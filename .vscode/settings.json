@@ -1,0 +1,22 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "CodeGPT.apiKey": "Anthropic",
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always"
+    },
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "database": "poizonshopdb",
+            "name": "MySQL",
+            "username": "root"
+        }
+    ]
+}
