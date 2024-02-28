@@ -6,6 +6,7 @@ import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_add_user_dialog.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/users_table.dart';
 
 class AdminAllUsers extends StatefulWidget {
@@ -58,7 +59,13 @@ class _AdminAllUsersState extends State<AdminAllUsers> {
                               padding: const EdgeInsets.all(8.0),
                               child: BasicContainer(
                                 child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return const AddUserDialog();
+                                        });
+                                  },
                                   icon: const Icon(Icons.add),
                                 ),
                               ))),

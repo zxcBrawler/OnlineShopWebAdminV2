@@ -33,7 +33,14 @@ class UserRepoImpl implements UserRepo {
   @override
   Future<DataState<UserEntity>> addUser({UserDTO? user}) async {
     try {
-      final httpResponse = await _apiService.addUser(user: user!);
+      final httpResponse = await _apiService.addUser(
+          gender: user!.gender,
+          role: user.role,
+          employeeNumber: user.employeeNumber,
+          passwordHash: user.passwordHash,
+          phoneNumber: user.phoneNumber,
+          username: user.username,
+          email: user.email);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {

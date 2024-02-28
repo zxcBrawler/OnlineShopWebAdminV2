@@ -31,9 +31,11 @@ class RemoteUserBloc extends Bloc<RemoteUserEvent, RemoteUserState> {
   void onAddUser(AddUser event, Emitter<RemoteUserState> emitter) async {
     final dataState = await _addUserUsecase(params: event.user);
     if (dataState is DataSuccess) {
+      print(dataState.error);
       emitter(RemoteAddUserDone(dataState.data!));
     }
     if (dataState is DataFailed) {
+      print(dataState.error);
       emitter(RemoteUserError(dataState.error!));
     }
   }

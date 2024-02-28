@@ -7,11 +7,15 @@ class BasicDropdown extends StatefulWidget {
   final String listTitle;
   final List<String> dropdownData;
   final int selectedIndex;
-  const BasicDropdown(
-      {super.key,
-      required this.dropdownData,
-      required this.listTitle,
-      required this.selectedIndex});
+  final Function(int)? onIndexChanged;
+
+  const BasicDropdown({
+    super.key,
+    required this.dropdownData,
+    required this.listTitle,
+    required this.selectedIndex,
+    this.onIndexChanged,
+  });
 
   @override
   State<BasicDropdown> createState() => _BasicDropdownState();
@@ -19,6 +23,7 @@ class BasicDropdown extends StatefulWidget {
 
 class _BasicDropdownState extends State<BasicDropdown> {
   String? selectedValue;
+
   @override
   void initState() {
     super.initState();
@@ -58,6 +63,11 @@ class _BasicDropdownState extends State<BasicDropdown> {
                 setState(() {
                   selectedValue = value as String;
                 });
+
+                if (widget.onIndexChanged != null) {
+                  widget.onIndexChanged!(
+                      widget.dropdownData.indexOf(value as String));
+                }
               },
             ),
           ),
