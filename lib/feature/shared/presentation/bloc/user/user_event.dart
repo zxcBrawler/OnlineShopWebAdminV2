@@ -13,3 +13,13 @@ class AddUser extends RemoteUserEvent {
   final UserDTO user;
   const AddUser({required this.user});
 }
+
+class UpdateUser extends RemoteUserEvent {
+  final UserDTO user;
+  const UpdateUser({required this.user});
+}
+
+class DeleteUser extends RemoteUserEvent {
+  final int id;
+  const DeleteUser({required this.id});
+}

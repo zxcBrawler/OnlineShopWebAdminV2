@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/config/responsive.dart';
+import 'package:xc_web_admin/core/routes/app_router.dart';
+import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/dropdown/basic_dropdown.dart';
 import 'package:xc_web_admin/core/widget/header/basic_header_text.dart';
 import 'package:xc_web_admin/core/widget/text/base_button_text.dart';
@@ -9,6 +11,7 @@ import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/di/service.dart';
+import 'package:xc_web_admin/feature/shared/data/dto/add_edit_user_dto.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/user_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_event.dart';
@@ -16,6 +19,8 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_stat
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_state.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_user_orders_table.dart';
 
 class AdminUserDetails extends StatefulWidget {
@@ -32,6 +37,9 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
   late final TextEditingController phoneNumController;
   late final TextEditingController usernameController;
   late final TextEditingController employeeNumberController;
+  final UserDTO updatedUser = UserDTO();
+  late int? selectedRoleIndex;
+  late int? selectedGenderIndex;
 
   @override
   void initState() {
@@ -42,6 +50,9 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
     phoneNumController = TextEditingController(text: user.phoneNumber);
     usernameController = TextEditingController(text: user.username);
     employeeNumberController = TextEditingController(text: user.employeeNumber);
+
+    selectedRoleIndex = user.role!.id! - 1;
+    selectedGenderIndex = user.gender!.id! - 1;
   }
 
   @override
@@ -118,8 +129,10 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                                             dropdownData: state.roles!
                                                 .map((e) => e.roleName!)
                                                 .toList(),
-                                            selectedIndex:
-                                                widget.user!.role!.id! - 1,
+                                            selectedIndex: selectedRoleIndex!,
+                                            onIndexChanged: (value) {
+                                              selectedRoleIndex = value;
+                                            },
                                           );
                                         case RemoteRoleError():
                                           return const Text("error");
@@ -147,8 +160,10 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                                                 .toList()
                                                 .reversed
                                                 .toList(),
-                                            selectedIndex:
-                                                widget.user!.gender!.id! - 1,
+                                            selectedIndex: selectedGenderIndex!,
+                                            onIndexChanged: (value) {
+                                              selectedGenderIndex = value;
+                                            },
                                           );
                                         case RemoteGenderError():
                                           return const Text("error");
@@ -224,12 +239,31 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
     );
   }
 
-  void _editUserInfo() {
-    //TODO: Add logic for editing user info
+  void _editUserInfo() async {
+    updatedUser.id = widget.user!.id!;
+    updatedUser.email = emailController.text;
+    updatedUser.username = usernameController.text;
+    updatedUser.passwordHash = passController.text;
+    updatedUser.phoneNumber = phoneNumController.text;
+    updatedUser.employeeNumber = employeeNumberController.text;
+    updatedUser.gender = selectedGenderIndex! + 1;
+    updatedUser.role = selectedRoleIndex! + 1;
+    service<RemoteUserBloc>().add(UpdateUser(user: updatedUser));
+    await Future.delayed(const Duration(seconds: 1));
+    router.pop();
+    router.push(
+      Pages.adminAllUsers.screenPath,
+    );
   }
 
-  void _deleteUser() {
+  void _deleteUser() async {
     //TODO: Add logic for deleting user
+    service<RemoteUserBloc>().add(DeleteUser(id: widget.user!.id!));
+    await Future.delayed(const Duration(seconds: 1));
+    router.pop();
+    router.push(
+      Pages.adminAllUsers.screenPath,
+    );
   }
 
   TextEditingController _getControllerForField(String field) {

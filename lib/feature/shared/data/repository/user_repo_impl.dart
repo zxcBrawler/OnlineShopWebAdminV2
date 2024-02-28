@@ -54,4 +54,48 @@ class UserRepoImpl implements UserRepo {
       return DataFailed(e);
     }
   }
+
+  @override
+  Future<DataState<UserEntity>> updateUser({UserDTO? user}) async {
+    try {
+      final httpResponse = await _apiService.updateUserById(
+          id: user!.id,
+          gender: user.gender,
+          role: user.role,
+          employeeNumber: user.employeeNumber,
+          passwordHash: user.passwordHash,
+          phoneNumber: user.phoneNumber,
+          username: user.username,
+          email: user.email);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<void>> deleteUser({int? id}) async {
+    try {
+      final httpResponse = await _apiService.deleteUserById(id: id!);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
 }

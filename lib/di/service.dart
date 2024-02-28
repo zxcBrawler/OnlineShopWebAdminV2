@@ -21,7 +21,9 @@ import 'package:xc_web_admin/feature/shared/domain/usecase/role/get_roles_usecas
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/delete_shop_address_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/get_shop_addresses_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/user/add_user_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/user/delete_user_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/user/get_users_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/user/update_user_usecase.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/address/address_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_bloc.dart';
@@ -41,7 +43,7 @@ Future<void> init() async {
   service.registerFactory<RemoteShopAddressesBloc>(
       () => RemoteShopAddressesBloc(service(), service()));
   service.registerFactory<RemoteUserBloc>(
-      () => RemoteUserBloc(service(), service()));
+      () => RemoteUserBloc(service(), service(), service(), service()));
   service.registerFactory<RemoteDeliveryInfoBloc>(
       () => RemoteDeliveryInfoBloc(service()));
   service.registerFactory<RemoteRoleBloc>(() => RemoteRoleBloc(service()));
@@ -75,4 +77,8 @@ Future<void> init() async {
 
   service.registerSingleton<GetRolesUsecase>(GetRolesUsecase(service()));
   service.registerSingleton<GetGendersUsecase>(GetGendersUsecase(service()));
+
+  service.registerSingleton<UpdateUserUsecase>(UpdateUserUsecase(service()));
+
+  service.registerSingleton<DeleteUserUsecase>(DeleteUserUsecase(service()));
 }

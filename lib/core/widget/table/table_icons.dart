@@ -8,6 +8,8 @@ import 'package:xc_web_admin/feature/shared/data/model/shop_address.dart';
 import 'package:xc_web_admin/feature/shared/data/model/user.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_event.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
 
 class TableIcons<T> extends StatefulWidget {
   final String type;
@@ -133,6 +135,8 @@ class _TableIconsState extends State<TableIcons> {
         );
         break;
       case "UserModel":
+        UserModel user = widget.data as UserModel;
+        service<RemoteUserBloc>().add(DeleteUser(id: user.id!));
         await Future.delayed(const Duration(seconds: 1));
         router.pop();
         router.push(

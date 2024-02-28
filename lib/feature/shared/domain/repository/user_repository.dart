@@ -5,4 +5,6 @@ import 'package:xc_web_admin/feature/shared/domain/entities/user_entity.dart';
 abstract class UserRepo {
   Future<DataState<List<UserEntity>>> getAllUsers();
   Future<DataState<UserEntity>> addUser({UserDTO? user});
+  Future<DataState<UserEntity>> updateUser({UserDTO? user});
+  Future<DataState<void>> deleteUser({int? id});
 }

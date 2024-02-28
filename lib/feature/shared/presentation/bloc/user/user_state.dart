@@ -21,6 +21,10 @@ class RemoteAddUserDone extends RemoteUserState {
   const RemoteAddUserDone(UserEntity user) : super(user: user);
 }
 
+class RemoteDeleteUserDone extends RemoteUserState {
+  const RemoteDeleteUserDone() : super();
+}
+
 class RemoteUserError extends RemoteUserState {
   const RemoteUserError(DioException error) : super(error: error);
 }
