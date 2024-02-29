@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:xc_web_admin/core/resources/controller/side_menu_controller.dart';
 import 'package:xc_web_admin/feature/shared/data/data_source/api_service.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/address_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/clothes_repo_impl.dart';
@@ -15,10 +16,10 @@ import 'package:xc_web_admin/feature/shared/domain/repository/gender_repository.
 import 'package:xc_web_admin/feature/shared/domain/repository/role_repository.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/shop_address_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/user_repository.dart';
-
 import 'package:xc_web_admin/feature/shared/domain/usecase/address/get_addresses_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_colors_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_photos_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_sizes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/gender/get_genders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/order/get_orders_usecase.dart';
@@ -36,7 +37,6 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_bloc
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
-import 'package:xc_web_admin/core/resources/controller/side_menu_controller.dart';
 
 final service = GetIt.instance;
 Future<void> init() async {
@@ -92,8 +92,8 @@ Future<void> init() async {
   service.registerSingleton<DeleteUserUsecase>(DeleteUserUsecase(service()));
 
   service.registerSingleton<GetClothesUsecase>(GetClothesUsecase(service()));
-  service.registerSingleton<GetClothesColorsUsecase>(
-      GetClothesColorsUsecase(service()));
+  service.registerSingleton<GetClothesSizesUsecase>(
+      GetClothesSizesUsecase(service()));
   service.registerSingleton<GetClothesColorsUsecase>(
       GetClothesColorsUsecase(service()));
   service.registerSingleton<GetClothesPhotosUsecase>(
