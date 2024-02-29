@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:xc_web_admin/core/widget/widget/custom_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_active_users.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_clothes.dart.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_dashboard.dart';
@@ -89,4 +90,7 @@ final List<CustomWidget> adminPages = [
   CustomWidget(
       initialLocation: Pages.adminAllOrders.screenPath,
       child: const AdminAllUsers()),
+  CustomWidget(
+      initialLocation: Pages.adminAllClothes.screenPath,
+      child: const AdminAllClothes()),
 ];

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xc_web_admin/core/routes/app_router.dart';
+import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/chart/basic_pie_chart.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
@@ -67,7 +69,8 @@ class _MaleClothesWidgetState extends State<MaleClothesWidget> {
                       child: IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            //router.go(Pages.adminAllUsers.screenPath);
+                            router.go(Pages.adminAllClothes.screenPath,
+                                extra: {"male clothes"});
                           },
                           icon: const Icon(
                             Icons.chevron_right,

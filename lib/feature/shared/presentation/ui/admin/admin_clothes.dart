@@ -20,7 +20,7 @@ class _AdminClothesState extends State<AdminClothes> {
     return SafeArea(
       child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
-          child: !Responsive.isDesktop(context)
+          child: Responsive.isTablet(context) || Responsive.isDesktop(context)
               ? const Column(
                   children: [
                     Header(
@@ -30,10 +30,6 @@ class _AdminClothesState extends State<AdminClothes> {
                     Row(
                       children: [
                         FemaleClothesWidget(),
-                      ],
-                    ),
-                    Row(
-                      children: [
                         MaleClothesWidget(),
                       ],
                     ),
@@ -42,10 +38,6 @@ class _AdminClothesState extends State<AdminClothes> {
                         AdminTopSoldItemsClothesWidget(
                           title: "top sold female items",
                         ),
-                      ],
-                    ),
-                    Row(
-                      children: [
                         AdminTopSoldItemsClothesWidget(
                           title: "top sold male items",
                         ),
@@ -63,6 +55,10 @@ class _AdminClothesState extends State<AdminClothes> {
                     Row(
                       children: [
                         FemaleClothesWidget(),
+                      ],
+                    ),
+                    Row(
+                      children: [
                         MaleClothesWidget(),
                       ],
                     ),
@@ -71,6 +67,10 @@ class _AdminClothesState extends State<AdminClothes> {
                         AdminTopSoldItemsClothesWidget(
                           title: "top sold female items",
                         ),
+                      ],
+                    ),
+                    Row(
+                      children: [
                         AdminTopSoldItemsClothesWidget(
                           title: "top sold male items",
                         ),

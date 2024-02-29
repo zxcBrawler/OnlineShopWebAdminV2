@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_active_users.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_clothes.dart.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_orders.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes.dart';
@@ -144,6 +145,18 @@ final router =
         name: Pages.adminAllOrders.screenName,
         pageBuilder: (context, state) {
           return const NoTransitionPage(child: AdminAllOrders());
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _shellNavigatorKey,
+        path: Pages.adminAllClothes.screenPath,
+        name: Pages.adminAllClothes.screenName,
+        pageBuilder: (context, state) {
+          HashSet<String> title = state.extra as HashSet<String>;
+          return NoTransitionPage(
+              child: AdminAllClothes(
+            title: title.first,
+          ));
         },
       ),
     ],
