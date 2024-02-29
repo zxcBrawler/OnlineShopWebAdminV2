@@ -2,12 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xc_web_admin/feature/shared/data/data_source/api_service.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/address_repo_impl.dart';
+import 'package:xc_web_admin/feature/shared/data/repository/clothes_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/delivery_info_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/gender_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/role_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/shop_address_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/user_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/address_repo.dart';
+import 'package:xc_web_admin/feature/shared/domain/repository/clothes_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/delivery_info_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/gender_repository.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/role_repository.dart';
@@ -15,6 +17,9 @@ import 'package:xc_web_admin/feature/shared/domain/repository/shop_address_repo.
 import 'package:xc_web_admin/feature/shared/domain/repository/user_repository.dart';
 
 import 'package:xc_web_admin/feature/shared/domain/usecase/address/get_addresses_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_colors_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_photos_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/gender/get_genders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/order/get_orders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/role/get_roles_usecase.dart';
@@ -25,6 +30,7 @@ import 'package:xc_web_admin/feature/shared/domain/usecase/user/delete_user_usec
 import 'package:xc_web_admin/feature/shared/domain/usecase/user/get_users_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/user/update_user_usecase.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/address/address_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_bloc.dart';
@@ -49,6 +55,8 @@ Future<void> init() async {
   service.registerFactory<RemoteRoleBloc>(() => RemoteRoleBloc(service()));
   service
       .registerFactory<RemoteGendersBloc>(() => RemoteGendersBloc(service()));
+  service.registerFactory<RemoteClothesBloc>(
+      () => RemoteClothesBloc(service(), service(), service(), service()));
 
   //Dio
   service.registerSingleton<Dio>(Dio());
@@ -61,6 +69,7 @@ Future<void> init() async {
   service.registerSingleton<DeliveryInfoRepo>(DeliveryInfoRepoImpl(service()));
   service.registerSingleton<RoleRepo>(RoleRepoImpl(service()));
   service.registerSingleton<GenderRepo>(GenderRepoImpl(service()));
+  service.registerSingleton<ClothesRepo>(ClothesRepoImpl(service()));
 
   //Use case
   service
@@ -81,4 +90,12 @@ Future<void> init() async {
   service.registerSingleton<UpdateUserUsecase>(UpdateUserUsecase(service()));
 
   service.registerSingleton<DeleteUserUsecase>(DeleteUserUsecase(service()));
+
+  service.registerSingleton<GetClothesUsecase>(GetClothesUsecase(service()));
+  service.registerSingleton<GetClothesColorsUsecase>(
+      GetClothesColorsUsecase(service()));
+  service.registerSingleton<GetClothesColorsUsecase>(
+      GetClothesColorsUsecase(service()));
+  service.registerSingleton<GetClothesPhotosUsecase>(
+      GetClothesPhotosUsecase(service()));
 }

@@ -57,7 +57,7 @@ class _UserInfoState extends State<UserInfo> {
           ),
         ),
       );
-    } else if (Responsive.isTablet(context)) {
+    } else if (Responsive.isDesktop(context)) {
       return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
