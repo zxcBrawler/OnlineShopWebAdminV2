@@ -93,7 +93,7 @@ class _TableIconsState extends State<TableIcons> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirm deletion'),
-          content: const Text('Are you sure you want to delete this item?'),
+          content: const Text('Are you sure you want to delete this data?'),
           actions: [
             // Yes button triggers the deletion process
             TextButton(
@@ -136,12 +136,18 @@ class _TableIconsState extends State<TableIcons> {
         break;
       case "UserModel":
         UserModel user = widget.data as UserModel;
-        service<RemoteUserBloc>().add(DeleteUser(id: user.id!));
-        await Future.delayed(const Duration(seconds: 1));
-        router.pop();
-        router.push(
-          Pages.adminAllUsers.screenPath,
-        );
+        if (user.role!.roleName! != "user") {
+          service<RemoteUserBloc>().add(DeleteUser(id: user.id!));
+          await Future.delayed(const Duration(seconds: 1));
+          router.pop();
+          router.push(
+            Pages.adminAllUsers.screenPath,
+          );
+        } else {
+          //TODO: handle case when user wants to delete buyer (that's not allowed)
+          router.pop();
+        }
+
         break;
       default:
         break;

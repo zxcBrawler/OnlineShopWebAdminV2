@@ -16,18 +16,23 @@ class AdminShopAddressInfo extends StatefulWidget {
 }
 
 class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
+  late final TextEditingController shopAddressDirectionController;
+  late final TextEditingController shopMetroController;
+  late final TextEditingController contactNumberController;
+  late final TextEditingController latitudeController;
+  late final TextEditingController longitudeController;
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController shopAddressDirectionController =
-        TextEditingController(
-            text: widget.shopAddressModel.shopAddressDirection);
-    final TextEditingController shopMetroController =
+    shopAddressDirectionController = TextEditingController(
+        text: widget.shopAddressModel.shopAddressDirection);
+    shopMetroController =
         TextEditingController(text: widget.shopAddressModel.shopMetro);
-    final TextEditingController contactNumberController =
+    contactNumberController =
         TextEditingController(text: widget.shopAddressModel.contactNumber);
-    final TextEditingController latitudeController =
+    latitudeController =
         TextEditingController(text: widget.shopAddressModel.latitude);
-    final TextEditingController longitudeController =
+    longitudeController =
         TextEditingController(text: widget.shopAddressModel.longitude);
 
     return Scaffold(
@@ -86,6 +91,7 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
                                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                             userAgentPackageName:
                                 'dev.fleaflet.flutter_map.example',
+                            tileDisplay: const TileDisplay.fadeIn(),
                           ),
                           MarkerLayer(markers: [
                             Marker(
@@ -109,30 +115,7 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      BasicTextField(
-                        title: "shop address direction",
-                        controller: shopAddressDirectionController,
-                        isEnabled: true,
-                      ),
-                      BasicTextField(
-                        title: "shop metro",
-                        controller: shopMetroController,
-                        isEnabled: true,
-                      ),
-                      BasicTextField(
-                          title: "contact number",
-                          controller: contactNumberController,
-                          isEnabled: true),
-                      BasicTextField(
-                          title: "latitude",
-                          controller: latitudeController,
-                          isEnabled: true),
-                      BasicTextField(
-                          title: "longitude",
-                          controller: longitudeController,
-                          isEnabled: true),
-                    ],
+                    children: [..._buildTextFields()],
                   ),
                 )
               ],
@@ -141,5 +124,41 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
         ),
       )),
     );
+  }
+
+  TextEditingController _getControllerForField(String field) {
+    switch (field) {
+      case "shop address direction":
+        return shopAddressDirectionController;
+      case "shop metro":
+        return shopMetroController;
+      case "contact number":
+        return contactNumberController;
+      case "latitude":
+        return latitudeController;
+      case "longitude":
+        return longitudeController;
+
+      default:
+        throw Exception("Invalid field: $field");
+    }
+  }
+
+  List<Widget> _buildTextFields() {
+    final fields = [
+      "shop address direction",
+      "shop metro",
+      "contact number",
+      "latitude",
+      "longitude"
+    ];
+
+    return fields.map((field) {
+      return BasicTextField(
+        title: field,
+        controller: _getControllerForField(field),
+        isEnabled: true,
+      );
+    }).toList();
   }
 }

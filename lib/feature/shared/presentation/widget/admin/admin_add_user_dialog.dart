@@ -9,7 +9,6 @@ import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
 import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/data/dto/add_edit_user_dto.dart';
-import 'package:xc_web_admin/feature/shared/domain/entities/role_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_state.dart';
@@ -51,11 +50,8 @@ class _AddUserDialogState extends State<AddUserDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const BasicText(
-        title: "add new user",
-      ),
-      content: SingleChildScrollView(
+    return Dialog(
+      child: SingleChildScrollView(
           child: BlocProvider<RemoteRoleBloc>(
         create: (context) => service()..add(const GetRoles()),
         child: BlocBuilder<RemoteRoleBloc, RemoteRoleState>(
@@ -66,6 +62,9 @@ class _AddUserDialogState extends State<AddUserDialog> {
               case RemoteRoleDone():
                 return Column(
                   children: [
+                    const BasicText(
+                      title: "add new user",
+                    ),
                     BasicDropdown(
                       listTitle: "choose role",
                       dropdownData: state.roles!
@@ -104,7 +103,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
                       ),
                     ),
                     const BasicText(title: "enter user details"),
-                    ..._buildTextFieldsForRole(state.roles!),
+                    ..._buildTextFields(),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
@@ -165,7 +164,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
     }
   }
 
-  List<Widget> _buildTextFieldsForRole(List<RoleEntity> roles) {
+  List<Widget> _buildTextFields() {
     final List<String> fields = [
       "username",
       "password",
