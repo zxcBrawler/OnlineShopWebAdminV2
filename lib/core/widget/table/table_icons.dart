@@ -4,6 +4,7 @@ import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/di/service.dart';
+import 'package:xc_web_admin/feature/shared/data/model/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/data/model/shop_address.dart';
 import 'package:xc_web_admin/feature/shared/data/model/user.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
@@ -73,6 +74,13 @@ class _TableIconsState extends State<TableIcons> {
           extra: {widget.data as UserModel},
         );
         break;
+
+      case "DeliveryInfoModel":
+        router.push(
+          Pages.adminOrderDetails.screenPath,
+          extra: {widget.data as DeliveryInfoModel},
+        );
+        break;
       // Default case does nothing
       default:
         break;
@@ -95,7 +103,7 @@ class _TableIconsState extends State<TableIcons> {
           title: const Text('Confirm deletion'),
           content: const Text('Are you sure you want to delete this data?'),
           actions: [
-            // Yes button triggers the deletion process
+            // "Yes" button triggers the deletion process
             TextButton(
               onPressed: () async {
                 // Call the _handleDelete function to perform deletion
@@ -105,7 +113,7 @@ class _TableIconsState extends State<TableIcons> {
                 title: 'Yes',
               ),
             ),
-            // No button closes the dialog without performing deletion
+            // "No" button closes the dialog without performing deletion
             TextButton(
               onPressed: () {
                 // Close the dialog
@@ -148,6 +156,10 @@ class _TableIconsState extends State<TableIcons> {
           router.pop();
         }
 
+        break;
+      case "DeliveryInfoModel":
+        // TODO: handle case when user wants to delete order (that's not allowed)
+        router.pop();
         break;
       default:
         break;

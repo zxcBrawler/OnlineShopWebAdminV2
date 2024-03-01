@@ -90,7 +90,7 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
                               child: ClothesTable(
                                 title: widget.title,
                               ),
-                            ), //implement linechart
+                            ),
                           ),
                         ],
                       ),

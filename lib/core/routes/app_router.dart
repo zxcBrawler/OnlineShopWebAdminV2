@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
+import 'package:xc_web_admin/feature/shared/domain/entities/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_active_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_clothes.dart.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_orders.dart';
@@ -10,6 +11,7 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_user
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_dashboard.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_main_screen.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_order_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_orders_main.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_shop_address_info.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_shops_main.dart';
@@ -42,6 +44,18 @@ final router =
       Set<UserEntity> user = state.extra as Set<UserEntity>;
       return AdminUserDetails(
         user: user.first,
+      );
+    },
+  ),
+  GoRoute(
+    parentNavigatorKey: _rootNavigatorKey,
+    path: Pages.adminOrderDetails.screenPath,
+    name: Pages.adminOrderDetails.screenName,
+    builder: (context, state) {
+      Set<DeliveryInfoEntity> deliveryInfo =
+          state.extra as Set<DeliveryInfoEntity>;
+      return AdminOrderDetails(
+        deliveryInfo: deliveryInfo.first,
       );
     },
   ),

@@ -13,7 +13,8 @@ enum Pages {
   adminUserAddresses,
   adminShopAddressInfo,
   adminAllOrders,
-  adminAllClothes
+  adminAllClothes,
+  adminOrderDetails
 }
 
 enum DirectorPages { director }
@@ -38,6 +39,7 @@ extension AppPageExtension on Pages {
       Pages.adminShopAddressInfo => '/adminShopAddressInfo',
       Pages.adminAllOrders => '/adminAllOrders',
       Pages.adminAllClothes => '/adminAllClothes',
+      Pages.adminOrderDetails => '/adminOrderDetails',
     };
   }
 
@@ -58,6 +60,7 @@ extension AppPageExtension on Pages {
       Pages.adminShopAddressInfo => 'adminShopAddressInfo',
       Pages.adminAllOrders => 'adminAllOrders',
       Pages.adminAllClothes => 'adminAllClothes',
+      Pages.adminOrderDetails => 'adminOrderDetails',
     };
   }
 }
