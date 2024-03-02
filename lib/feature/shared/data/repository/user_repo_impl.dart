@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:xc_web_admin/core/constants/constants.dart';
 import 'package:xc_web_admin/core/resources/data/data_state.dart';
 import 'package:xc_web_admin/feature/shared/data/data_source/api_service.dart';
 import 'package:xc_web_admin/feature/shared/data/dto/add_edit_user_dto.dart';
@@ -15,7 +16,8 @@ class UserRepoImpl implements UserRepo {
   @override
   Future<DataState<List<UserEntity>>> getAllUsers() async {
     try {
-      final httpResponse = await _apiService.getUsers();
+      final httpResponse =
+          await _apiService.getUsers(accessToken: accessToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
