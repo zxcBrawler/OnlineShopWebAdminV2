@@ -1,9 +1,6 @@
-// ignore_for_file: unused_field
-
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:xc_web_admin/core/constants/constants.dart';
 import 'package:xc_web_admin/core/resources/data/data_state.dart';
 import 'package:xc_web_admin/feature/shared/data/data_source/api_service.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/delivery_info.dart';
@@ -16,8 +13,7 @@ class DeliveryInfoRepoImpl implements DeliveryInfoRepo {
   @override
   Future<DataState<List<DeliveryInfoEntity>>> getAllInfo() async {
     try {
-      final httpResponse =
-          await _apiService.getAllInfo(accessToken: accessToken!);
+      final httpResponse = await _apiService.getAllInfo();
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {

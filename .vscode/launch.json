@@ -7,7 +7,7 @@
         {
             "name": "OnlineShopWebAdmin-main",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
         },
         {
             "name": "OnlineShopWebAdmin-main (profile mode)",
@@ -20,6 +20,6 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
-        }
+        },
     ]
 }

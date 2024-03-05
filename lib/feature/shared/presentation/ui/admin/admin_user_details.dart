@@ -34,7 +34,6 @@ class AdminUserDetails extends StatefulWidget {
 class _AdminUserDetailsState extends State<AdminUserDetails> {
   // Controllers for handling user input
   late final TextEditingController emailController;
-  late final TextEditingController passController;
   late final TextEditingController phoneNumController;
   late final TextEditingController usernameController;
   late final TextEditingController employeeNumberController;
@@ -53,7 +52,6 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
     // Initialize controllers with user data
     final user = widget.user!;
     emailController = TextEditingController(text: user.email);
-    passController = TextEditingController(text: user.passwordHash);
     phoneNumController = TextEditingController(text: user.phoneNumber);
     usernameController = TextEditingController(text: user.username);
     employeeNumberController = TextEditingController(text: user.employeeNumber);
@@ -70,8 +68,8 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
 
     // Determine which fields to display based on user role
     final fields = (widget.user!.role!.roleName != "user")
-        ? ["username", "password", "phone num", "email", "employee number"]
-        : ["username", "password", "phone num", "email"];
+        ? ["username", "phone num", "email", "employee number"]
+        : ["username", "phone num", "email"];
 
     return Scaffold(
       body: SafeArea(
@@ -254,7 +252,6 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
     updatedUser.id = widget.user!.id!;
     updatedUser.email = emailController.text;
     updatedUser.username = usernameController.text;
-    updatedUser.passwordHash = passController.text;
     updatedUser.phoneNumber = phoneNumController.text;
     updatedUser.employeeNumber = employeeNumberController.text;
     updatedUser.gender = selectedGenderIndex! + 1;
@@ -288,8 +285,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
     switch (field) {
       case "username":
         return usernameController;
-      case "password":
-        return passController;
+
       case "phone num":
         return phoneNumController;
       case "email":

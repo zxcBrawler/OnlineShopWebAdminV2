@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:xc_web_admin/core/constants/constants.dart';
+import 'package:xc_web_admin/core/constants/shared_prefs.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/shared/charts/total_items_piechart.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/shared/charts/total_orders_pie_chart.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_users.dart';
@@ -13,6 +15,13 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadAccessToken();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -47,5 +56,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   ],
                 )),
     );
+  }
+
+  Future<void> loadAccessToken() async {
+    String? token = await SharedPreferencesManager.loadAccessToken();
+    setState(() {
+      accessToken = token;
+    });
   }
 }
