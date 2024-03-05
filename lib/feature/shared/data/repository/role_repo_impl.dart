@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:xc_web_admin/core/constants/constants.dart';
 import 'package:xc_web_admin/core/resources/data/data_state.dart';
 import 'package:xc_web_admin/feature/shared/data/data_source/api_service.dart';
 import 'package:xc_web_admin/feature/shared/data/model/role.dart';
@@ -14,7 +15,8 @@ class RoleRepoImpl implements RoleRepo {
   @override
   Future<DataState<List<RoleModel>>> getRoles() async {
     try {
-      final httpResponse = await _apiService.getRoles();
+      final httpResponse =
+          await _apiService.getRoles(accessToken: accessToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {

@@ -27,6 +27,7 @@ class BasicTextFieldState extends State<BasicTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 100),
       child: TextField(
+        key: widget.key,
         enabled: widget.isEnabled,
         controller: widget.controller,
         style: GoogleFonts.hammersmithOne(textStyle: basicTextFieldStyle()),

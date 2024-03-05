@@ -39,7 +39,7 @@ class RemoteClothesBloc extends Bloc<RemoteClothesEvent, RemoteClothesState> {
 
   void onGetClothesColors(
       GetClothesColors event, Emitter<RemoteClothesState> emit) async {
-    final dataState = await _getClothesColorsUsecase();
+    final dataState = await _getClothesColorsUsecase(params: event.id);
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       print(dataState.data);
       emit(RemoteClothesColorsDone(dataState.data!));
@@ -55,7 +55,7 @@ class RemoteClothesBloc extends Bloc<RemoteClothesEvent, RemoteClothesState> {
 
   void onGetClothesSizes(
       GetClothesSizes event, Emitter<RemoteClothesState> emit) async {
-    final dataState = await _getClothesSizesUsecase();
+    final dataState = await _getClothesSizesUsecase(params: event.id);
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       print(dataState.data);
       emit(RemoteClothesSizeClothesDone(dataState.data!));
@@ -71,7 +71,7 @@ class RemoteClothesBloc extends Bloc<RemoteClothesEvent, RemoteClothesState> {
 
   void onGetClothesPhotos(
       GetClothesPhoto event, Emitter<RemoteClothesState> emit) async {
-    final dataState = await _getClothesPhotosUsecase();
+    final dataState = await _getClothesPhotosUsecase(params: event.id);
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       print(dataState.data);
       emit(RemotePhotosOfClothesDone(dataState.data!));

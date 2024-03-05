@@ -42,7 +42,8 @@ class UserRepoImpl implements UserRepo {
           passwordHash: user.passwordHash,
           phoneNumber: user.phoneNumber,
           username: user.username,
-          email: user.email);
+          email: user.email,
+          accessToken: accessToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
@@ -68,7 +69,8 @@ class UserRepoImpl implements UserRepo {
           passwordHash: user.passwordHash,
           phoneNumber: user.phoneNumber,
           username: user.username,
-          email: user.email);
+          email: user.email,
+          accessToken: accessToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
@@ -86,7 +88,8 @@ class UserRepoImpl implements UserRepo {
   @override
   Future<DataState<void>> deleteUser({int? id}) async {
     try {
-      final httpResponse = await _apiService.deleteUserById(id: id!);
+      final httpResponse =
+          await _apiService.deleteUserById(id: id!, accessToken: accessToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {

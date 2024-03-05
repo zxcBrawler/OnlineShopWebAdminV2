@@ -3,12 +3,16 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
+import 'package:xc_web_admin/feature/shared/data/model/clothes.dart';
+import 'package:xc_web_admin/feature/shared/data/model/shop_address.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/delivery_info.dart';
+import 'package:xc_web_admin/feature/shared/domain/entities/user_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_active_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_clothes.dart.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_orders.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_dashboard.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_main_screen.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_order_details.dart';
@@ -20,8 +24,6 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_user_det
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_users_main.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_activity_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/auth/auth_page.dart';
-import 'package:xc_web_admin/feature/shared/data/model/shop_address.dart';
-import 'package:xc_web_admin/feature/shared/domain/entities/user_entity.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -68,6 +70,17 @@ final router =
           state.extra as HashSet<ShopAddressModel>;
       return AdminShopAddressInfo(
         shopAddressModel: address.first,
+      );
+    },
+  ),
+  GoRoute(
+    parentNavigatorKey: _rootNavigatorKey,
+    path: Pages.adminClothesDetails.screenPath,
+    name: Pages.adminClothesDetails.screenName,
+    builder: (context, state) {
+      HashSet<ClothesModel> clothes = state.extra as HashSet<ClothesModel>;
+      return AdminClothesDetails(
+        clothes: clothes.first,
       );
     },
   ),

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:xc_web_admin/core/constants/constants.dart';
 import 'package:xc_web_admin/core/resources/data/data_state.dart';
 import 'package:xc_web_admin/feature/shared/data/data_source/api_service.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/clothes_colors_entity.dart';
@@ -17,7 +18,8 @@ class ClothesRepoImpl implements ClothesRepo {
   @override
   Future<DataState<List<ClothesEntity>>> getClothes() async {
     try {
-      final httpResponse = await _apiService.getClothes();
+      final httpResponse =
+          await _apiService.getClothes(accessToken: accessToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
@@ -36,7 +38,8 @@ class ClothesRepoImpl implements ClothesRepo {
   Future<DataState<List<ClothesColorsEntity>>> getClothesColors(
       {int? id}) async {
     try {
-      final httpResponse = await _apiService.getColors(id: id);
+      final httpResponse =
+          await _apiService.getColors(id: id, accessToken: accessToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
@@ -55,7 +58,8 @@ class ClothesRepoImpl implements ClothesRepo {
   Future<DataState<List<ClothesSizeClothesEntity>>> getClothesSizeClothes(
       {int? id}) async {
     try {
-      final httpResponse = await _apiService.getSizes(id: id);
+      final httpResponse =
+          await _apiService.getSizes(id: id, accessToken: accessToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
@@ -74,7 +78,8 @@ class ClothesRepoImpl implements ClothesRepo {
   Future<DataState<List<PhotosOfClothesEntity>>> getPhotosOfClothes(
       {int? id}) async {
     try {
-      final httpResponse = await _apiService.getPhotos(id: id);
+      final httpResponse =
+          await _apiService.getPhotos(id: id, accessToken: accessToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {

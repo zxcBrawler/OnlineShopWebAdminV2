@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:xc_web_admin/core/constants/constants.dart';
 import 'package:xc_web_admin/core/resources/data/data_state.dart';
 import 'package:xc_web_admin/feature/shared/data/data_source/api_service.dart';
 import 'package:xc_web_admin/feature/shared/data/dto/edit_status_dto.dart';
@@ -15,7 +16,8 @@ class StatusRepoImpl implements StatusRepo {
   @override
   Future<DataState<List<StatusOrderModel>>> getStatuses() async {
     try {
-      final httpResponse = await _apiService.getStatuses();
+      final httpResponse =
+          await _apiService.getStatuses(accessToken: accessToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
@@ -34,7 +36,9 @@ class StatusRepoImpl implements StatusRepo {
   Future<DataState<void>> updateStatus({StatusDTO? statusDTO}) async {
     try {
       final httpResponse = await _apiService.updateStatus(
-          id: statusDTO!.id, statusID: statusDTO.statusID);
+          id: statusDTO!.id,
+          statusID: statusDTO.statusID,
+          accessToken: accessToken!);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);

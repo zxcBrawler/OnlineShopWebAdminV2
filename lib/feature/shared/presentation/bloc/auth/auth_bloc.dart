@@ -20,6 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final dataState = await _authenticate(params: event.loginDTO);
     if (dataState is DataSuccess) {
       accessToken = dataState.data?.accessToken ?? "";
+      print(accessToken);
       if (accessToken != "") {
         router.go(Pages.adminDashboard.screenPath);
       }

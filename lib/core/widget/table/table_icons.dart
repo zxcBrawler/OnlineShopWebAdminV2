@@ -4,6 +4,7 @@ import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/di/service.dart';
+import 'package:xc_web_admin/feature/shared/data/model/clothes.dart';
 import 'package:xc_web_admin/feature/shared/data/model/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/data/model/shop_address.dart';
 import 'package:xc_web_admin/feature/shared/data/model/user.dart';
@@ -79,6 +80,12 @@ class _TableIconsState extends State<TableIcons> {
         router.push(
           Pages.adminOrderDetails.screenPath,
           extra: {widget.data as DeliveryInfoModel},
+        );
+        break;
+      case "ClothesModel":
+        router.push(
+          Pages.adminClothesDetails.screenPath,
+          extra: {widget.data as ClothesModel},
         );
         break;
       // Default case does nothing

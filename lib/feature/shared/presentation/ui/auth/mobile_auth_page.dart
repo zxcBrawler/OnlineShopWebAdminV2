@@ -20,7 +20,7 @@ class MobileAuthPage extends StatefulWidget {
 }
 
 class _MobileAuthPageState extends State<MobileAuthPage> {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passController = TextEditingController();
 
   @override
@@ -53,11 +53,13 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
                             child:
                                 Image.asset("assets/xc-logo-transparent.png"))),
                     BasicTextField(
-                      title: "email",
-                      controller: emailController,
+                      key: const Key("authUsernameInput"),
+                      title: "username",
+                      controller: usernameController,
                       isEnabled: true,
                     ),
                     BasicTextField(
+                      key: const Key("authPasswordInput"),
                       title: "password",
                       controller: passController,
                       isEnabled: true,
@@ -69,6 +71,7 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
+                              key: const Key("authButton"),
                               onPressed: () async {
                                 await _loginAndNavigate();
                               },
@@ -99,7 +102,7 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
 
   @override
   void dispose() {
-    emailController.dispose();
+    usernameController.dispose();
     passController.dispose();
     super.dispose();
   }
@@ -107,7 +110,7 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
   Future<void> _loginAndNavigate() async {
     final authBloc = service<AuthBloc>();
     final loginDTO = LoginDTO(
-      username: emailController.text,
+      username: usernameController.text,
       passwordHash: passController.text,
     );
 
@@ -115,15 +118,14 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
 
     authBloc.stream.listen((state) {
       if (state is AuthStateDone) {
-        print(state.loginResponse!.accessToken);
         router.push(Pages.adminDashboard.screenPath);
       } else if (state is AuthStateError) {
         showDialog(
             context: context,
             builder: (context) {
               //TODO: implement correct error handling
-              return AlertDialog(
-                content: Text(state.error.toString()),
+              return const AlertDialog(
+                content: Text("Invalid username or password"),
               );
             });
       }
