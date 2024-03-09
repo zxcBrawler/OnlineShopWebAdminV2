@@ -17,8 +17,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Login>(onLogin);
   }
 
+  /// Handles the [Login] event.
+  ///
+  /// Emits the appropriate [AuthState] based on the result of the authentication.
+  ///
+  /// Saves the access token and username to shared preferences if the authentication is successful.
+  /// Navigates to the admin dashboard if the access token is not empty.
+  /// Prints the error if the authentication fails.
   void onLogin(Login event, Emitter<AuthState> emit) async {
+    // Authenticate the user with the provided login details.
     final dataState = await _authenticate(params: event.loginDTO);
+
+    // If the authentication is successful, save the access token and username to shared preferences.
+    // Navigate to the admin dashboard.
     if (dataState is DataSuccess) {
       accessToken = dataState.data?.accessToken ?? "";
       username = event.loginDTO!.username;
@@ -29,9 +40,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         router.go(Pages.adminDashboard.screenPath);
       }
 
+      // Emit the [AuthStateDone] state with the authentication data.
       emit(AuthStateDone(dataState.data!));
     }
 
+    // If the authentication fails, print the error.
+    // Emit the [AuthStateError] state with the error message.
     if (dataState is DataFailed) {
       print(dataState.error);
       emit(AuthStateError(dataState.error!));

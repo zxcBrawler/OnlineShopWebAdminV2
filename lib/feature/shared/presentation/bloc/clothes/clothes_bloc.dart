@@ -22,65 +22,125 @@ class RemoteClothesBloc extends Bloc<RemoteClothesEvent, RemoteClothesState> {
     on<GetClothesPhoto>(onGetClothesPhotos);
   }
 
+  /// Handles the event [GetClothes] by calling the [_getClothesUsecase] and
+  /// emitting the appropriate state.
+  ///
+  /// It emits a [RemoteClothesDone] state if the [_getClothesUsecase]
+  /// returns a [DataSuccess] with non-empty data. It emits a
+  /// [RemoteClothesError] state if the [_getClothesUsecase]
+  /// returns a [DataFailed] or a [DataSuccess] with empty data.
   void onGetClothes(GetClothes event, Emitter<RemoteClothesState> emit) async {
+    // Call the use case to get clothes data.
     final dataState = await _getClothesUsecase();
+
+    // If the use case returns a DataSuccess with non-empty data,
+    // emit a RemoteClothesDone state.
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      print(dataState.data);
+      // Emit the RemoteClothesDone state with the retrieved data.
       emit(RemoteClothesDone(dataState.data!));
     }
-    if (dataState is DataSuccess && dataState.data!.isEmpty) {
-      emit(RemoteClothesError(dataState.error!));
-    }
-    if (dataState is DataFailed) {
-      print(dataState.error);
+
+    // If the use case returns a DataFailed or a DataSuccess with empty data,
+    // emit a RemoteClothesError state.
+    if (dataState is DataFailed ||
+        (dataState is DataSuccess && dataState.data!.isEmpty)) {
+      // Emit the RemoteClothesError state with the error message.
       emit(RemoteClothesError(dataState.error!));
     }
   }
 
+  /// Handles the event [GetClothesColors] by calling the [_getClothesColorsUsecase]
+  /// and emitting the appropriate state.
+  ///
+  /// It emits a [RemoteClothesColorsDone] state if the [_getClothesColorsUsecase]
+  /// returns a [DataSuccess] with non-empty data. It emits a
+  /// [RemoteClothesError] state if the [_getClothesColorsUsecase]
+  /// returns a [DataSuccess] with empty data or a [DataFailed].
   void onGetClothesColors(
       GetClothesColors event, Emitter<RemoteClothesState> emit) async {
+    // Call the use case to get clothes colors.
     final dataState = await _getClothesColorsUsecase(params: event.id);
+
+    // If the use case returns a DataSuccess with non-empty data,
+    // emit a RemoteClothesColorsDone state.
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      print(dataState.data);
+      // Emit the RemoteClothesColorsDone state with the retrieved data.
       emit(RemoteClothesColorsDone(dataState.data!));
     }
-    if (dataState is DataSuccess && dataState.data!.isEmpty) {
-      emit(RemoteClothesError(dataState.error!));
-    }
-    if (dataState is DataFailed) {
-      print(dataState.error);
+
+    // If the use case returns a DataSuccess with empty data or a DataFailed,
+    // emit a RemoteClothesError state.
+    if (dataState is DataSuccess && dataState.data!.isEmpty ||
+        dataState is DataFailed) {
+      // Emit the RemoteClothesError state with the error message.
       emit(RemoteClothesError(dataState.error!));
     }
   }
 
+  /// Handles the event [GetClothesSizes] by calling the [_getClothesSizesUsecase]
+  /// and emitting the appropriate state.
+  ///
+  /// It emits a [RemoteClothesSizeClothesDone] state if the
+  /// [_getClothesSizesUsecase] returns a [DataSuccess] with non-empty data.
+  /// It emits a [RemoteClothesError] state if the [_getClothesSizesUsecase]
+  /// returns a [DataSuccess] with empty data or a [DataFailed].
+  ///
+  /// The [event] parameter contains the id of the clothes.
+  /// The [emit] parameter is a function used to emit states.
   void onGetClothesSizes(
       GetClothesSizes event, Emitter<RemoteClothesState> emit) async {
+    // Call the use case to get clothes sizes.
     final dataState = await _getClothesSizesUsecase(params: event.id);
+
+    // If the use case returns a DataSuccess with non-empty data,
+    // emit a RemoteClothesSizeClothesDone state.
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      print(dataState.data);
+      // Emit the RemoteClothesSizeClothesDone state with the retrieved data.
       emit(RemoteClothesSizeClothesDone(dataState.data!));
     }
-    if (dataState is DataSuccess && dataState.data!.isEmpty) {
-      emit(RemoteClothesError(dataState.error!));
-    }
-    if (dataState is DataFailed) {
-      print(dataState.error);
+
+    // If the use case returns a DataSuccess with empty data or a DataFailed,
+    // emit a RemoteClothesError state.
+    if (dataState is DataSuccess && dataState.data!.isEmpty ||
+        dataState is DataFailed) {
+      // Emit the RemoteClothesError state with the error message.
       emit(RemoteClothesError(dataState.error!));
     }
   }
 
+  /// Handles the event [GetClothesPhotos] by calling the [_getClothesPhotosUsecase]
+  /// and emits the appropriate state.
+  ///
+  /// It emits a [RemotePhotosOfClothesDone] state if the
+  /// [_getClothesPhotosUsecase] returns a [DataSuccess] with non-empty data.
+  /// It emits a [RemoteClothesError] state if the [_getClothesPhotosUsecase]
+  /// returns a [DataSuccess] with empty data or a [DataFailed].
+  ///
+  /// The [event] parameter contains the id of the clothes.
+  /// The [emit] parameter is a function used to emit states.
   void onGetClothesPhotos(
       GetClothesPhoto event, Emitter<RemoteClothesState> emit) async {
+    // Call the use case to get clothes photos.
     final dataState = await _getClothesPhotosUsecase(params: event.id);
+
+    // If the use case returns a DataSuccess with non-empty data,
+    // emit a RemotePhotosOfClothesDone state.
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      print(dataState.data);
+      // Emit the RemotePhotosOfClothesDone state with the retrieved data.
       emit(RemotePhotosOfClothesDone(dataState.data!));
     }
+
+    // If the use case returns a DataSuccess with empty data,
+    // emit a RemoteClothesError state.
     if (dataState is DataSuccess && dataState.data!.isEmpty) {
+      // Emit the RemoteClothesError state with the error message.
       emit(RemoteClothesError(dataState.error!));
     }
+
+    // If the use case returns a DataFailed,
+    // emit a RemoteClothesError state.
     if (dataState is DataFailed) {
-      print(dataState.error);
+      // Emit the RemoteClothesError state with the error message.
       emit(RemoteClothesError(dataState.error!));
     }
   }
