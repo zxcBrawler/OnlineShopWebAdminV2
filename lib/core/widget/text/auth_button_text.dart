@@ -14,7 +14,7 @@ class AuthButtonText extends StatelessWidget {
         title,
         style: GoogleFonts.hammersmithOne(
             textStyle: TextStyle(
-                color: AppColors.white, letterSpacing: 2, fontSize: 30)),
+                color: AppColors.white, letterSpacing: 2, fontSize: 20)),
       ),
     );
   }

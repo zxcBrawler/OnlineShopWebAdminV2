@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/config/color.dart';
+import 'package:xc_web_admin/config/methods.dart';
 import 'package:xc_web_admin/config/responsive.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
+import 'package:xc_web_admin/core/widget/button/build_button.dart';
 import 'package:xc_web_admin/core/widget/dropdown/basic_dropdown.dart';
 import 'package:xc_web_admin/core/widget/header/basic_header_text.dart';
-import 'package:xc_web_admin/core/widget/text/base_button_text.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
@@ -28,15 +29,16 @@ class AdminUserDetails extends StatefulWidget {
   const AdminUserDetails({super.key, this.user});
 
   @override
-  _AdminUserDetailsState createState() => _AdminUserDetailsState();
+  State<AdminUserDetails> createState() => _AdminUserDetailsState();
 }
 
 class _AdminUserDetailsState extends State<AdminUserDetails> {
   // Controllers for handling user input
-  late final TextEditingController emailController;
-  late final TextEditingController phoneNumController;
-  late final TextEditingController usernameController;
-  late final TextEditingController employeeNumberController;
+  Map<String, TextEditingController> controllers = {
+    "email": TextEditingController(),
+    "phone num": TextEditingController(),
+    "username": TextEditingController(),
+  };
 
   // DTO for storing updated user information
   final UserDTO updatedUser = UserDTO();
@@ -51,10 +53,16 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
 
     // Initialize controllers with user data
     final user = widget.user!;
-    emailController = TextEditingController(text: user.email);
-    phoneNumController = TextEditingController(text: user.phoneNumber);
-    usernameController = TextEditingController(text: user.username);
-    employeeNumberController = TextEditingController(text: user.employeeNumber);
+    controllers["email"]!.text = user.email!;
+    controllers["phone num"]!.text = user.phoneNumber!;
+    controllers["username"]!.text = user.username!;
+
+    if (widget.user!.role!.roleName != "user") {
+      controllers.addEntries([
+        MapEntry("employee number", TextEditingController()),
+      ]);
+      controllers["employee number"]!.text = user.employeeNumber!;
+    }
 
     // Set initial selected indices
     selectedRoleIndex = user.role!.id! - 1;
@@ -65,11 +73,6 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
   Widget build(BuildContext context) {
     // Check if the screen size is mobile
     final isMobile = Responsive.isMobile(context);
-
-    // Determine which fields to display based on user role
-    final fields = (widget.user!.role!.roleName != "user")
-        ? ["username", "phone num", "email", "employee number"]
-        : ["username", "phone num", "email"];
 
     return Scaffold(
       body: SafeArea(
@@ -117,10 +120,11 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         // Text fields for user input
-                        for (var field in fields)
+                        for (var field in controllers.keys)
                           BasicTextField(
                             title: field,
-                            controller: _getControllerForField(field),
+                            controller: Methods.getControllerForField(
+                                controllers, field),
                             isEnabled: field != "password",
                           ),
                         // Dropdowns for role and gender
@@ -236,8 +240,8 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  _buildButton("Edit", AppColors.darkBrown, _editUserInfo),
-                  _buildButton("Delete", AppColors.red, _deleteUser),
+                  buildButton("Edit", AppColors.darkBrown, _editUserInfo),
+                  buildButton("Delete", AppColors.red, _deleteUser),
                 ],
               ),
             ],
@@ -250,10 +254,10 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
   // Function to handle updating user information
   void _editUserInfo() async {
     updatedUser.id = widget.user!.id!;
-    updatedUser.email = emailController.text;
-    updatedUser.username = usernameController.text;
-    updatedUser.phoneNumber = phoneNumController.text;
-    updatedUser.employeeNumber = employeeNumberController.text;
+    updatedUser.email = controllers["email"]!.text;
+    updatedUser.username = controllers["username"]!.text;
+    updatedUser.phoneNumber = controllers["phone number"]!.text;
+    updatedUser.employeeNumber = controllers["employee number"]!.text;
     updatedUser.gender = selectedGenderIndex! + 1;
     updatedUser.role = selectedRoleIndex! + 1;
 
@@ -278,40 +282,5 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
       //TODO: handle case when user wants to delete buyer (that's not allowed)
       router.pop();
     }
-  }
-
-  // Function to get the controller for a specific input field
-  TextEditingController _getControllerForField(String field) {
-    switch (field) {
-      case "username":
-        return usernameController;
-
-      case "phone num":
-        return phoneNumController;
-      case "email":
-        return emailController;
-      case "employee number":
-        return employeeNumberController;
-      default:
-        throw Exception("Invalid field: $field");
-    }
-  }
-
-  // Widget for building custom buttons
-  Widget _buildButton(
-      String title, Color backgroundColor, VoidCallback onPressed) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ),
-        child: BaseButtonText(title: title),
-      ),
-    );
   }
 }

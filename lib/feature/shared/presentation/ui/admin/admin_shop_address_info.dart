@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:xc_web_admin/config/color.dart';
+import 'package:xc_web_admin/config/methods.dart';
 import 'package:xc_web_admin/config/responsive.dart';
 import 'package:xc_web_admin/core/widget/header/basic_header_text.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
@@ -16,25 +17,27 @@ class AdminShopAddressInfo extends StatefulWidget {
 }
 
 class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
-  late final TextEditingController shopAddressDirectionController;
-  late final TextEditingController shopMetroController;
-  late final TextEditingController contactNumberController;
-  late final TextEditingController latitudeController;
-  late final TextEditingController longitudeController;
+  Map<String, TextEditingController> controllers = {
+    "shopAddressDirection": TextEditingController(),
+    "shopMetro": TextEditingController(),
+    "contactNumber": TextEditingController(),
+    "latitude": TextEditingController(),
+    "longitude": TextEditingController(),
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    controllers["shopAddressDirection"]!.text =
+        widget.shopAddressModel.shopAddressDirection!;
+    controllers["shopMetro"]!.text = widget.shopAddressModel.shopMetro!;
+    controllers["contactNumber"]!.text = widget.shopAddressModel.contactNumber!;
+    controllers["latitude"]!.text = widget.shopAddressModel.latitude!;
+    controllers["longitude"]!.text = widget.shopAddressModel.longitude!;
+  }
 
   @override
   Widget build(BuildContext context) {
-    shopAddressDirectionController = TextEditingController(
-        text: widget.shopAddressModel.shopAddressDirection);
-    shopMetroController =
-        TextEditingController(text: widget.shopAddressModel.shopMetro);
-    contactNumberController =
-        TextEditingController(text: widget.shopAddressModel.contactNumber);
-    latitudeController =
-        TextEditingController(text: widget.shopAddressModel.latitude);
-    longitudeController =
-        TextEditingController(text: widget.shopAddressModel.longitude);
-
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -114,9 +117,16 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
                 ),
                 Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [..._buildTextFields()],
-                  ),
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        for (var field in controllers.keys)
+                          BasicTextField(
+                            title: field,
+                            controller: Methods.getControllerForField(
+                                controllers, field),
+                            isEnabled: true,
+                          ),
+                      ]),
                 )
               ],
             ),
@@ -124,41 +134,5 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
         ),
       )),
     );
-  }
-
-  TextEditingController _getControllerForField(String field) {
-    switch (field) {
-      case "shop address direction":
-        return shopAddressDirectionController;
-      case "shop metro":
-        return shopMetroController;
-      case "contact number":
-        return contactNumberController;
-      case "latitude":
-        return latitudeController;
-      case "longitude":
-        return longitudeController;
-
-      default:
-        throw Exception("Invalid field: $field");
-    }
-  }
-
-  List<Widget> _buildTextFields() {
-    final fields = [
-      "shop address direction",
-      "shop metro",
-      "contact number",
-      "latitude",
-      "longitude"
-    ];
-
-    return fields.map((field) {
-      return BasicTextField(
-        title: field,
-        controller: _getControllerForField(field),
-        isEnabled: true,
-      );
-    }).toList();
   }
 }

@@ -26,6 +26,8 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
   @override
   void initState() {
     super.initState();
+    usernameController.text = "zxcBrawler4";
+    passController.text = "zxc1234";
   }
 
   @override

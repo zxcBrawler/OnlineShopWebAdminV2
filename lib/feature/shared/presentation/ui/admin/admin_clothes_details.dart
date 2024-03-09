@@ -1,18 +1,22 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/config/color.dart';
+import 'package:xc_web_admin/config/methods.dart';
 import 'package:xc_web_admin/config/responsive.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/widget/header/basic_header_text.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
+import 'package:xc_web_admin/core/widget/widget/basic_color_container.dart';
+import 'package:xc_web_admin/core/widget/widget/basic_sizes_container.dart';
 import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/data/model/clothes.dart';
-import 'package:xc_web_admin/feature/shared/domain/entities/photos_of_clothes_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_state.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+
+import '../../../../../core/constants/strings.dart';
 
 class AdminClothesDetails extends StatefulWidget {
   final ClothesModel clothes;
@@ -23,33 +27,25 @@ class AdminClothesDetails extends StatefulWidget {
 }
 
 class _AdminClothesDetailsState extends State<AdminClothesDetails> {
-  late final TextEditingController barcodeController;
-  late final TextEditingController nameRuController;
-  late final TextEditingController nameEnController;
-  late final TextEditingController priceController;
+  Map<String, TextEditingController> controllers = {
+    "barcode": TextEditingController(),
+    "name clothes ru": TextEditingController(),
+    "name clothes en": TextEditingController(),
+    "price clothes": TextEditingController(),
+    // Add more fields as needed
+  };
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    barcodeController = TextEditingController(text: widget.clothes.barcode);
-    nameRuController =
-        TextEditingController(text: widget.clothes.nameClothesRu);
-    nameEnController =
-        TextEditingController(text: widget.clothes.nameClothesEn);
-    priceController = TextEditingController(text: widget.clothes.priceClothes);
-    print(widget.clothes.idClothes);
+    controllers["barcode"]!.text = widget.clothes.barcode!;
+    controllers["name clothes ru"]!.text = widget.clothes.nameClothesRu!;
+    controllers["name clothes en"]!.text = widget.clothes.nameClothesEn!;
+    controllers["price clothes"]!.text = widget.clothes.priceClothes!;
   }
 
   @override
   Widget build(BuildContext context) {
-    final fields = [
-      "barcode",
-      "name clothes ru",
-      "name clothes en",
-      "price clothes"
-    ];
-
     final isMobile = Responsive.isMobile(context);
     return Scaffold(
       body: SafeArea(
@@ -95,13 +91,11 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
                             case RemoteClothesLoading:
                               return const CircularProgressIndicator();
                             case RemotePhotosOfClothesDone:
-                              List<PhotosOfClothesEntity> images =
-                                  state.photosOfClothes!;
                               return SizedBox(
                                 height: 500,
                                 width: 500,
                                 child: CarouselSlider(
-                                  items: images
+                                  items: state.photosOfClothes!
                                       .map((photo) => Center(
                                               child: CachedNetworkImage(
                                             imageUrl: photo
@@ -129,7 +123,7 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
                                 ),
                               );
                             case RemoteClothesError:
-                              return const Text("Error loading image");
+                              return const Text(errorLoadingImage);
                           }
                           return const SizedBox();
                         },
@@ -137,39 +131,107 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
                     ),
                     Expanded(
                         child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                          // Text fields for user input
-                          // If controller value for the field is not null and is not empty, display the text field
-                          for (var field in fields)
-                            _getControllerForField(field).text.isNotEmpty
-                                ? BasicTextField(
-                                    title: field,
-                                    controller: _getControllerForField(field),
-                                    isEnabled: false,
-                                  )
-                                : const SizedBox(),
-                        ]))
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        // Text fields for user input
+                        // If controller value for the field is not null and is not empty, display the text field
+                        for (var field in controllers.keys)
+                          BasicTextField(
+                            title: field,
+                            controller: Methods.getControllerForField(
+                                controllers, field),
+                            isEnabled: true,
+                          ),
+
+                        BlocProvider<RemoteClothesBloc>(
+                          create: (context) => service<RemoteClothesBloc>()
+                            ..add(
+                                GetClothesSizes(id: widget.clothes.idClothes!)),
+                          child: BlocBuilder<RemoteClothesBloc,
+                              RemoteClothesState>(
+                            builder: (context, state) {
+                              switch (state.runtimeType) {
+                                case RemoteClothesLoading:
+                                  return const CircularProgressIndicator();
+                                case RemoteClothesSizeClothesDone:
+                                  return Column(
+                                    children: [
+                                      const HeaderText(
+                                        textSize: 20,
+                                        title: availableInSizes,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Wrap(
+                                          children: List.generate(
+                                            state.clothesSizeClothes!.length,
+                                            (index) => Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: SizesContainer(
+                                                title: state
+                                                    .clothesSizeClothes![index]
+                                                    .sizeClothes!
+                                                    .nameSize!,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                case RemoteClothesError:
+                                  return const Text(errorLoadingSizes);
+                              }
+                              return const SizedBox();
+                            },
+                          ),
+                        ),
+                        BlocProvider(
+                            create: (context) => service<RemoteClothesBloc>()
+                              ..add(GetClothesColors(
+                                  id: widget.clothes.idClothes!)),
+                            child: BlocBuilder<RemoteClothesBloc,
+                                RemoteClothesState>(builder: (context, state) {
+                              switch (state.runtimeType) {
+                                case RemoteClothesLoading:
+                                  return const CircularProgressIndicator();
+                                case RemoteClothesColorsDone:
+                                  return Column(
+                                    children: [
+                                      const HeaderText(
+                                        textSize: 20,
+                                        title: availableInColors,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Wrap(
+                                          children: List.generate(
+                                            state.clothesColors!.length,
+                                            (index) => Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: ColorContainer(
+                                                color: Methods.getColorFromHex(
+                                                    state.clothesColors![index]
+                                                        .colors!.hex!),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                case RemoteClothesError:
+                                  return const Text(errorLoadingColors);
+                              }
+                              return const SizedBox();
+                            }))
+                      ],
+                    )),
                   ])
                 ],
               ))),
     );
-  }
-
-  // Function to get the controller for a specific input field
-  TextEditingController _getControllerForField(String field) {
-    switch (field) {
-      case "barcode":
-        return barcodeController;
-      case "name clothes ru":
-        return nameRuController;
-      case "name clothes en":
-        return nameEnController;
-      case "price clothes":
-        return priceController;
-
-      default:
-        throw Exception("Invalid field: $field");
-    }
   }
 }

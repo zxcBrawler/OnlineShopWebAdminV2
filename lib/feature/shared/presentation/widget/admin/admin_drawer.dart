@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/config/color.dart';
+import 'package:xc_web_admin/core/constants/shared_prefs.dart';
+import 'package:xc_web_admin/core/routes/app_router.dart';
+import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/sidemenu/side_menu_tab.dart';
 
 import '../../../../../core/constants/menu_items.dart';
@@ -31,6 +34,12 @@ class _AdminDrawerState extends State<AdminDrawer> {
                 title: item['title'],
                 route: item['route'],
               ),
+            IconButton(
+                onPressed: () {
+                  SharedPreferencesManager.deleteAccessToken();
+                  router.pushReplacement(Pages.auth.screenPath);
+                },
+                icon: const Icon(Icons.exit_to_app_rounded))
           ],
         ),
       ),
