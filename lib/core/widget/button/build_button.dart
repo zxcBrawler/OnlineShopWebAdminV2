@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/core/widget/text/base_button_text.dart';
 
-Widget _buildButton(
+Widget buildButton(
     String title, Color backgroundColor, VoidCallback onPressed) {
   return Padding(
     padding: const EdgeInsets.all(8.0),

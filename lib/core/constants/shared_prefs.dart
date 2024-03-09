@@ -8,18 +8,12 @@ class SharedPreferencesManager {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  static Future<String?> loadAccessToken() async {
+  static Future<void> saveAccessToken(Map<String, String>? token) async {
     if (!isInitialized()) {
       throw Exception("SharedPreferencesManager not initialized.");
     }
-    return _prefs.getString('accessToken');
-  }
-
-  static Future<void> saveAccessToken(String? token) async {
-    if (!isInitialized()) {
-      throw Exception("SharedPreferencesManager not initialized.");
-    }
-    _prefs.setString('accessToken', token ?? '');
+    _prefs.setString('accessToken', token!.keys.first);
+    _prefs.setString('username', token.values.first);
   }
 
   static Future<void> deleteAccessToken() async {

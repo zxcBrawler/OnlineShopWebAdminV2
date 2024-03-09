@@ -4,8 +4,8 @@ import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/config/responsive.dart';
 
 class UserInfo extends StatefulWidget {
-  //add string for username
-  const UserInfo({super.key});
+  final String username;
+  const UserInfo({super.key, required this.username});
 
   @override
   State<UserInfo> createState() => _UserInfoState();
@@ -34,7 +34,7 @@ class _UserInfoState extends State<UserInfo> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "username", // pass widget string here
+                  widget.username, // pass widget string here
                   style: GoogleFonts.hammersmithOne(
                       textStyle:
                           TextStyle(color: AppColors.white, fontSize: 20)),

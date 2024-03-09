@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:xc_web_admin/core/resources/controller/side_menu_controller.dart';
 import 'package:xc_web_admin/core/widget/widget/custom_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_active_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_clothes.dart.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_dashboard.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_drawer.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_orders_main.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_shops_main.dart';
-
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_users_main.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_activity_details.dart';
-import 'package:xc_web_admin/config/responsive.dart';
-import 'package:xc_web_admin/core/resources/controller/side_menu_controller.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_drawer.dart';
 
 import '../../../../../core/routes/router_utils.dart';
 
@@ -39,12 +37,8 @@ class AdminMainScreenState extends State<AdminMainScreen> {
           child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (Responsive.isDesktop(context))
-            const Expanded(
-              child: AdminDrawer(),
-            ),
           Expanded(
-            flex: 5,
+            flex: 6,
             child: widget.child!,
           ),
         ],

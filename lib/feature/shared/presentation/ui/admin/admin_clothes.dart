@@ -20,7 +20,7 @@ class _AdminClothesState extends State<AdminClothes> {
     return SafeArea(
       child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
-          child: Responsive.isTablet(context) || Responsive.isDesktop(context)
+          child: Responsive.isDesktop(context)
               ? const Column(
                   children: [
                     Header(

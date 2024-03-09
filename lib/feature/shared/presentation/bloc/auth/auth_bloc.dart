@@ -21,8 +21,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final dataState = await _authenticate(params: event.loginDTO);
     if (dataState is DataSuccess) {
       accessToken = dataState.data?.accessToken ?? "";
-      SharedPreferencesManager.saveAccessToken(accessToken);
-      print(accessToken);
+      username = event.loginDTO!.username;
+      SharedPreferencesManager.saveAccessToken(
+          <String, String>{accessToken!: username!});
+
       if (accessToken != "") {
         router.go(Pages.adminDashboard.screenPath);
       }
