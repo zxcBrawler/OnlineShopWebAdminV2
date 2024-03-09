@@ -135,7 +135,7 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
   /// This method is called when the widget is removed from the widget tree.
   /// It disposes the usernameController, passController, and then calls
   /// the super.dispose() method to clean up resources used by the parent class.
-  @override
+
   void dispose() {
     // Dispose the usernameController to release its resources.
     usernameController.dispose();
