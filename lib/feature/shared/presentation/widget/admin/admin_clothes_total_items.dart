@@ -13,8 +13,24 @@ class AdminTotalItems extends StatelessWidget {
   const AdminTotalItems({super.key});
 
   @override
+
+  /// Builds the widget tree for the [AdminClothesTotalItems] widget.
+  ///
+  /// This widget uses a [BlocProvider] to create an instance of
+  /// [RemoteClothesBloc] and adds a [GetClothes] event to it. The widget
+  /// also uses a [BlocBuilder] to listen for changes in the state of
+  /// [RemoteClothesBloc]. Depending on the runtime type of the state,
+  /// different widgets are displayed.
+  ///
+  /// Parameters:
+  ///   - [context]: The build context of this widget.
+  ///
+  /// Returns:
+  ///   The widget tree for [AdminClothesTotalItems].
+  @override
   Widget build(BuildContext context) {
     return BlocProvider<RemoteClothesBloc>(
+      // Create an instance of RemoteClothesBloc and add a GetClothes event to it
       create: (context) => service()..add(const GetClothes()),
       child: Row(
         children: [
@@ -29,17 +45,21 @@ class AdminTotalItems extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       BlocBuilder<RemoteClothesBloc, RemoteClothesState>(
+                        // Build different widgets based on the state of RemoteClothesBloc
                         builder: (_, state) {
                           switch (state.runtimeType) {
                             case RemoteClothesLoading:
+                              // Display a circular progress indicator when the state is RemoteClothesLoading
                               return const Center(
                                   child: CircularProgressIndicator());
                             case RemoteClothesDone:
+                              // Display the total number of clothes when the state is RemoteClothesDone
                               return BasicText(
                                 title:
                                     'total clothes: ${state.clothes!.length}',
                               );
                             case RemoteClothesError:
+                              // Display the text "error" when the state is RemoteClothesError
                               return const Text("error");
                           }
                           return const SizedBox();
@@ -49,6 +69,7 @@ class AdminTotalItems extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: IconButton(
                           padding: EdgeInsets.zero,
+                          // Navigate to the adminAllClothes screen when the icon button is pressed
                           onPressed: () {
                             router.go(Pages.adminAllClothes.screenPath,
                                 extra: {"clothes"});

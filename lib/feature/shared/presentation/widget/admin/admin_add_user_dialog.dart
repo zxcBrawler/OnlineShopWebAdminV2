@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/config/color.dart';
+import 'package:xc_web_admin/config/methods.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/dropdown/basic_dropdown.dart';
@@ -26,11 +27,7 @@ class AddUserDialog extends StatefulWidget {
 }
 
 class _AddUserDialogState extends State<AddUserDialog> {
-  late final TextEditingController emailController;
-  late final TextEditingController passController;
-  late final TextEditingController phoneNumController;
-  late final TextEditingController usernameController;
-  late final TextEditingController employeeNumberController;
+  late final Map<String, TextEditingController> controllers;
 
   final UserDTO newUser = UserDTO();
 
@@ -38,17 +35,59 @@ class _AddUserDialogState extends State<AddUserDialog> {
   int? selectedGenderIndex = 0;
 
   @override
+
+  /// Initializes the state of the [_AddUserDialogState] class.
+  ///
+  /// This function is called immediately after the widget is inserted into the
+  /// tree in a stateful widget, and in particular, it is called each time
+  /// [State.setState] is called, unless [State.mounted] is false.
+  ///
+  /// In this function, a [Map] is initialized to hold [TextEditingController]
+  /// objects for each of the text fields in the add user dialog. The keys of the
+  /// map are the names of the text fields, and the values are the
+  /// [TextEditingController] objects.
+  @override
   void initState() {
+    // Call the superclass's initState function.
     super.initState();
 
-    emailController = TextEditingController(text: "");
-    passController = TextEditingController(text: "");
-    phoneNumController = TextEditingController(text: "");
-    usernameController = TextEditingController(text: "");
-    employeeNumberController = TextEditingController(text: "");
+    // Initialize the controllers map.
+    controllers = {
+      // Email text field controller.
+      'email': TextEditingController(text: ''),
+      // Password text field controller.
+      'pass': TextEditingController(text: ''),
+      // Phone number text field controller.
+      'phoneNum': TextEditingController(text: ''),
+      // Username text field controller.
+      'username': TextEditingController(text: ''),
+      // Employee number text field controller.
+      'employeeNumber': TextEditingController(text: ''),
+    };
   }
 
   @override
+
+  /// Builds the UI for the add user dialog.
+  ///
+  /// This function returns a [Dialog] widget with a [SingleChildScrollView]
+  /// containing a [BlocProvider] and a [BlocBuilder] widgets. The [BlocProvider]
+  /// widget is used to create a [RemoteRoleBloc] and the [BlocBuilder] widget
+  /// is used to listen to the state of the [RemoteRoleBloc]. Depending on the
+  /// state, different UI elements are rendered.
+  ///
+  /// The [Dialog] widget is the root widget and contains a scrollable
+  /// [SingleChildScrollView]. Inside the scroll view, there is a [BlocProvider]
+  /// widget that creates a [RemoteRoleBloc] and adds a [GetRoles] event to
+  /// it. Inside the [BlocProvider], there is a [BlocBuilder] widget that listens
+  /// to the state of the [RemoteRoleBloc]. Depending on the state, different
+  /// UI elements are rendered.
+  ///
+  /// The UI elements rendered by the [BlocBuilder] widget include a
+  /// [BasicText] widget for the title, a [BasicDropdown] widget for the role
+  /// selection, a [BlocProvider] widget for the gender selection, and a list
+  /// of [BasicInput] widgets for the user details. At the bottom, there is an
+  /// [ElevatedButton] widget that adds a new user when pressed.
   Widget build(BuildContext context) {
     return Dialog(
       child: SingleChildScrollView(
@@ -103,17 +142,23 @@ class _AddUserDialogState extends State<AddUserDialog> {
                       ),
                     ),
                     const BasicText(title: "enter user details"),
-                    ..._buildTextFields(),
+                    for (var field in controllers.keys)
+                      BasicTextField(
+                        title: field,
+                        controller:
+                            Methods.getControllerForField(controllers, field),
+                        isEnabled: true,
+                      ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
                         onPressed: () async {
-                          newUser.email = emailController.text;
-                          newUser.passwordHash = passController.text;
-                          newUser.phoneNumber = phoneNumController.text;
-                          newUser.username = usernameController.text;
+                          newUser.email = controllers['email']!.text;
+                          newUser.passwordHash = controllers['pass']!.text;
+                          newUser.phoneNumber = controllers['phoneNum']!.text;
+                          newUser.username = controllers['username']!.text;
                           newUser.employeeNumber =
-                              employeeNumberController.text;
+                              controllers['employeeNumber']!.text;
                           newUser.role = selectedRoleIndex! + 1;
                           newUser.gender = selectedGenderIndex! + 1;
                           service<RemoteUserBloc>().add(AddUser(user: newUser));
@@ -143,42 +188,5 @@ class _AddUserDialogState extends State<AddUserDialog> {
         ),
       )),
     );
-  }
-
-  TextEditingController _getControllerForField(String field) {
-    switch (field) {
-      case "username":
-        return usernameController;
-      case "password":
-        return passController;
-      case "phone num":
-        return phoneNumController;
-
-      case "email":
-        return emailController;
-      case "employee number":
-        return employeeNumberController;
-
-      default:
-        throw Exception("Invalid field: $field");
-    }
-  }
-
-  List<Widget> _buildTextFields() {
-    final List<String> fields = [
-      "username",
-      "password",
-      "phone num",
-      "email",
-      "employee number"
-    ];
-
-    return fields.map((field) {
-      return BasicTextField(
-        title: field,
-        controller: _getControllerForField(field),
-        isEnabled: true,
-      );
-    }).toList();
   }
 }

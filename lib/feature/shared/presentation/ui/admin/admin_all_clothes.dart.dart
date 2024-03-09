@@ -18,37 +18,71 @@ class AdminAllClothes extends StatefulWidget {
 
 class _AdminAllClothesState extends State<AdminAllClothes> {
   @override
+
+  /// Builds the widget tree for the [AdminAllClothes] screen.
+  ///
+  /// This method is called when the widget is inserted into the widget tree.
+  /// It returns a [SafeArea] widget that contains a [SingleChildScrollView]
+  /// widget with padding. The [SingleChildScrollView] contains a [Column]
+  /// widget with multiple [Row] widgets, each containing various children.
+  ///
+  /// The [Column] widget starts with a [Header] widget containing the title
+  /// passed to the widget. Then, it contains a [Row] widget with two children.
+  /// The first child is a [BasicSearchBar] widget, and the second child is
+  /// another [Row] widget. This second [Row] widget contains two children,
+  /// each containing an [IconButton] widget. The first [IconButton] triggers
+  /// a dialog to be shown, and the second [IconButton] does nothing.
+  ///
+  /// After that, the [Column] widget contains another [Row] widget, which
+  /// contains a [BasicContainer] widget containing a [ClothesTable] widget.
+  /// The [ClothesTable] widget is wrapped in a [BlocProvider] widget.
   Widget build(BuildContext context) {
     return SafeArea(
+      // Wraps the screen in a safe area
       child: SingleChildScrollView(
+        // A scrollable widget that contains the rest of the widgets
         padding: const EdgeInsets.all(16.0),
+        // Padding around the widgets
         child: Column(
+          // A vertically expanding widget that contains the rest of the widgets
           children: [
             Row(
+              // A horizontally expanding widget that contains a header widget
               children: [
                 Expanded(
+                  // Expands to fill available horizontal space
                   child: Header(
+                    // A widget for displaying a title
                     title: 'all ${widget.title}',
                   ),
                 ),
               ],
             ),
             Row(
+              // A horizontally expanding widget that contains search bar and filter buttons
               mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // Spaces out the children horizontally
               children: [
                 const BasicSearchBar(),
+                // A widget for searching
                 Expanded(
+                  // Expands to fill available horizontal space
                   child: Row(
+                    // A horizontally expanding widget that contains two filter buttons
                     mainAxisAlignment: MainAxisAlignment.end,
+                    // Aligns the children to the right
                     children: [
                       SizedBox(
+                          // A sized box for the filter button
                           height: 70,
                           width: 70,
                           child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: BasicContainer(
+                                // A container for the filter button
                                 child: IconButton(
                                   onPressed: () {},
+                                  // What happens when the filter button is pressed
                                   icon: const Icon(Icons.filter_alt),
                                 ),
                               ))),
@@ -75,8 +109,10 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
               ],
             ),
             Row(
+              // A horizontally expanding widget that contains a table widget
               children: [
                 Expanded(
+                  // Expands to fill available horizontal space
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: BasicContainer(

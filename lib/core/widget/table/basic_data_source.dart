@@ -21,24 +21,31 @@ class BasicDataSource<T> extends DataTableSource {
     required this.data,
   });
 
+  @override
+
   /// Gets the data row at the specified [index].
-  /// Returns a [DataRow] for the specified [index].
   ///
   /// If [index] is within the valid range of [rowsCount], it generates regular
   /// data cells based on the [columnTitles] and [rowData]. Additionally, a
   /// permanent column is added to the data row for actions/icons.
   ///
   /// Returns `null` if [index] is out of range.
-  @override
+  ///
   DataRow? getRow(int index) {
+    // Check if the index is within the valid range of rowsCount
     if (index < rowsCount) {
+      // Get the row data at the specified index
       final rowData = data[index];
+
+      // Generate regular cells for each column in the row data
       final regularCells = List<DataCell>.generate(
         columnTitles.length,
         (cellIndex) {
+          // Get the value of the cell at the specified index in the row data
           final cellValue =
               (rowData as dynamic).getPropertyValue(columnTitles[cellIndex]);
 
+          // Create a BasicTextColumnData widget with the cell value as its title
           return DataCell(
             BasicTextColumnData(
               title: '$cellValue',
@@ -47,17 +54,20 @@ class BasicDataSource<T> extends DataTableSource {
         },
       );
 
-      // returns permanent column at the end of each row containit two Icon buttons to delete and edit
+      // Create a TableIcons widget with the type of data stored in the table
+      // and the row data as its parameters
       final permanentColumn = DataCell(TableIcons(
-        // Extracting the type of data stored in table from the data's string representation
         type: data.first.toString().split('\'')[1],
         data: data[index],
       ));
 
+      // Create a DataRow with the regular cells and the permanent column
       return DataRow(
         cells: [...regularCells, permanentColumn],
       );
     }
+
+    // Return null if the index is out of range
     return null;
   }
 

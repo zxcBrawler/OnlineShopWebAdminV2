@@ -29,27 +29,45 @@ class TableIcons<T> extends StatefulWidget {
 
 class _TableIconsState extends State<TableIcons> {
   @override
+
+  /// Builds the widget tree for the table icons.
+  ///
+  /// This method builds a row containing two icon buttons. The first icon button
+  /// displays the "more" option, while the second icon button displays the delete
+  /// option. The onPressed callbacks for both buttons are set to call the
+  /// respective handling methods.
+  ///
+  /// Parameters:
+  ///   - ctx: The build context of the widget tree.
+  ///
+  /// Returns:
+  ///   - A row widget containing two icon buttons.
   Widget build(BuildContext ctx) {
+    // Build the widget tree for the table icons.
     return Row(
       children: [
+        // Build the "more" option icon button
         IconButton(
           padding: EdgeInsets.zero,
-          onPressed: () => _handleMoreOption(),
+          onPressed: () =>
+              _handleMoreOption(), // Call the handling method when pressed
           icon: Icon(
             Icons.more_horiz,
             size: 30,
-            color: AppColors.darkBrown,
+            color: AppColors.darkBrown, // Set the color to dark brown
           ),
         ),
+        // Build the delete option icon button
         IconButton(
           padding: EdgeInsets.zero,
-          onPressed: () => _handleDeleteOption(ctx),
+          onPressed: () =>
+              _handleDeleteOption(ctx), // Call the handling method when pressed
           icon: const Icon(
             Icons.delete,
             size: 30,
-            color: Colors.red,
+            color: Colors.red, // Set the color to red
           ),
-        )
+        ),
       ],
     );
   }
@@ -137,37 +155,53 @@ class _TableIconsState extends State<TableIcons> {
   }
 
   /// Handles the deletion process depending on the data type specified in [widget.type].
+  ///
+  /// Deletion process is different for each data type:
+  ///  - For "ShopAddressModel", deletes the shop address from the remote database and navigates to the admin shop page.
+  ///  - For "UserModel", deletes the user from the remote database and navigates to the admin all users page, except when the user is a buyer.
+  ///  - For "DeliveryInfoModel", does nothing (TODO: handle case when user wants to delete order).
   Future<void> _handleDelete() async {
+    // Switch statement based on the data type
     switch (widget.type) {
+      // Case for ShopAddressModel
       case "ShopAddressModel":
+        // Cast widget.data to ShopAddressModel
         ShopAddressModel shopAddress = widget.data as ShopAddressModel;
+        // Delete shop address from remote database
         service<RemoteShopAddressesBloc>()
             .add(DeleteShopAddress(shopAddress.shopAddressId));
+        // Wait for 1 second
         await Future.delayed(const Duration(seconds: 1));
+        // Pop the current route and navigate to admin shop page
         router.pop();
-        router.push(
-          Pages.adminShops.screenPath,
-        );
+        router.push(Pages.adminShops.screenPath);
         break;
+
+      // Case for UserModel
       case "UserModel":
         UserModel user = widget.data as UserModel;
-        if (user.role!.roleName! != "user") {
+        // Check if the user is not a buyer
+        if (user.role!.roleName != "user") {
+          // Delete user from remote database
           service<RemoteUserBloc>().add(DeleteUser(id: user.id!));
+          // Wait for 1 second
           await Future.delayed(const Duration(seconds: 1));
+          // Pop the current route and navigate to admin all users page
           router.pop();
-          router.push(
-            Pages.adminAllUsers.screenPath,
-          );
+          router.push(Pages.adminAllUsers.screenPath);
         } else {
-          //TODO: handle case when user wants to delete buyer (that's not allowed)
+          // User is a buyer, do nothing (TODO: handle case when user wants to delete buyer)
           router.pop();
         }
-
         break;
+
+      // Case for DeliveryInfoModel
       case "DeliveryInfoModel":
-        // TODO: handle case when user wants to delete order (that's not allowed)
+        // Do nothing (TODO: handle case when user wants to delete order)
         router.pop();
         break;
+
+      // Default case, do nothing
       default:
         break;
     }

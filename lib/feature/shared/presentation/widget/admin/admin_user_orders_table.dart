@@ -21,48 +21,60 @@ class UserOrdersTable extends StatefulWidget {
 
 class _UserOrdersTableState extends State<UserOrdersTable> {
   @override
+
+  /// Builds the widget tree based on the state of the [RemoteDeliveryInfoBloc].
+  ///
+  /// Wraps the widget with [BlocProvider] to provide the [RemoteDeliveryInfoBloc].
+  /// Creates an instance of [RemoteDeliveryInfoBloc] using the [service] method.
+  /// Listens for changes in the state of [RemoteDeliveryInfoBloc] using [BlocBuilder].
+  /// Returns the widget tree based on the runtime type of the state.
   Widget build(BuildContext context) {
+    // Wrap the widget with BlocProvider to provide the RemoteDeliveryInfoBloc
     return BlocProvider<RemoteDeliveryInfoBloc>(
+      // Create method to provide an instance of RemoteDeliveryInfoBloc
       create: (context) => service()..add(const GetDeliveryInfo()),
-      child: BlocConsumer<RemoteDeliveryInfoBloc, RemoteDeliveryInfoState>(
-        listener: (context, state) {
-          print("123");
-        },
-        builder: (context, state) {
-          return BlocBuilder<RemoteDeliveryInfoBloc, RemoteDeliveryInfoState>(
-            builder: (_, state) {
-              switch (state.runtimeType) {
-                case RemoteDeliveryInfoLoading:
-                  return const Center(child: CircularProgressIndicator());
-                case RemoteDeliveryInfoDone:
-                  List<DeliveryInfoEntity> userOrders = state.info!
-                      .where((element) =>
-                          element.order?.userCard?.user?.id == widget.user.id)
-                      .toList();
-                  if (userOrders.isEmpty) {
-                    return const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: BasicText(title: "no orders"),
-                    );
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: BasicTable(
-                      columns:
-                          generateColumns(userOrders.first.getProperties()),
-                      dataSource: BasicDataSource<DeliveryInfoEntity>(
-                        rowsCount: userOrders.length,
-                        columnTitles: userOrders.first.getProperties(),
-                        data: userOrders,
-                      ),
-                    ),
-                  );
-                case RemoteDeliveryInfoError:
-                  return const Text("error");
+      // Child widget to listen for changes in the state of RemoteDeliveryInfoBloc
+      child: BlocBuilder<RemoteDeliveryInfoBloc, RemoteDeliveryInfoState>(
+        // Builder method to render the widget based on the state of RemoteDeliveryInfoBloc
+        builder: (_, state) {
+          // Switch on the runtime type of the state to handle different cases
+          switch (state.runtimeType) {
+            case RemoteDeliveryInfoLoading:
+              // Show loading indicator while fetching data
+              return const Center(child: CircularProgressIndicator());
+            case RemoteDeliveryInfoDone:
+              // Filter the orders for the current user
+              List<DeliveryInfoEntity> userOrders = state.info!
+                  .where((element) =>
+                      element.order?.userCard?.user?.id == widget.user.id)
+                  .toList();
+              // Check if no orders are found for the user
+              if (userOrders.isEmpty) {
+                // Display a message
+                return const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: BasicText(title: "no orders"),
+                );
               }
+              // Display a table with the user's orders
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: BasicTable(
+                  columns: generateColumns(userOrders.first.getProperties()),
+                  dataSource: BasicDataSource<DeliveryInfoEntity>(
+                    rowsCount: userOrders.length,
+                    columnTitles: userOrders.first.getProperties(),
+                    data: userOrders,
+                  ),
+                ),
+              );
+            case RemoteDeliveryInfoError:
+              // Display error message
+              return const Text("error");
+            default:
+              // Return an empty SizedBox if no case is matched
               return const SizedBox();
-            },
-          );
+          }
         },
       ),
     );

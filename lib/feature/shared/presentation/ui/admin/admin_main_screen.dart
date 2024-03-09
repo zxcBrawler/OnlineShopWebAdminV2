@@ -29,31 +29,62 @@ class AdminMainScreenState extends State<AdminMainScreen> {
   int _currentPage = 0;
 
   @override
+
+  /// The main screen widget for the admin panel.
+  ///
+  /// This widget builds a Scaffold that includes a drawer and a body. The
+  /// body is a SafeArea that contains a Row with a single child: [widget.child].
+  ///
+  /// The [widget.child] is the child widget that is displayed in the body.
+  /// The [widget.child] is passed to the widget when it is created.
+  ///
+  /// The scaffold also has a key that is obtained from the [SideMenuController].
   Widget build(BuildContext context) {
     return Scaffold(
+      // The drawer for the admin panel.
       drawer: const AdminDrawer(),
+      // The key for the Scaffold. The key is obtained from the SideMenuController.
       key: context.read<SideMenuController>().scaffoldKey,
+      // The body of the Scaffold.
       body: SafeArea(
-          child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 6,
-            child: widget.child!,
-          ),
-        ],
-      )),
+        // The child widget that is displayed in the body.
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // The child widget that is passed to the widget when it is created.
+            Expanded(
+              flex: 6,
+              child: widget.child!,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
+  /// Navigates to a different tab in the admin panel.
+  ///
+  /// This function takes a [BuildContext] and an [index] as parameters.
+  /// It changes the current page to the tab specified by [index] and navigates to the corresponding location.
+  ///
+  /// The function first checks if the current page is already the specified tab. If it is, the function returns.
+  /// Otherwise, it updates the current page to the specified tab and navigates to the corresponding location using the GoRouter.
   void goOtherTab(BuildContext context, int index) {
+    // Check if the current page is already the specified tab.
     if (index == _currentPage) return;
+
+    // Get the GoRouter from the context.
     GoRouter router = GoRouter.of(context);
+
+    // Get the initial location of the specified tab.
     String location = adminPages[index].initialLocation;
 
+    // Update the current page to the specified tab.
     setState(() {
       _currentPage = index;
     });
+
+    // Navigate to the specified location.
     router.go(location);
   }
 }

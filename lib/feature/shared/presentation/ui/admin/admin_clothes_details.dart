@@ -32,15 +32,29 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
     "name clothes ru": TextEditingController(),
     "name clothes en": TextEditingController(),
     "price clothes": TextEditingController(),
-    // Add more fields as needed
   };
 
   @override
+
+  /// Initialize the state of the widget.
+  ///
+  /// This method is called immediately after the widget is created. It sets the
+  /// initial values of the text fields based on the provided [ClothesModel].
+  @override
   void initState() {
+    // Call the superclass's initState method.
     super.initState();
+
+    // Set the initial value of the 'barcode' text field.
     controllers["barcode"]!.text = widget.clothes.barcode!;
+
+    // Set the initial value of the 'name clothes ru' text field.
     controllers["name clothes ru"]!.text = widget.clothes.nameClothesRu!;
+
+    // Set the initial value of the 'name clothes en' text field.
     controllers["name clothes en"]!.text = widget.clothes.nameClothesEn!;
+
+    // Set the initial value of the 'price clothes' text field.
     controllers["price clothes"]!.text = widget.clothes.priceClothes!;
   }
 

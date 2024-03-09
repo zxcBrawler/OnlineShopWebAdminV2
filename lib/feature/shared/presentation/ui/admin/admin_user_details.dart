@@ -48,15 +48,25 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
   late int? selectedGenderIndex;
 
   @override
+
+  /// Initializes the state of the [_AdminUserDetailsState] widget.
+  ///
+  /// This method is called when the widget is inserted into the tree. It
+  /// initializes the state of the widget by setting the values of the
+  /// controllers with the user data and setting the initial selected indices
+  /// for the role and gender dropdowns.
+  @override
   void initState() {
+    // Call the parent's initState method
     super.initState();
 
-    // Initialize controllers with user data
+    // Initialize the controllers with user data
     final user = widget.user!;
     controllers["email"]!.text = user.email!;
     controllers["phone num"]!.text = user.phoneNumber!;
     controllers["username"]!.text = user.username!;
 
+    // If user role is not "user", add "employee number" controller and set its value
     if (widget.user!.role!.roleName != "user") {
       controllers.addEntries([
         MapEntry("employee number", TextEditingController()),
@@ -70,6 +80,18 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
   }
 
   @override
+
+  /// Builds the widget tree for the AdminUserDetails screen.
+  ///
+  /// This method builds the widget tree for the AdminUserDetails screen,
+  /// which displays details about a specific user. It includes various
+  /// text fields for displaying information about the user, such as the
+  /// email, phone number, username, and employee number, if user role is "user".
+  /// It also includes a dropdown menus for selecting the role and gender of user, which can be changed.
+  /// Also, if user role is "user", it includes a various widget to display the user's orders,  user's payment info
+  /// and user's addresses in a table.
+  /// Finally, it includes a buttons for editing user gender and role
+  /// and deleting the user (which is not allowed if user role is "user").
   Widget build(BuildContext context) {
     // Check if the screen size is mobile
     final isMobile = Responsive.isMobile(context);
@@ -84,6 +106,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
               // Header and back button
               Row(
                 children: [
+                  // Back button
                   IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
@@ -95,6 +118,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                       size: 30,
                     ),
                   ),
+                  // Header title
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -114,6 +138,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  // User icon
                   Icon(Icons.group, size: 500, color: AppColors.darkBrown),
                   Expanded(
                     child: Column(
@@ -125,11 +150,12 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                             title: field,
                             controller: Methods.getControllerForField(
                                 controllers, field),
-                            isEnabled: field != "password",
+                            isEnabled: false,
                           ),
                         // Dropdowns for role and gender
                         Row(
                           children: [
+                            // Role dropdown
                             Expanded(
                               child: BlocProvider<RemoteRoleBloc>(
                                 create: (context) =>
@@ -156,6 +182,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                                 ),
                               ),
                             ),
+                            // Gender dropdown
                             Expanded(
                               child: BlocProvider<RemoteGendersBloc>(
                                 create: (context) =>
@@ -188,11 +215,12 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
               // Additional sections if user role is "user"
               if (widget.user!.role!.roleName == "user") ...[
+                // User orders section
                 HeaderText(
                   textSize: isMobile ? 35 : 45,
                   title: 'user orders',
@@ -207,6 +235,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                     ),
                   ),
                 ),
+                // User payment info section
                 HeaderText(
                   textSize: isMobile ? 35 : 45,
                   title: 'user payment info',
@@ -221,6 +250,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                     ),
                   ),
                 ),
+                // User addresses section
                 HeaderText(
                   textSize: isMobile ? 35 : 45,
                   title: 'user addresses',
@@ -240,7 +270,9 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  // Edit button
                   buildButton("Edit", AppColors.darkBrown, _editUserInfo),
+                  // Delete button
                   buildButton("Delete", AppColors.red, _deleteUser),
                 ],
               ),
@@ -252,7 +284,15 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
   }
 
   // Function to handle updating user information
+  /// Function to handle updating user information.
+  ///
+  /// This function retrieves the user information from the controllers and
+  /// updates the [updatedUser] object with the new information. It then sends
+  /// an [UpdateUser] event to the [RemoteUserBloc] with the updated user.
+  /// After the event is processed, the function pops the current route and
+  /// navigates to the admin all users page.
   void _editUserInfo() async {
+    // Update the user info in the [updatedUser] object
     updatedUser.id = widget.user!.id!;
     updatedUser.email = controllers["email"]!.text;
     updatedUser.username = controllers["username"]!.text;
@@ -261,7 +301,11 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
     updatedUser.gender = selectedGenderIndex! + 1;
     updatedUser.role = selectedRoleIndex! + 1;
 
+    // Send the updated user to the RemoteUserBloc
     service<RemoteUserBloc>().add(UpdateUser(user: updatedUser));
+
+    // Wait for 1 second and then pop the current route and navigate to the
+    // admin all users page.
     await Future.delayed(const Duration(seconds: 1));
     router.pop();
     router.push(
@@ -270,16 +314,35 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
   }
 
   // Function to handle deleting user
+
+  /// Deletes a user.
+  ///
+  /// This function handles the deletion of a user. If the user is not a
+  /// 'buyer', it sends a [DeleteUser] event to the [RemoteUserBloc] with the
+  /// user's id and then pops the current route and navigates to the admin
+  /// all users page. If the user is a 'buyer', it simply pops the current
+  /// route.
+  ///
+  /// This function has no parameters.
+  ///
+  /// This function does not return anything.
   void _deleteUser() async {
+    // If the user is not a 'buyer'
     if (widget.user!.role!.roleName! != "user") {
+      // Send a DeleteUser event to the RemoteUserBloc
       service<RemoteUserBloc>().add(DeleteUser(id: widget.user!.id!));
+
+      // Wait for 1 second and then pop the current route and navigate to the
+      // admin all users page.
       await Future.delayed(const Duration(seconds: 1));
       router.pop();
       router.push(
         Pages.adminAllUsers.screenPath,
       );
-    } else {
-      //TODO: handle case when user wants to delete buyer (that's not allowed)
+    }
+    // If the user is a 'buyer'
+    else {
+      // Simply pop the current route.
       router.pop();
     }
   }

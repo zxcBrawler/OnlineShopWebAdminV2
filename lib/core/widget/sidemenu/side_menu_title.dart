@@ -8,7 +8,6 @@ class SideMenuTitle extends StatelessWidget {
   const SideMenuTitle({super.key, required this.title});
   @override
   Widget build(BuildContext context) {
-
     return Text(
       title,
       style: GoogleFonts.hammersmithOne(

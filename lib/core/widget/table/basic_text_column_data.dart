@@ -7,17 +7,34 @@ class BasicTextColumnData extends StatelessWidget {
   const BasicTextColumnData({super.key, required this.title});
 
   @override
+
+  /// Builds a widget that displays a [title] in a centered [Text] widget.
+  ///
+  /// The [title] is padded by 2 pixels on all sides and displayed using the
+  /// [GoogleFonts.hammersmithOne] font with the following styles:
+  /// - Color: [AppColors.black]
+  /// - Font size: 15
+  /// - Font weight: [FontWeight.bold]
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
+    // The padding around the text widget.
+    const EdgeInsets padding = EdgeInsets.all(2.0);
+
+    // The text widget displaying the [title] with the specified style.
+    final Widget textWidget = Padding(
+      padding: padding,
       child: Text(
         title,
         style: GoogleFonts.hammersmithOne(
-            textStyle: TextStyle(
-                color: AppColors.black,
-                fontSize: 15,
-                fontWeight: FontWeight.bold)),
+          textStyle: TextStyle(
+            color: AppColors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
+
+    return textWidget;
   }
 }

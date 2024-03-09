@@ -13,8 +13,16 @@ class UserInfo extends StatefulWidget {
 
 class _UserInfoState extends State<UserInfo> {
   @override
+
+  /// Builds the UserInfo widget based on the device type.
+  ///
+  /// If the device is a desktop, it displays the username along with an
+  /// account icon and a dropdown menu icon. If the device is mobile,
+  /// it only displays the account icon.
   Widget build(BuildContext context) {
+    // Check if the device is a desktop
     if (Responsive.isDesktop(context)) {
+      // Return a container widget with a rounded border and a background color
       return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -23,6 +31,7 @@ class _UserInfoState extends State<UserInfo> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
+              // Add an account icon
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
@@ -31,49 +40,17 @@ class _UserInfoState extends State<UserInfo> {
                   size: 40,
                 ),
               ),
+              // Add the username as a text widget
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  widget.username, // pass widget string here
+                  widget.username, // Pass widget string here
                   style: GoogleFonts.hammersmithOne(
                       textStyle:
                           TextStyle(color: AppColors.white, fontSize: 20)),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  icon: const Icon(
-                    Icons.expand_more,
-                    size: 40,
-                  ),
-                  color: AppColors.white,
-                  iconSize: 30,
-                  onPressed: () {},
-                ),
-              )
-            ],
-          ),
-        ),
-      );
-    } else if (Responsive.isDesktop(context)) {
-      return Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: AppColors.darkBrown),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.account_circle,
-                  color: AppColors.white,
-                  size: 40,
-                ),
-              ),
+              // Add a dropdown menu icon
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: IconButton(
@@ -92,6 +69,8 @@ class _UserInfoState extends State<UserInfo> {
         ),
       );
     } else {
+      // Return a container widget with a rounded border and a background color
+      // containing only an account icon
       return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),

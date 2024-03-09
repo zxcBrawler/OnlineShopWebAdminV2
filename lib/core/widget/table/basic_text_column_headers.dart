@@ -7,16 +7,24 @@ class BasicTextColumnHeaders extends StatelessWidget {
 
   const BasicTextColumnHeaders({super.key, required this.title});
   @override
+
+  /// Widget for displaying a column header in a table.
+  ///
+  /// The [title] parameter is the text that will be displayed in the header.
+  @override
   Widget build(BuildContext context) {
+    // Padding adds spacing around the text widget.
     return Padding(
-      padding: const EdgeInsets.all(2.0),
+      padding: const EdgeInsets.all(2.0), // Applies padding on all sides.
       child: Text(
-        title,
+        title, // Text of the header.
         style: GoogleFonts.hammersmithOne(
-            textStyle: TextStyle(
-                color: AppColors.darkBrown,
-                fontWeight: FontWeight.bold,
-                fontSize: 20)),
+          textStyle: TextStyle(
+            color: AppColors.darkBrown, // Color of the text.
+            fontWeight: FontWeight.bold, // Bold text.
+            fontSize: 20, // Size of the font.
+          ),
+        ),
       ),
     );
   }

@@ -18,12 +18,27 @@ class AdminAllUsers extends StatefulWidget {
 
 class _AdminAllUsersState extends State<AdminAllUsers> {
   @override
+
+  /// Builds the UI for the [AdminAllUsers] widget.
+  ///
+  /// This method returns a [SafeArea] widget that contains a scrollable
+  /// [SingleChildScrollView] with a column of widgets. The column contains
+  /// a [Header] widget with the title 'all users', a [BasicSearchBar] widget,
+  /// and a row with two [IconButton] widgets. The first [IconButton] opens a
+  /// dialog box to filter the users, and the second [IconButton] opens a
+  /// dialog box to add a new user. Below the row, there is another row with
+  /// a [BasicContainer] widget that contains a [Column] widget with a
+  /// [BlocProvider] widget that provides a [RemoteUserBloc] and a [UsersTable]
+  /// widget.
   Widget build(BuildContext context) {
     return SafeArea(
+      // Container that wraps the scrollable widget
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
+        // Column of widgets
         child: Column(
           children: [
+            // Header widget with title 'all users'
             const Row(
               children: [
                 Expanded(
@@ -33,6 +48,7 @@ class _AdminAllUsersState extends State<AdminAllUsers> {
                 ),
               ],
             ),
+            // Row with search bar and filter/add buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -41,6 +57,7 @@ class _AdminAllUsersState extends State<AdminAllUsers> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      // Filter users button
                       SizedBox(
                           height: 70,
                           width: 70,
@@ -52,6 +69,7 @@ class _AdminAllUsersState extends State<AdminAllUsers> {
                                   icon: const Icon(Icons.filter_alt),
                                 ),
                               ))),
+                      // Add user button
                       SizedBox(
                           height: 70,
                           width: 70,
@@ -60,6 +78,7 @@ class _AdminAllUsersState extends State<AdminAllUsers> {
                               child: BasicContainer(
                                 child: IconButton(
                                   onPressed: () {
+                                    // Open add user dialog
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
@@ -74,6 +93,7 @@ class _AdminAllUsersState extends State<AdminAllUsers> {
                 )
               ],
             ),
+            // Row with users table
             Row(
               children: [
                 Expanded(
@@ -85,10 +105,11 @@ class _AdminAllUsersState extends State<AdminAllUsers> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: BlocProvider<RemoteUserBloc>(
+                              // Provide RemoteUserBloc and get users
                               create: (context) =>
                                   service()..add(const GetUsers()),
                               child: const UsersTable(),
-                            ), //implement linechart
+                            ),
                           ),
                         ],
                       ),

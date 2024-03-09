@@ -39,32 +39,58 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
 
   late int? selectedStatusIndex;
   @override
+
+  /// Initializes the [_AdminOrderDetailsState] with the necessary text editing controllers
+  /// and sets the initial values for the controllers based on the [widget.deliveryInfo] parameter.
+  @override
   void initState() {
+    // Call the parent's initState method
     super.initState();
+
+    // Set the initial value for the "date order" controller
     controllers["date order"]!.text = widget.deliveryInfo.order!.dateOrder!;
+    // Set the initial value for the "time order" controller
     controllers["time order"]!.text = widget.deliveryInfo.order!.timeOrder!;
+    // Set the initial value for the "order number" controller
     controllers["order number"]!.text = widget.deliveryInfo.order!.numberOrder!;
+    // Set the initial value for the "sum order" controller
     controllers["sum order"]!.text = widget.deliveryInfo.order!.sumOrder!;
+    // Set the initial value for the "shop address" controller
     controllers["shop address"]!.text =
         widget.deliveryInfo.shopAddresses!.shopAddressDirection!;
+    // Set the initial value for the "user address" controller
     controllers["user address"]!.text =
         widget.deliveryInfo.addresses!.directionAddress!;
   }
 
   @override
+
+  /// Builds the widget tree for the AdminOrderDetails screen.
+  ///
+  /// This method builds the widget tree for the AdminOrderDetails screen,
+  /// which displays details about a specific order. It includes various
+  /// text fields for displaying information about the order, such as the
+  /// date and time of the order, the order number, and the sum of the order.
+  /// It also includes a dropdown menu for selecting the status of the order.
+  /// Finally, it includes a button for editing the status of the order.
   Widget build(BuildContext context) {
+    // Check if the device is a mobile device
     final isMobile = Responsive.isMobile(context);
+
+    // Build the widget tree
     return Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
+                    // Build the header row
                     Row(
                       children: [
                         IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
+                            // Navigate back to the previous screen
                             router.pop(context);
                           },
                           icon: Icon(
@@ -88,6 +114,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                         ),
                       ],
                     ),
+                    // Build the order details row
                     Row(
                       children: [
                         Icon(Icons.assignment,
@@ -97,8 +124,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                              // Text fields for user input
-                              // If controller value for the field is not null and is not empty, display the text field
+                              // Build the text fields for order details
                               for (var field in controllers.keys)
                                 BasicTextField(
                                   title: field,
@@ -107,6 +133,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                   isEnabled: false,
                                 ),
 
+                              // Build the dropdown menu for status selection
                               BlocProvider<RemoteStatusBloc>(
                                   create: (context) =>
                                       service<RemoteStatusBloc>()
@@ -140,6 +167,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                             ]))
                       ],
                     ),
+                    // Build the edit status button
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -155,14 +183,26 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
 
   //! FIXME: id of status got from selectedStatusIndex is not correct.
 
+  /// Edit the status of an order.
+  ///
+  /// This function updates the status of an order by calling the [UpdateStatues] event
+  /// and navigates back to the [adminAllOrders] page.
   void _editStatus() async {
+    // Set the id of the updated status to the id of the order
     updatedStatus.id = widget.deliveryInfo.order!.idOrder!;
+
+    // Set the status id of the updated status to the id of the selected status
     updatedStatus.statusID = statuses
         .firstWhere((status) => status.idStatus == selectedStatusIndex! + 1)
         .idStatus!;
 
+    // Add the UpdateStatues event to the RemoteStatusBloc
     service<RemoteStatusBloc>().add(UpdateStatues(updatedStatus));
+
+    // Wait for 1 second
     await Future.delayed(const Duration(seconds: 1));
+
+    // Pop the current route and push to the adminAllOrders page
     router.pop();
     router.push(
       Pages.adminAllOrders.screenPath,

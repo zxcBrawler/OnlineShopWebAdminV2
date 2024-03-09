@@ -20,31 +20,45 @@ class SideMenuTab extends StatefulWidget {
 
 class _SideMenuTabState extends State<SideMenuTab> {
   @override
+
+  /// Builds the SideMenuTab widget.
+  ///
+  /// The SideMenuTab widget represents a single tab in the side menu.
+  /// It contains an icon, a title, and a navigation button.
+  /// When the navigation button is pressed, it navigates to the specified route.
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0), // Padding around the container
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0), color: AppColors.white),
+            borderRadius:
+                BorderRadius.circular(20.0), // Border radius of the container
+            color: AppColors.white), // Background color of the container
         child: Padding(
-          padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
+          padding: const EdgeInsets.only(
+              left: 8.0, top: 8.0, bottom: 8.0), // Padding inside the container
           child: ListTile(
+              // ListTile widget containing the icon, title, and navigation button
               leading: Icon(
-                widget.tabIcon,
-                size: 40,
+                widget.tabIcon, // Icon displayed in the leading position
+                size: 40, // Size of the icon
               ),
-              iconColor: AppColors.darkBrown,
-              title: SideMenuTitle(title: widget.title),
+              iconColor: AppColors.darkBrown, // Color of the icon
+              title: SideMenuTitle(
+                  title: widget
+                      .title), // SideMenuTitle widget containing the title
               trailing: IconButton(
-                  padding: EdgeInsets.zero,
+                  padding:
+                      EdgeInsets.zero, // No padding for the navigation button
                   onPressed: () {
-                    router.go(widget.route);
-                    router.pop(context);
+                    router.go(widget.route); // Navigate to the specified route
+                    router.pop(context); // Pop the current route from the stack
                   },
                   icon: const Icon(
-                    Icons.chevron_right,
-                    size: 35,
-                  ))),
+                    Icons
+                        .chevron_right, // Icon displayed in the trailing position
+                    size: 35, // Size of the icon
+                  ))), // Navigation button with a chevron icon
         ),
       ),
     );
