@@ -16,8 +16,6 @@ class AdminDrawer extends StatefulWidget {
 }
 
 class _AdminDrawerState extends State<AdminDrawer> {
-  @override
-
   /// Widget representing the admin drawer.
   ///
   /// This widget is responsible for displaying the admin drawer.

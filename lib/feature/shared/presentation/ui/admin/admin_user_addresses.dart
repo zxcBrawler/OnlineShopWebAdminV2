@@ -10,8 +10,6 @@ class AdminUserAddresses extends StatefulWidget {
 }
 
 class _AdminUserAddressesState extends State<AdminUserAddresses> {
-  @override
-
   /// Builds the UI for the [AdminUserAddresses] widget.
   ///
   /// This method returns a [Row] widget that centers its children in the main

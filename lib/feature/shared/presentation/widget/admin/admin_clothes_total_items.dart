@@ -12,8 +12,6 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_st
 class AdminTotalItems extends StatelessWidget {
   const AdminTotalItems({super.key});
 
-  @override
-
   /// Builds the widget tree for the [AdminClothesTotalItems] widget.
   ///
   /// This widget uses a [BlocProvider] to create an instance of

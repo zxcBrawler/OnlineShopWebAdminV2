@@ -18,8 +18,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
     super.initState();
   }
 
-  @override
-
   /// Builds the UI for the [AdminDashboard] widget.
   ///
   /// This method builds the user interface for the [AdminDashboard] widget.

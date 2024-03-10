@@ -16,8 +16,6 @@ class ClothesTable extends StatefulWidget {
 }
 
 class _ClothesTableState extends State<ClothesTable> {
-  @override
-
   /// Builds the widget tree based on the provided [RemoteClothesBloc] state.
   ///
   /// This method builds a [BlocBuilder] widget that listens to the state

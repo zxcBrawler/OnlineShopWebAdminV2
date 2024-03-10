@@ -25,8 +25,6 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
     "longitude": TextEditingController(),
   };
 
-  @override
-
   /// Initialize the state of the widget.
   ///
   /// This method is called when the widget is inserted into the tree.

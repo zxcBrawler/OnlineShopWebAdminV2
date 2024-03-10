@@ -11,8 +11,6 @@ class AdminOrders extends StatefulWidget {
 }
 
 class _AdminOrdersState extends State<AdminOrders> {
-  @override
-
   /// Builds the UI for the [AdminOrders] widget.
   ///
   /// This method returns a [SafeArea] widget that wraps a

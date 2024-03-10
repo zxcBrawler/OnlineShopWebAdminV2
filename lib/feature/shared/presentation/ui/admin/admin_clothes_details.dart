@@ -34,8 +34,6 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
     "price clothes": TextEditingController(),
   };
 
-  @override
-
   /// Initialize the state of the widget.
   ///
   /// This method is called immediately after the widget is created. It sets the
