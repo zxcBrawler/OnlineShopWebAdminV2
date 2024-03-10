@@ -36,7 +36,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
   // Controllers for handling user input
   Map<String, TextEditingController> controllers = {
     "email": TextEditingController(),
-    "phone num": TextEditingController(),
+    "phone number": TextEditingController(),
     "username": TextEditingController(),
   };
 
@@ -63,7 +63,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
     // Initialize the controllers with user data
     final user = widget.user!;
     controllers["email"]!.text = user.email!;
-    controllers["phone num"]!.text = user.phoneNumber!;
+    controllers["phone number"]!.text = user.phoneNumber!;
     controllers["username"]!.text = user.username!;
 
     // If user role is not "user", add "employee number" controller and set its value
@@ -297,7 +297,9 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
     updatedUser.email = controllers["email"]!.text;
     updatedUser.username = controllers["username"]!.text;
     updatedUser.phoneNumber = controllers["phone number"]!.text;
-    updatedUser.employeeNumber = controllers["employee number"]!.text;
+    if (widget.user!.role!.roleName != "user") {
+      updatedUser.employeeNumber = controllers["employee number"]!.text;
+    }
     updatedUser.gender = selectedGenderIndex! + 1;
     updatedUser.role = selectedRoleIndex! + 1;
 

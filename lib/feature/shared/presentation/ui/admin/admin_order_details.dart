@@ -38,7 +38,6 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
   late List<StatusOrderEntity> statuses;
 
   late int? selectedStatusIndex;
-  @override
 
   /// Initializes the [_AdminOrderDetailsState] with the necessary text editing controllers
   /// and sets the initial values for the controllers based on the [widget.deliveryInfo] parameter.
@@ -57,10 +56,10 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
     controllers["sum order"]!.text = widget.deliveryInfo.order!.sumOrder!;
     // Set the initial value for the "shop address" controller
     controllers["shop address"]!.text =
-        widget.deliveryInfo.shopAddresses!.shopAddressDirection!;
+        widget.deliveryInfo.shopAddresses!.shopAddressDirection ?? "";
     // Set the initial value for the "user address" controller
     controllers["user address"]!.text =
-        widget.deliveryInfo.addresses!.directionAddress!;
+        widget.deliveryInfo.addresses!.directionAddress ?? "";
   }
 
   @override
@@ -125,13 +124,20 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                               // Build the text fields for order details
+
                               for (var field in controllers.keys)
-                                BasicTextField(
-                                  title: field,
-                                  controller: Methods.getControllerForField(
-                                      controllers, field),
-                                  isEnabled: false,
-                                ),
+                                Methods.getControllerForField(
+                                            controllers, field)
+                                        .text
+                                        .isNotEmpty
+                                    ? BasicTextField(
+                                        title: field,
+                                        controller:
+                                            Methods.getControllerForField(
+                                                controllers, field),
+                                        isEnabled: false,
+                                      )
+                                    : const SizedBox(),
 
                               // Build the dropdown menu for status selection
                               BlocProvider<RemoteStatusBloc>(

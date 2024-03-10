@@ -18,11 +18,9 @@ class RemoteAddressesBloc
     final dataState = await _getAddressesUsecase();
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      print(dataState.data);
       emitter(RemoteAddressDone(dataState.data!));
     }
     if (dataState is DataFailed) {
-      print(dataState.error);
       emitter(RemoteAddressError(dataState.error!));
     }
   }

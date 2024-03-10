@@ -44,10 +44,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthStateDone(dataState.data!));
     }
 
-    // If the authentication fails, print the error.
     // Emit the [AuthStateError] state with the error message.
     if (dataState is DataFailed) {
-      print(dataState.error);
       emit(AuthStateError(dataState.error!));
     }
   }
