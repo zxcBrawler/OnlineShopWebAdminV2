@@ -6,6 +6,7 @@ import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_event.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_add_clothes_dialog.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_table.dart';
 
 class AdminAllClothes extends StatefulWidget {
@@ -94,10 +95,11 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
                               child: BasicContainer(
                                 child: IconButton(
                                   onPressed: () {
+                                    // Open add user dialog
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return const Placeholder();
+                                          return const AddClothesDialog();
                                         });
                                   },
                                   icon: const Icon(Icons.add),

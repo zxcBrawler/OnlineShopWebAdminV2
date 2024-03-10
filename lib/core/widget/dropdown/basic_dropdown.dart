@@ -100,8 +100,10 @@ class _BasicDropdownState extends State<BasicDropdown> {
 
                 // Call the onIndexChanged callback if provided
                 if (widget.onIndexChanged != null) {
-                  widget.onIndexChanged!(
-                      widget.dropdownData.indexOf(value as String));
+                  setState(() {
+                    widget.onIndexChanged!(
+                        widget.dropdownData.indexOf(value as String));
+                  });
                 }
               },
             ),

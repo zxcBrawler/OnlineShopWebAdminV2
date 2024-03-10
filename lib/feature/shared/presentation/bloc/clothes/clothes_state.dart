@@ -3,18 +3,23 @@ import 'package:xc_web_admin/feature/shared/domain/entities/clothes_colors_entit
 import 'package:xc_web_admin/feature/shared/domain/entities/clothes_entity.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/clothes_size_clothes_entity.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/photos_of_clothes_entity.dart';
+import 'package:xc_web_admin/feature/shared/domain/entities/type_clothes_entity.dart';
 
 abstract class RemoteClothesState {
   final List<ClothesEntity>? clothes;
   final List<ClothesColorsEntity>? clothesColors;
   final List<ClothesSizeClothesEntity>? clothesSizeClothes;
   final List<PhotosOfClothesEntity>? photosOfClothes;
+  final List<TypeClothesEntity>? typeClothes;
+  final ClothesEntity? addedClothes;
   final DioException? error;
   const RemoteClothesState(
       {this.clothes,
       this.clothesColors,
       this.clothesSizeClothes,
       this.photosOfClothes,
+      this.addedClothes,
+      this.typeClothes,
       this.error});
 }
 
@@ -25,6 +30,11 @@ class RemoteClothesLoading extends RemoteClothesState {
 class RemoteClothesDone extends RemoteClothesState {
   const RemoteClothesDone(List<ClothesEntity> clothes)
       : super(clothes: clothes);
+}
+
+class RemoteClothesAddDone extends RemoteClothesState {
+  const RemoteClothesAddDone(ClothesEntity clothes)
+      : super(addedClothes: clothes);
 }
 
 class RemoteClothesColorsDone extends RemoteClothesState {
@@ -41,6 +51,11 @@ class RemoteClothesSizeClothesDone extends RemoteClothesState {
 class RemotePhotosOfClothesDone extends RemoteClothesState {
   const RemotePhotosOfClothesDone(List<PhotosOfClothesEntity> photosOfClothes)
       : super(photosOfClothes: photosOfClothes);
+}
+
+class RemoteTypeClothesDone extends RemoteClothesState {
+  const RemoteTypeClothesDone(List<TypeClothesEntity> typeClothes)
+      : super(typeClothes: typeClothes);
 }
 
 class RemoteClothesError extends RemoteClothesState {

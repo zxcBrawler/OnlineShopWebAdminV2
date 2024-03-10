@@ -23,10 +23,12 @@ import 'package:xc_web_admin/feature/shared/domain/repository/status_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/user_repository.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/address/get_addresses_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/auth/authenticate.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/add_clothes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_colors_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_photos_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_sizes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_type_clothes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/gender/get_genders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/order/get_orders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/role/get_roles_usecase.dart';
@@ -65,8 +67,8 @@ Future<void> init() async {
   service.registerFactory<RemoteRoleBloc>(() => RemoteRoleBloc(service()));
   service
       .registerFactory<RemoteGendersBloc>(() => RemoteGendersBloc(service()));
-  service.registerFactory<RemoteClothesBloc>(
-      () => RemoteClothesBloc(service(), service(), service(), service()));
+  service.registerFactory<RemoteClothesBloc>(() => RemoteClothesBloc(
+      service(), service(), service(), service(), service(), service()));
 
   service.registerFactory<RemoteStatusBloc>(
       () => RemoteStatusBloc(service(), service()));
@@ -123,4 +125,9 @@ Future<void> init() async {
       .registerSingleton<UpdateStatusUsecase>(UpdateStatusUsecase(service()));
 
   service.registerSingleton<Authenticate>(Authenticate(service()));
+
+  service.registerSingleton<AddClothesUsecase>(AddClothesUsecase(service()));
+
+  service.registerSingleton<GetTypeClothesUsecase>(
+      GetTypeClothesUsecase(service()));
 }
