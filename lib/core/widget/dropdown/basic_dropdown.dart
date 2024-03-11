@@ -1,20 +1,25 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:xc_web_admin/config/methods.dart';
 import 'package:xc_web_admin/core/widget/dropdown/basic_dropdown_container.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield_style.dart';
 
 class BasicDropdown extends StatefulWidget {
   final String listTitle;
-  final List<String> dropdownData;
+  final List<String>? dropdownData;
   final int selectedIndex;
   final Function(int)? onIndexChanged;
+  final bool isColorDropdown;
+  final List<String>? colorDropdownData;
 
   const BasicDropdown({
     super.key,
-    required this.dropdownData,
+    this.dropdownData,
     required this.listTitle,
     required this.selectedIndex,
     this.onIndexChanged,
+    required this.isColorDropdown,
+    this.colorDropdownData,
   });
 
   @override
@@ -38,7 +43,8 @@ class _BasicDropdownState extends State<BasicDropdown> {
 
     // Set the selected value to the value of the dropdown data at the
     // specified selected index.
-    selectedValue = widget.dropdownData[widget.selectedIndex];
+
+    selectedValue = widget.dropdownData![widget.selectedIndex];
   }
 
   @override
@@ -80,16 +86,44 @@ class _BasicDropdownState extends State<BasicDropdown> {
                 style: basicTextFieldStyle(),
               ),
               // Build the dropdown items
-              items: widget.dropdownData
-                  .map((item) => DropdownMenuItem<String>(
-                        value: item,
-                        // Display the item value
-                        child: Text(
-                          item,
-                          style: basicTextFieldStyle(),
-                        ),
-                      ))
-                  .toList(),
+              items: widget.isColorDropdown == false
+                  ? widget.dropdownData!
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            // Display the item value
+                            child: Row(
+                              children: [
+                                Text(
+                                  item,
+                                  style: basicTextFieldStyle(),
+                                ),
+                              ],
+                            ),
+                          ))
+                      .toList()
+                  : widget.dropdownData!
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            // Display the item value
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.circle,
+                                    color: Methods.getColorFromHex(widget
+                                            .colorDropdownData![
+                                        widget.dropdownData!.indexOf(item)]),
+                                  ),
+                                ),
+                                Text(
+                                  item,
+                                  style: basicTextFieldStyle(),
+                                ),
+                              ],
+                            ),
+                          ))
+                      .toList(),
               // Set the initial value
               value: selectedValue,
               // Handle the onChanged callback
@@ -102,7 +136,7 @@ class _BasicDropdownState extends State<BasicDropdown> {
                 if (widget.onIndexChanged != null) {
                   setState(() {
                     widget.onIndexChanged!(
-                        widget.dropdownData.indexOf(value as String));
+                        widget.dropdownData!.indexOf(value as String));
                   });
                 }
               },

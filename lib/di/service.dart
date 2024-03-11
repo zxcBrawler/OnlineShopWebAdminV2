@@ -6,19 +6,23 @@ import 'package:xc_web_admin/feature/shared/data/data_source/api_service.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/address_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/auth_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/clothes_repo_impl.dart';
+import 'package:xc_web_admin/feature/shared/data/repository/color_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/delivery_info_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/gender_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/role_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/shop_address_repo_impl.dart';
+import 'package:xc_web_admin/feature/shared/data/repository/size_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/status_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/user_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/address_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/auth_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/clothes_repo.dart';
+import 'package:xc_web_admin/feature/shared/domain/repository/color_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/delivery_info_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/gender_repository.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/role_repository.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/shop_address_repo.dart';
+import 'package:xc_web_admin/feature/shared/domain/repository/size_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/status_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/user_repository.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/address/get_addresses_usecase.dart';
@@ -29,11 +33,13 @@ import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_p
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_sizes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_type_clothes_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/color/get_colors_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/gender/get_genders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/order/get_orders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/role/get_roles_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/delete_shop_address_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/get_shop_addresses_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/size/get_sizes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/status/get_statuses_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/status/update_status_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/user/add_user_usecase.dart';
@@ -43,10 +49,12 @@ import 'package:xc_web_admin/feature/shared/domain/usecase/user/update_user_usec
 import 'package:xc_web_admin/feature/shared/presentation/bloc/address/address_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/auth/auth_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/status/status_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
 
@@ -74,6 +82,9 @@ Future<void> init() async {
       () => RemoteStatusBloc(service(), service()));
   service.registerFactory<AuthBloc>(() => AuthBloc(service()));
 
+  service.registerFactory<RemoteColorBloc>(() => RemoteColorBloc(service()));
+  service.registerFactory<RemoteSizeBloc>(() => RemoteSizeBloc(service()));
+
   //Dio
   service.registerSingletonAsync<SharedPreferencesManager>(
     () async => SharedPreferencesManager(),
@@ -91,6 +102,8 @@ Future<void> init() async {
   service.registerSingleton<ClothesRepo>(ClothesRepoImpl(service()));
   service.registerSingleton<StatusRepo>(StatusRepoImpl(service()));
   service.registerSingleton<AuthRepo>(AuthRepoImpl(service()));
+  service.registerSingleton<ColorRepo>(ColorRepoImpl(service()));
+  service.registerSingleton<SizeRepo>(SizeRepoImpl(service()));
 
   //Use case
   service
@@ -130,4 +143,7 @@ Future<void> init() async {
 
   service.registerSingleton<GetTypeClothesUsecase>(
       GetTypeClothesUsecase(service()));
+
+  service.registerSingleton<GetColorsUsecase>(GetColorsUsecase(service()));
+  service.registerSingleton<GetSizesUsecase>(GetSizesUsecase(service()));
 }

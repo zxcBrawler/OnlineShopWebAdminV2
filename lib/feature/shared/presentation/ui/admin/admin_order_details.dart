@@ -165,6 +165,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                               selectedStatusIndex = value;
                                             });
                                           },
+                                          isColorDropdown: false,
                                         );
                                       }
                                       return const SizedBox();

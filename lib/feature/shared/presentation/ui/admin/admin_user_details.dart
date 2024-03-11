@@ -175,6 +175,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                                             selectedRoleIndex = value;
                                           });
                                         },
+                                        isColorDropdown: false,
                                       );
                                     }
                                     return const SizedBox();
@@ -204,6 +205,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                                             selectedGenderIndex = value;
                                           });
                                         },
+                                        isColorDropdown: false,
                                       );
                                     }
                                     return const SizedBox();

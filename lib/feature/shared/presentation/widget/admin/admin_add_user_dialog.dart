@@ -114,6 +114,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
                       onIndexChanged: (value) {
                         selectedRoleIndex = value;
                       },
+                      isColorDropdown: false,
                     ),
                     BlocProvider<RemoteGendersBloc>(
                       create: (context) => service()..add(const GetGenders()),
@@ -124,16 +125,18 @@ class _AddUserDialogState extends State<AddUserDialog> {
                               return const SizedBox();
                             case RemoteGenderDone():
                               return BasicDropdown(
-                                  listTitle: "choose gender",
-                                  dropdownData: state.genders!
-                                      .map((e) => e.nameCategory!)
-                                      .toList()
-                                      .reversed
-                                      .toList(),
-                                  selectedIndex: selectedGenderIndex!,
-                                  onIndexChanged: (value) {
-                                    selectedGenderIndex = value;
-                                  });
+                                listTitle: "choose gender",
+                                dropdownData: state.genders!
+                                    .map((e) => e.nameCategory!)
+                                    .toList()
+                                    .reversed
+                                    .toList(),
+                                selectedIndex: selectedGenderIndex!,
+                                onIndexChanged: (value) {
+                                  selectedGenderIndex = value;
+                                },
+                                isColorDropdown: false,
+                              );
                             case RemoteGenderError():
                               return const Text("error");
                           }

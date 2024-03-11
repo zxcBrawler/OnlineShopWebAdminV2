@@ -6,14 +6,23 @@ import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/widget/dropdown/basic_dropdown.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
+import 'package:xc_web_admin/core/widget/textfield/basic_textfield_style.dart';
 import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/data/dto/add_clothes_dto.dart';
+import 'package:xc_web_admin/feature/shared/domain/entities/color_entity.dart';
+import 'package:xc_web_admin/feature/shared/domain/entities/size_clothes_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_state.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_event.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_state.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_state.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_event.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_state.dart';
 
 class AddClothesDialog extends StatefulWidget {
   const AddClothesDialog({super.key});
@@ -26,9 +35,12 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
   late final Map<String, TextEditingController> controllers;
   final TextEditingController photoURLController = TextEditingController();
   late final RemoteClothesBloc newBloc;
-  List<int>? selectedSizes = [];
-  List<int>? selectedColors = [];
+  List<int>? selectedSizesForAdding = [];
+  List<int>? selectedColorsForAdding = [];
   List<String>? uploadedPhotos = [];
+
+  List<ColorEntity> selectedColors = [];
+  List<SizeClothesEntity> selectedSizes = [];
 
   int? selectedGenderIndex = 0;
   int? selectedTypeClothesIndex = 0;
@@ -40,9 +52,9 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
     super.initState();
     controllers = {
       'barcode': TextEditingController(text: ''),
-      'nameClothesRu': TextEditingController(text: ''),
-      'nameClothesEn': TextEditingController(text: ''),
-      'priceClothes': TextEditingController(text: ''),
+      'name clothes ru': TextEditingController(text: ''),
+      'name clothes en': TextEditingController(text: ''),
+      'price clothes': TextEditingController(text: ''),
     };
     newBloc = service<RemoteClothesBloc>()
       ..add(GetTypeClothes(id: selectedGenderIndex! + 1));
@@ -82,6 +94,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                                     id: selectedGenderIndex! + 1));
                               });
                             },
+                            isColorDropdown: false,
                           ),
                         ],
                       );
@@ -114,6 +127,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                                 selectedTypeClothesIndex = value;
                               });
                             },
+                            isColorDropdown: false,
                           ),
                         ],
                       );
@@ -135,20 +149,139 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                 ),
                 isEnabled: true,
               ),
-
-            // ! implement sizes and colors after adding corresponding blocs
-            // const BasicText(title: "choose sizes"),
-            // BlocProvider<RemoteSizesBloc>(
-            //   create: (context) =>
-
-            // )
-            // const BasicText(title: "choose colors"),
-            // BlocProvider<RemoteColorsBloc>(
-            //   create: (context) =>
-
-            // )
-            // !
-
+            const BasicText(title: "choose sizes"),
+            BlocProvider<RemoteSizeBloc>(
+                create: (context) => service()..add(const GetSizes()),
+                child: BlocBuilder<RemoteSizeBloc, RemoteSizeState>(
+                    builder: (_, state) {
+                  switch (state) {
+                    case RemoteSizesLoading():
+                      return const SizedBox();
+                    case RemoteSizesDone():
+                      List<SizeClothesEntity> sizes = state.sizes!;
+                      return Column(
+                        children: [
+                          BasicDropdown(
+                            listTitle: "choose sizes",
+                            dropdownData:
+                                sizes.map((e) => e.nameSize ?? "").toList(),
+                            selectedIndex: 0,
+                            onIndexChanged: (value) {
+                              setState(() {
+                                selectedSizes.add(sizes[value]);
+                                print(selectedSizes);
+                              });
+                            },
+                            isColorDropdown: false,
+                          ),
+                        ],
+                      );
+                    case RemoteSizesError():
+                      return const Text("error");
+                  }
+                  return const SizedBox();
+                })),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 100, vertical: 20),
+                    child: Wrap(
+                      children: [
+                        if (selectedSizes.isNotEmpty)
+                          for (var item in selectedSizes)
+                            ListTile(
+                              title: Text(
+                                item.nameSize!,
+                                style: basicTextFieldStyle(),
+                              ),
+                              trailing: IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  setState(() {
+                                    selectedSizes.remove(item);
+                                  });
+                                },
+                                icon: const Icon(Icons.close),
+                              ),
+                            ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const BasicText(title: "choose colors"),
+            BlocProvider<RemoteColorBloc>(
+                create: (context) => service()..add(const GetColors()),
+                child: BlocBuilder<RemoteColorBloc, RemoteColorState>(
+                    builder: (_, state) {
+                  switch (state) {
+                    case RemoteColorsLoading():
+                      return const SizedBox();
+                    case RemoteColorsDone():
+                      List<ColorEntity> colors = state.colors!;
+                      return Column(
+                        children: [
+                          BasicDropdown(
+                            listTitle: "choose colors",
+                            dropdownData:
+                                colors.map((e) => e.nameColor ?? "").toList(),
+                            colorDropdownData:
+                                colors.map((e) => e.hex ?? "").toList(),
+                            selectedIndex: 0,
+                            onIndexChanged: (value) {
+                              setState(() {
+                                selectedColors.add(colors[value]);
+                              });
+                            },
+                            isColorDropdown: true,
+                          ),
+                        ],
+                      );
+                    case RemoteColorsError():
+                      return const Text("error");
+                  }
+                  return const SizedBox();
+                })),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 100, vertical: 20),
+                    child: Wrap(
+                      children: [
+                        if (selectedColors.isNotEmpty)
+                          for (var item in selectedColors)
+                            ListTile(
+                              title: Text(
+                                item.nameColor!,
+                                style: basicTextFieldStyle(),
+                              ),
+                              leading: Icon(
+                                Icons.circle,
+                                color: Methods.getColorFromHex(item.hex!),
+                              ),
+                              trailing: IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  setState(() {
+                                    selectedColors.remove(item);
+                                  });
+                                },
+                                icon: const Icon(Icons.close),
+                              ),
+                            ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const BasicText(title: "add photo URL"),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -224,14 +357,16 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
     );
   }
 
+  // ! test this one after adding blocs for sizes and colors and button that calls this function
+
   void addClothes() async {
     newClothes.barcode = controllers['barcode']!.text;
-    newClothes.nameClothesRu = controllers['nameClothesRu']!.text;
-    newClothes.nameClothesEn = controllers['nameClothesEn']!.text;
-    newClothes.priceClothes = controllers['priceClothes']!.text;
+    newClothes.nameClothesRu = controllers['name clothes ru']!.text;
+    newClothes.nameClothesEn = controllers['name clothes en']!.text;
+    newClothes.priceClothes = controllers['price clothes']!.text;
     newClothes.uploadedPhotos = uploadedPhotos!;
-    newClothes.selectedColors = selectedColors!;
-    newClothes.selectedSizes = selectedSizes!;
+    newClothes.selectedColors = selectedColorsForAdding!;
+    newClothes.selectedSizes = selectedSizesForAdding!;
 
     newBloc.add(AddClothes(clothesDTO: newClothes));
 
@@ -251,4 +386,5 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
       }
     });
   }
+  // !
 }
