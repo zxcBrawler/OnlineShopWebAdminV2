@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/config/methods.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
+import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/dropdown/basic_dropdown.dart';
+import 'package:xc_web_admin/core/widget/text/base_button_text.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield_style.dart';
@@ -51,11 +54,18 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
   void initState() {
     super.initState();
     controllers = {
-      'barcode': TextEditingController(text: ''),
-      'name clothes ru': TextEditingController(text: ''),
-      'name clothes en': TextEditingController(text: ''),
+      'barcode': TextEditingController(
+        text: '',
+      ),
+      'name clothes ru': TextEditingController(
+        text: '',
+      ),
+      'name clothes en': TextEditingController(
+        text: '',
+      ),
       'price clothes': TextEditingController(text: ''),
     };
+
     newBloc = service<RemoteClothesBloc>()
       ..add(GetTypeClothes(id: selectedGenderIndex! + 1));
   }
@@ -124,7 +134,8 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                             selectedIndex: selectedTypeClothesIndex!,
                             onIndexChanged: (value) {
                               setState(() {
-                                selectedTypeClothesIndex = value;
+                                selectedTypeClothesIndex =
+                                    state.typeClothes![value].idType;
                               });
                             },
                             isColorDropdown: false,
@@ -169,7 +180,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                             onIndexChanged: (value) {
                               setState(() {
                                 selectedSizes.add(sizes[value]);
-                                print(selectedSizes);
+                                selectedSizesForAdding?.add(sizes[value].id!);
                               });
                             },
                             isColorDropdown: false,
@@ -202,6 +213,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                                 onPressed: () {
                                   setState(() {
                                     selectedSizes.remove(item);
+                                    selectedSizesForAdding?.remove(item.id);
                                   });
                                 },
                                 icon: const Icon(Icons.close),
@@ -235,6 +247,8 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                             onIndexChanged: (value) {
                               setState(() {
                                 selectedColors.add(colors[value]);
+                                selectedColorsForAdding
+                                    ?.add(colors[value].colorId!);
                               });
                             },
                             isColorDropdown: true,
@@ -271,6 +285,8 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                                 onPressed: () {
                                   setState(() {
                                     selectedColors.remove(item);
+                                    selectedColorsForAdding
+                                        ?.remove(item.colorId!);
                                   });
                                 },
                                 icon: const Icon(Icons.close),
@@ -350,14 +366,27 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                   ),
                 ),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () async {
+                  addClothes();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.darkBrown,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: const BaseButtonText(title: "add new clothes"),
+              ),
             )
           ],
         ),
       ),
     );
   }
-
-  // ! test this one after adding blocs for sizes and colors and button that calls this function
 
   void addClothes() async {
     newClothes.barcode = controllers['barcode']!.text;
@@ -367,24 +396,22 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
     newClothes.uploadedPhotos = uploadedPhotos!;
     newClothes.selectedColors = selectedColorsForAdding!;
     newClothes.selectedSizes = selectedSizesForAdding!;
+    newClothes.selectedTypeClothes = selectedTypeClothesIndex!;
 
     newBloc.add(AddClothes(clothesDTO: newClothes));
 
-    newBloc.stream.listen((state) {
-      if (state is RemoteClothesAddDone) {
-        router.pop();
-      } else if (state is RemoteClothesError) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            //TODO: implement correct error handling
-            return const AlertDialog(
-              content: Text("smth went wrong"),
-            );
-          },
-        );
-      }
-    });
+    await Future.delayed(const Duration(seconds: 1));
+    router.pop();
+    if (selectedGenderIndex! + 1 == 1) {
+      router.push(
+        Pages.adminAllClothes.screenPath,
+        extra: {"male clothes"},
+      );
+    } else {
+      router.push(
+        Pages.adminAllClothes.screenPath,
+        extra: {"female clothes"},
+      );
+    }
   }
-  // !
 }

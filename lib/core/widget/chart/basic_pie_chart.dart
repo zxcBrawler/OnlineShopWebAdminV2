@@ -78,26 +78,32 @@ class _BasicPieChartState extends State<BasicPieChart> {
         ///
         /// Returns:
         /// - A [Row] widget containing indicators for each entry in inputData.
-        Row(
-          mainAxisAlignment:
-              MainAxisAlignment.center, // Center the row horizontally
-          children: widget.inputData.keys.map((title) {
-            return Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Indicator(
-                    color: getColorForTitle(title), // Set indicator color
-                    text: title,
-                    isSquare: false,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Wrap(
+                    spacing: 15.0, // Adjust the spacing between indicators
+                    runSpacing: 8.0, // Adjust the spacing between rows
+                    children: widget.inputData.keys.map((title) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Indicator(
+                          color: getColorForTitle(title),
+                          text: title,
+                          isSquare: false,
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ),
-                const SizedBox(
-                  width: 4,
-                ),
-              ],
-            );
-          }).toList(),
+              ),
+            ],
+          ),
         ),
       ],
     );

@@ -24,6 +24,7 @@ class SharedPreferencesManager {
   }
 
   static bool isInitialized() {
+    // ignore: unnecessary_null_comparison
     return _prefs != null;
   }
 }
