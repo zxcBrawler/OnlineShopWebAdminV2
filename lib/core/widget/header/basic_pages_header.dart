@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xc_web_admin/config/responsive.dart';
-import 'package:xc_web_admin/core/constants/constants.dart';
+import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/resources/controller/side_menu_controller.dart';
 import 'package:xc_web_admin/core/widget/header/basic_header_text.dart';
 import 'package:xc_web_admin/core/widget/header/user_info.dart';
@@ -50,7 +50,7 @@ class _HeaderState extends State<Header> {
         const Spacer(),
         // User information
         UserInfo(
-          username: username ?? "",
+          username: SessionStorage.getValue('username'),
         ),
       ],
     );

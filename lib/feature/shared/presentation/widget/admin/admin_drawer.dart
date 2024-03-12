@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/config/color.dart';
-import 'package:xc_web_admin/core/constants/shared_prefs.dart';
+import 'package:xc_web_admin/core/constants/session_storage.dart';
+
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/sidemenu/side_menu_tab.dart';
@@ -55,7 +56,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
             IconButton(
                 // Call the logout function when the button is pressed.
                 onPressed: () {
-                  SharedPreferencesManager.deleteAccessToken();
+                  SessionStorage.clearAll();
                   router.pushReplacement(Pages.auth.screenPath);
                 },
                 // Set the icon of the button to an exit to app icon.

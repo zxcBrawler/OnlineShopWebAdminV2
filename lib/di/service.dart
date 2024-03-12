@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:xc_web_admin/core/constants/shared_prefs.dart';
 import 'package:xc_web_admin/core/resources/controller/side_menu_controller.dart';
 import 'package:xc_web_admin/feature/shared/data/data_source/api_service.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/address_repo_impl.dart';
@@ -86,9 +85,7 @@ Future<void> init() async {
   service.registerFactory<RemoteSizeBloc>(() => RemoteSizeBloc(service()));
 
   //Dio
-  service.registerSingletonAsync<SharedPreferencesManager>(
-    () async => SharedPreferencesManager(),
-  );
+
   service.registerSingleton<Dio>(Dio());
 
   //Repo -> repository repositoryimpl datasource (local, remote)

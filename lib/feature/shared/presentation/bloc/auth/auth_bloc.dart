@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xc_web_admin/core/constants/constants.dart';
-import 'package:xc_web_admin/core/constants/shared_prefs.dart';
+import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/resources/data/data_state.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
@@ -31,12 +30,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     // If the authentication is successful, save the access token and username to shared preferences.
     // Navigate to the admin dashboard.
     if (dataState is DataSuccess) {
-      accessToken = dataState.data?.accessToken ?? "";
-      username = event.loginDTO!.username;
-      SharedPreferencesManager.saveAccessToken(
-          <String, String>{accessToken!: username!});
+      SessionStorage.saveLocalData(
+          'accessToken', dataState.data?.accessToken ?? "");
+      SessionStorage.saveLocalData('username', event.loginDTO!.username!);
 
-      if (accessToken != "") {
+      if (SessionStorage.getValue('accessToken') != "") {
         router.go(Pages.adminDashboard.screenPath);
       }
 

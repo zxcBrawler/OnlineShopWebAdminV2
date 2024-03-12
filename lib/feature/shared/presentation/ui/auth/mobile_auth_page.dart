@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/config/responsive.dart';
+import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/text/auth_button_text.dart';
@@ -29,6 +30,9 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
     // Set the initial values of the text fields to dummy values for testing purposes.
     usernameController.text = "zxcBrawler4";
     passController.text = "zxc1234";
+    if (SessionStorage.getValue('accessToken') != "") {
+      router.go(Pages.adminDashboard.screenPath);
+    }
   }
 
   @override

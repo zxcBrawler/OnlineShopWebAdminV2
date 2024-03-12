@@ -7,12 +7,13 @@ class BasicTextField extends StatefulWidget {
   final String title;
   final TextEditingController controller;
   final bool isEnabled;
-
+  final Function(void)? onChanged;
   const BasicTextField({
     super.key,
     required this.title,
     required this.controller,
     required this.isEnabled,
+    this.onChanged,
   });
 
   @override
@@ -52,6 +53,7 @@ class BasicTextFieldState extends State<BasicTextField> {
                 )
               : null,
         ),
+        onChanged: widget.onChanged,
       ),
     );
   }
