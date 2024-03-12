@@ -9,7 +9,9 @@ import 'package:xc_web_admin/feature/shared/domain/entities/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/user_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_active_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_clothes.dart.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_colors.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_orders.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_sizes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes_details.dart';
@@ -226,6 +228,22 @@ final router =
               child: AdminAllClothes(
             title: title.first,
           ));
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _shellNavigatorKey,
+        path: Pages.adminAllColors.screenPath,
+        name: Pages.adminAllColors.screenName,
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: AdminAllColors());
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _shellNavigatorKey,
+        path: Pages.adminAllSizes.screenPath,
+        name: Pages.adminAllSizes.screenName,
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: AdminAllSizes());
         },
       ),
     ],

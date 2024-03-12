@@ -32,12 +32,14 @@ import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_p
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_sizes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_type_clothes_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/color/add_color_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/color/get_colors_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/gender/get_genders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/order/get_orders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/role/get_roles_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/delete_shop_address_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/get_shop_addresses_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/size/add_size_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/size/get_sizes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/status/get_statuses_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/status/update_status_usecase.dart';
@@ -81,8 +83,10 @@ Future<void> init() async {
       () => RemoteStatusBloc(service(), service()));
   service.registerFactory<AuthBloc>(() => AuthBloc(service()));
 
-  service.registerFactory<RemoteColorBloc>(() => RemoteColorBloc(service()));
-  service.registerFactory<RemoteSizeBloc>(() => RemoteSizeBloc(service()));
+  service.registerFactory<RemoteColorBloc>(
+      () => RemoteColorBloc(service(), service()));
+  service.registerFactory<RemoteSizeBloc>(
+      () => RemoteSizeBloc(service(), service()));
 
   //Dio
 
@@ -143,4 +147,6 @@ Future<void> init() async {
 
   service.registerSingleton<GetColorsUsecase>(GetColorsUsecase(service()));
   service.registerSingleton<GetSizesUsecase>(GetSizesUsecase(service()));
+  service.registerSingleton<AddColorUsecase>(AddColorUsecase(service()));
+  service.registerSingleton<AddSizeUsecase>(AddSizeUsecase(service()));
 }

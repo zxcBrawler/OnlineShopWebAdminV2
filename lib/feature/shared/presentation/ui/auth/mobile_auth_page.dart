@@ -27,8 +27,8 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
   void initState() {
     super.initState();
     // Set the initial values of the text fields to dummy values for testing purposes.
-    //usernameController.text = "admin";
-    //passController.text = "admin";
+    usernameController.text = "admin";
+    passController.text = "admin";
   }
 
   @override
@@ -137,7 +137,7 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
     );
   }
 
-  /// Builds the logo widget for the mobile authentication page.
+  /// Builds the logo widget for the authentication page.
   ///
   /// This widget centers an image of the XC logo with dimensions 150x150
   /// and returns it as a [Center] widget.

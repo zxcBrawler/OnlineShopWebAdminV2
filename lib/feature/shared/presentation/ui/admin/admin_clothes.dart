@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_colors.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_sizes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/shared/female_clothes_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/shared/male_clothes_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_total_items.dart';
@@ -66,6 +68,12 @@ class _AdminClothesState extends State<AdminClothes> {
           ],
         ),
         AdminWeeklyItemsSold(),
+        Row(
+          children: [
+            Expanded(child: AdminColors()),
+            Expanded(child: AdminSizes())
+          ],
+        )
       ],
     );
   }
@@ -101,6 +109,7 @@ class _AdminClothesState extends State<AdminClothes> {
           ],
         ),
         AdminWeeklyItemsSold(),
+        AdminColors(),
       ],
     );
   }

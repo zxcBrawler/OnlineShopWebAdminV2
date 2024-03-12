@@ -1,0 +1,3 @@
+class SizeDTO {
+  String nameSize = "";
+}
