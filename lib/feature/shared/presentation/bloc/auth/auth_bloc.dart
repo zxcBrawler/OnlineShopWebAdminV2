@@ -1,8 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/resources/data/data_state.dart';
-import 'package:xc_web_admin/core/routes/app_router.dart';
-import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/auth/authenticate.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/auth/auth_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/auth/auth_state.dart';
@@ -33,10 +31,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       SessionStorage.saveLocalData(
           'accessToken', dataState.data?.accessToken ?? "");
       SessionStorage.saveLocalData('username', event.loginDTO!.username!);
-
-      if (SessionStorage.getValue('accessToken') != "") {
-        router.go(Pages.adminDashboard.screenPath);
-      }
 
       // Emit the [AuthStateDone] state with the authentication data.
       emit(AuthStateDone(dataState.data!));

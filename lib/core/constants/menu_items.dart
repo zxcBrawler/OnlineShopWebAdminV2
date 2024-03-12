@@ -28,3 +28,49 @@ List<Map<String, dynamic>> adminMenuItems = [
     'route': Pages.adminOrders.screenPath
   },
 ];
+
+List<Map<String, dynamic>> directorMenuItems = [
+  {
+    'tabIcon': Icons.dashboard,
+    'title': 'dashboard',
+    'route': Pages.directorDashboard.screenPath
+  },
+  {
+    'tabIcon': Icons.group,
+    'title': 'employees',
+    'route': Pages.directorDashboard.screenPath
+  },
+  {
+    'tabIcon': Icons.checkroom,
+    'title': 'clothes',
+    'route': Pages.directorDashboard.screenPath
+  },
+  {
+    'tabIcon': Icons.location_on,
+    'title': 'my shop',
+    'route': Pages.directorDashboard.screenPath
+  },
+  {
+    'tabIcon': Icons.assignment,
+    'title': 'shop orders',
+    'route': Pages.directorDashboard.screenPath
+  },
+];
+
+List<Map<String, dynamic>> employeeMenuItems = [
+  {
+    'tabIcon': Icons.dashboard,
+    'title': 'dashboard',
+    'route': Pages.employeeDashboard.screenPath
+  },
+  {
+    'tabIcon': Icons.checkroom,
+    'title': 'clothes',
+    'route': Pages.directorDashboard.screenPath
+  },
+  {
+    'tabIcon': Icons.assignment,
+    'title': 'shop orders',
+    'route': Pages.directorDashboard.screenPath
+  },
+];

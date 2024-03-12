@@ -24,6 +24,10 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_user_det
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_users_main.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_activity_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/auth/auth_page.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_dashboard.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_main_screen.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_dashboard.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_main_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -84,6 +88,44 @@ final router =
       );
     },
   ),
+  ShellRoute(
+      parentNavigatorKey: _rootNavigatorKey,
+      navigatorKey: _shellNavigatorKey,
+      builder: (context, state, child) {
+        return DirectorMainScreen(
+          location: state.matchedLocation,
+          child: child,
+        );
+      },
+      routes: [
+        GoRoute(
+          path: Pages.directorDashboard.screenPath,
+          name: Pages.directorDashboard.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: DirectorDashboard());
+          },
+        ),
+      ]),
+  ShellRoute(
+      parentNavigatorKey: _rootNavigatorKey,
+      navigatorKey: _shellNavigatorKey,
+      builder: (context, state, child) {
+        return EmployeeMainScreen(
+          location: state.matchedLocation,
+          child: child,
+        );
+      },
+      routes: [
+        GoRoute(
+          path: Pages.employeeDashboard.screenPath,
+          name: Pages.employeeDashboard.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: EmployeeDashboard());
+          },
+        ),
+      ]),
   ShellRoute(
     parentNavigatorKey: _rootNavigatorKey,
     navigatorKey: _shellNavigatorKey,

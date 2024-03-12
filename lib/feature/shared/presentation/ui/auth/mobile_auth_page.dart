@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/config/responsive.dart';
-import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/text/auth_button_text.dart';
@@ -28,11 +27,8 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
   void initState() {
     super.initState();
     // Set the initial values of the text fields to dummy values for testing purposes.
-    usernameController.text = "zxcBrawler4";
-    passController.text = "zxc1234";
-    if (SessionStorage.getValue('accessToken') != "") {
-      router.go(Pages.adminDashboard.screenPath);
-    }
+    usernameController.text = "admin";
+    passController.text = "admin";
   }
 
   @override
@@ -176,7 +172,27 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
     authBloc.stream.listen((state) {
       // If the state is of type [AuthStateDone], navigate to the admin dashboard screen
       if (state is AuthStateDone) {
-        router.push(Pages.adminDashboard.screenPath);
+        switch (state.loginResponse!.userEntity!.role!.roleName) {
+          case "admin":
+            router.go(Pages.adminDashboard.screenPath);
+            break;
+          case "director":
+            router.go(Pages.directorDashboard.screenPath);
+            break;
+          case "employee":
+            router.go(Pages.employeeDashboard.screenPath);
+            break;
+          default:
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const AlertDialog(
+                  content: Text("You cannot access this app"),
+                );
+              },
+            );
+            break;
+        }
       }
       // If the state is of type [AuthStateError], show an alert dialog with an error message
       else if (state is AuthStateError) {
