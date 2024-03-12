@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:xc_web_admin/core/constants/menu_items.dart';
+import 'package:xc_web_admin/core/widget/drawer/menu_items.dart';
 import 'package:xc_web_admin/core/resources/controller/side_menu_controller.dart';
-import 'package:xc_web_admin/core/widget/basic_drawer.dart';
+import 'package:xc_web_admin/core/widget/drawer/basic_drawer.dart';
 
 class AdminMainScreen extends StatefulWidget {
   final String? location;

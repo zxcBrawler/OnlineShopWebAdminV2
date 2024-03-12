@@ -21,6 +21,7 @@ class AuthRepoImpl implements AuthRepo {
         return DataSuccess(httpResponse.data);
       } else {
         return DataFailed(DioException(
+            message: httpResponse.data.message,
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
             type: DioExceptionType.badResponse,

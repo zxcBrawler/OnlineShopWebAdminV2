@@ -5,7 +5,7 @@ import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/sidemenu/side_menu_tab.dart';
 
-/// Widget representing the admin drawer
+/// Widget representing the drawer
 class BasicDrawer extends StatefulWidget {
   final List<Map<String, dynamic>> menuItems;
   const BasicDrawer({super.key, required this.menuItems});

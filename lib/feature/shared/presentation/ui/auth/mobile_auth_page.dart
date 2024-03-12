@@ -27,105 +27,212 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
   void initState() {
     super.initState();
     // Set the initial values of the text fields to dummy values for testing purposes.
-    usernameController.text = "admin";
-    passController.text = "admin";
+    //usernameController.text = "admin";
+    //passController.text = "admin";
   }
 
   @override
-
-  /// Builds the user interface widget tree for the mobile authentication page.
-  ///
-  /// If the device is a mobile device, a [SizedBox] widget is returned.
-  /// If the device is not a mobile device, a [BlocProvider] widget is returned.
-  /// The [BlocProvider] widget wraps a [Row] widget with three [Expanded] widgets.
-  /// The first and third [Expanded] widgets are empty [Container] widgets.
-  /// The second [Expanded] widget contains a [Padding] widget with a [Column] widget.
-  /// The [Column] widget has two [BasicTextField] widgets for the username and password input fields.
-  /// It also contains a [Padding] widget with a [Row] widget.
-  /// The [Row] widget contains an [ElevatedButton] widget for the authentication button.
   Widget build(BuildContext context) {
-    // Check if the device is a mobile device.
-    if (Responsive.isMobile(context)) {
-      // TODO: Implement authentication page for mobile devices.
-      return const SizedBox();
-    } else {
-      // If the device is not a mobile device, build the authentication page.
-      return BlocProvider(
-        // Create the authentication bloc.
-        create: (context) => service<AuthBloc>(),
-        // The authentication page is a row with three expandable widgets.
-        child: Row(
-          children: [
-            // Empty container widget for spacing.
-            Expanded(flex: 1, child: Container()),
-            // Expandable widget that contains the authentication form.
-            Expanded(
-              flex: 4,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: Column(
-                  // Align the form at the center of the widget.
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Image widget for the application logo.
-                    Center(
-                        child: SizedBox(
-                            width: 150,
-                            height: 150,
-                            child:
-                                Image.asset("assets/xc-logo-transparent.png"))),
-                    // Text field widget for the username input.
-                    BasicTextField(
-                      key: const Key("authUsernameInput"),
-                      title: "username",
-                      controller: usernameController,
-                      isEnabled: true,
-                    ),
-                    // Text field widget for the password input.
-                    BasicTextField(
-                      key: const Key("authPasswordInput"),
-                      title: "password",
-                      controller: passController,
-                      isEnabled: true,
-                    ),
-                    // Padding widget with a row widget for the authentication button.
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 100, vertical: 20),
-                      child: Row(
-                        children: [
-                          // Expandable widget that contains the authentication button.
-                          Expanded(
-                            child: ElevatedButton(
-                              key: const Key("authButton"),
-                              onPressed: () async {
-                                // Call the login and navigate function when the button is pressed.
-                                await _loginAndNavigate();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.darkBrown,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                              ),
-                              child: const AuthButtonText(
-                                title: "auth",
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+    return BlocProvider(
+      create: (context) => service<AuthBloc>(),
+      child: Responsive.isMobile(context)
+          ? _buildMobileAuthPage(context)
+          : _buildDesktopAuthPage(context),
+    );
+  }
+
+  /// Builds the mobile authentication page.
+  ///
+  /// This widget is responsible for building the mobile authentication page.
+  /// It returns a [Scaffold] widget with a [Column] as its child.
+  /// The [Column] contains an [Expanded] widget which contains a [Column].
+  /// The inner [Column] is responsible for displaying the logo, username field,
+  /// password field, and authentication button.
+  ///
+  /// Parameters:
+  ///   - context: The [BuildContext] of the widget.
+  ///
+  /// Returns:
+  ///   A [Scaffold] widget.
+  Widget _buildMobileAuthPage(BuildContext context) {
+    return Scaffold(
+      // The scaffold's body is a column.
+      body: Column(
+        // The column expands to fill the available space.
+        children: [
+          Expanded(
+            // The expanded widget expands to fill the available space.
+            child: Column(
+              // The column is centered vertically.
+              mainAxisAlignment: MainAxisAlignment.center,
+              // The children of the column are the logo, username field,
+              // password field, and authentication button.
+              children: [
+                // The logo of the application.
+                _buildLogo(),
+                // The text field for entering the username.
+                _buildUsernameField(),
+                // The text field for entering the password.
+                _buildPasswordField(),
+                // The button for authenticating the user.
+                _buildAuthButton(context),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Builds the desktop authentication page.
+  ///
+  /// This function returns a [Scaffold] widget with a [Row] as its child.
+  /// The [Row] contains two [Spacer] widgets and an [Expanded] widget.
+  /// The [Expanded] widget expands to fill the available space and has a flex of 4.
+  /// Inside the [Expanded] widget, there is a [Padding] widget with horizontal padding of 50.
+  /// Inside the [Padding] widget, there is a [Column] widget. The [Column] contains the logo,
+  /// username field, password field, and authentication button.
+  ///
+  /// Parameters:
+  ///   - context: The [BuildContext] of the widget.
+  ///
+  /// Returns:
+  ///   A [Scaffold] widget.
+  Widget _buildDesktopAuthPage(BuildContext context) {
+    return Scaffold(
+      // The scaffold's body is a row.
+      body: Row(
+        // The row contains two spacers and an expanded widget.
+        children: [
+          // The spacer widget expands to fill the available space.
+          const Spacer(),
+          Expanded(
+            // The expanded widget expands to fill the available space,
+            // and has a flex of 4.
+            flex: 4,
+            child: Padding(
+              // The padding widget has horizontal padding of 50.
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: Column(
+                // The column contains the logo, username field,
+                // password field, and authentication button.
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // The logo of the application.
+                  _buildLogo(),
+                  // The text field for entering the username.
+                  _buildUsernameField(),
+                  // The text field for entering the password.
+                  _buildPasswordField(),
+                  // The button for authenticating the user.
+                  _buildAuthButton(context),
+                ],
               ),
             ),
-            // Empty container widget for spacing.
-            Expanded(flex: 1, child: Container()),
-          ],
-        ),
-      );
-    }
+          ),
+          // The spacer widget expands to fill the available space.
+          const Spacer(),
+        ],
+      ),
+    );
+  }
+
+  /// Builds the logo widget for the mobile authentication page.
+  ///
+  /// This widget centers an image of the XC logo with dimensions 150x150
+  /// and returns it as a [Center] widget.
+  ///
+  /// Returns:
+  ///   A [Center] widget containing a [SizedBox] with the XC logo image.
+  Widget _buildLogo() {
+    // The logo is centered in the screen.
+    return Center(
+      child: SizedBox(
+        // The logo image has a width and height of 150 pixels.
+        width: 150,
+        height: 150,
+        // The image is an asset with the path "assets/xc-logo-transparent.png".
+        child: Image.asset("assets/xc-logo-transparent.png"),
+      ),
+    );
+  }
+
+  /// Builds the username field widget for the  authentication page.
+  ///
+  /// This widget creates a [BasicTextField] with the key "authUsernameInput",
+  /// a title of "username", the provided [usernameController], and enabled state of true.
+  ///
+  /// Returns:
+  ///   A [BasicTextField] widget for the username field.
+  Widget _buildUsernameField() {
+    // The username field is a BasicTextField with the provided key,
+    // title, controller, and enabled state.
+    return BasicTextField(
+      key: const Key("authUsernameInput"), // Key for the field.
+      title: "username", // Title of the field.
+      controller: usernameController, // Controller for the field's text.
+      isEnabled: true, // The field is enabled.
+    );
+  }
+
+  /// Builds the password field widget for the authentication page.
+  ///
+  /// This widget creates a [BasicTextField] with the key "authPasswordInput",
+  /// a title of "password", the provided [passController], and enabled state of true.
+  ///
+  /// Returns:
+  ///   A [BasicTextField] widget for the password field.
+  Widget _buildPasswordField() {
+    // The password field is a BasicTextField with the provided key,
+    // title, controller, and enabled state.
+    return BasicTextField(
+      key: const Key("authPasswordInput"), // Key for the field.
+      title: "password", // Title of the field.
+      controller: passController, // Controller for the field's text.
+      isEnabled: true, // The field is enabled.
+    );
+  }
+
+  /// Builds the authentication button widget.
+  ///
+  /// This function returns a [Padding] widget containing a [Row] widget
+  /// with a single [Expanded] widget. The [Expanded] widget contains an
+  /// [ElevatedButton] widget with the provided [BuildContext] and an
+  /// [onPressed] function that calls [_loginAndNavigate]. The style of the
+  /// button includes a background color of [AppColors.darkBrown] and a
+  /// rounded border with a circular radius of 30. The child of the button is
+  /// an [AuthButtonText] widget with the title "auth".
+  ///
+  /// Parameters:
+  ///   - context: The [BuildContext] of the widget.
+  ///
+  /// Returns:
+  ///   A [Padding] widget containing a [Row] widget with a single
+  ///   [Expanded] widget.
+  Widget _buildAuthButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+      child: Row(
+        children: [
+          Expanded(
+            child: ElevatedButton(
+              key: const Key("authButton"),
+              onPressed: () async {
+                // Call the loginAndNavigate function when the button is pressed.
+                await _loginAndNavigate();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.darkBrown,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: const AuthButtonText(title: "auth"),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -147,13 +254,13 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
     super.dispose();
   }
 
-  /// Function that handles the login process and navigation.
+  /// Handles the login process and navigation.
   ///
   /// This function retrieves the authentication bloc from the service locator,
   /// creates a login DTO (Data Transfer Object) with the provided username and password,
   /// adds a login event to the authentication bloc, and listens to the bloc's state stream.
   ///
-  /// If the state is of type [AuthStateDone], it navigates to the admin dashboard screen.
+  /// If the state is of type [AuthStateDone], it navigates to the appropriate dashboard screen based on the user's role.
   /// If the state is of type [AuthStateError], it shows an alert dialog with an error message.
   Future<void> _loginAndNavigate() async {
     // Retrieve the authentication bloc from the service locator
@@ -170,42 +277,67 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
 
     // Listen to the bloc's state stream
     authBloc.stream.listen((state) {
-      // If the state is of type [AuthStateDone], navigate to the admin dashboard screen
+      // Check the type of the state and perform the appropriate action
       if (state is AuthStateDone) {
-        switch (state.loginResponse!.userEntity!.role!.roleName) {
-          case "admin":
-            router.go(Pages.adminDashboard.screenPath);
-            break;
-          case "director":
-            router.go(Pages.directorDashboard.screenPath);
-            break;
-          case "employee":
-            router.go(Pages.employeeDashboard.screenPath);
-            break;
-          default:
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const AlertDialog(
-                  content: Text("You cannot access this app"),
-                );
-              },
-            );
-            break;
-        }
+        // Navigate to the appropriate dashboard screen based on the user's role
+        _navigateToDashboard(state.loginResponse!.userEntity!.role!.roleName!);
+      } else if (state is AuthStateError) {
+        // Show an alert dialog with an error message
+        _showErrorDialog();
       }
-      // If the state is of type [AuthStateError], show an alert dialog with an error message
-      else if (state is AuthStateError) {
+    });
+  }
+
+  /// Navigates to the appropriate dashboard screen based on the user's role.
+  ///
+  /// Takes the user's role as a parameter and navigates to the corresponding dashboard screen.
+  /// If the user's role is not recognized, it shows an alert dialog with an error message.
+  ///
+  /// Parameters:
+  ///   - role: The role of the user.
+  void _navigateToDashboard(String role) {
+    // Switch statement based on the user's role
+    switch (role) {
+      // If the user is an admin, navigate to the admin dashboard
+      case "admin":
+        router.go(Pages.adminDashboard.screenPath);
+        break;
+      // If the user is a director, navigate to the director dashboard
+      case "director":
+        router.go(Pages.directorDashboard.screenPath);
+        break;
+      // If the user is an employee, navigate to the employee dashboard
+      case "employee":
+        router.go(Pages.employeeDashboard.screenPath);
+        break;
+      // If the user's role is 'user', show an alert dialog with an error message
+      case "user":
         showDialog(
           context: context,
           builder: (context) {
-            //TODO: implement correct error handling
+            // Return an alert dialog with an error message
             return const AlertDialog(
-              content: Text("Invalid username or password"),
+              content: Text("you don't have permission to access this app"),
             );
           },
         );
-      }
-    });
+        break;
+      // If the user's role is not recognized, show an error dialog
+      default:
+        _showErrorDialog();
+        break;
+    }
+  }
+
+  /// Shows an alert dialog with an error message.
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          content: Text("invalid username or password"),
+        );
+      },
+    );
   }
 }

@@ -23,7 +23,7 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_user_add
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_user_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_users_main.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_activity_details.dart';
-import 'package:xc_web_admin/feature/shared/presentation/ui/auth/auth_page.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/auth/mobile_auth_page.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_dashboard.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_main_screen.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_dashboard.dart';
@@ -39,7 +39,7 @@ final router =
     path: Pages.auth.screenPath,
     name: Pages.auth.screenName,
     builder: (context, state) {
-      return const AuthPage();
+      return const MobileAuthPage();
     },
   ),
   GoRoute(
