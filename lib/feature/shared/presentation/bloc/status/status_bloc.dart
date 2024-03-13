@@ -60,7 +60,7 @@ class RemoteStatusBloc extends Bloc<RemoteStatusEvent, RemoteStatusState> {
     // with the updated data.
     if (dataState is DataSuccess) {
       // Emit the RemoteStatusDone state with the updated data.
-      emit(RemoteStatusDone(dataState.data!));
+      emit(RemoteStatusDone(dataState.data ?? []));
     }
 
     // If the use case returns a DataFailed, emit a RemoteStatusError state

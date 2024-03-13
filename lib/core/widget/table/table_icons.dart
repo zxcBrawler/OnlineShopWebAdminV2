@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/config/color.dart';
+import 'package:xc_web_admin/config/methods.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/data/model/clothes.dart';
+import 'package:xc_web_admin/feature/shared/data/model/color.dart';
 import 'package:xc_web_admin/feature/shared/data/model/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/data/model/shop_address.dart';
 import 'package:xc_web_admin/feature/shared/data/model/user.dart';
@@ -58,6 +60,7 @@ class _TableIconsState extends State<TableIcons> {
           ),
         ),
         // Build the delete option icon button
+
         IconButton(
           padding: EdgeInsets.zero,
           onPressed: () =>
@@ -79,31 +82,55 @@ class _TableIconsState extends State<TableIcons> {
   void _handleMoreOption() {
     // Switch statement based on the data type
     switch (widget.type) {
-      // For ShopAddressModel, navigate to the detailed shop address information page
+      // Case for ShopAddressModel, navigate to the detailed shop address information page
       case "ShopAddressModel":
+        // Navigate to the detailed shop address information page with the shop address data
         router.push(
           Pages.adminShopAddressInfo.screenPath,
           extra: {widget.data as ShopAddressModel},
         );
         break;
-      // For UserModel, navigate to the detailed user information page
+      // Case for UserModel, navigate to the detailed user information page
       case "UserModel":
+        // Navigate to the detailed user information page with the user data
         router.push(
           Pages.adminUserInfo.screenPath,
           extra: {widget.data as UserModel},
         );
         break;
 
+      // Case for DeliveryInfoModel, navigate to the detailed order information page
       case "DeliveryInfoModel":
+        // Navigate to the detailed order information page with the delivery info data
         router.push(
           Pages.adminOrderDetails.screenPath,
           extra: {widget.data as DeliveryInfoModel},
         );
         break;
+      // Case for ClothesModel, navigate to the detailed clothes information page
       case "ClothesModel":
+        // Navigate to the detailed clothes information page with the clothes data
         router.push(
           Pages.adminClothesDetails.screenPath,
           extra: {widget.data as ClothesModel},
+        );
+        break;
+
+      // Case for ColorModel, show a dialog with the color preview
+      case "ColorModel":
+        // Show a dialog with the color preview
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            ColorModel? currentColor = widget.data! as ColorModel;
+            return Dialog(
+              backgroundColor: Methods.getColorFromHex(currentColor.hex!),
+              child: const SizedBox(
+                height: 300,
+                width: 300,
+              ),
+            );
+          },
         );
         break;
       // Default case does nothing

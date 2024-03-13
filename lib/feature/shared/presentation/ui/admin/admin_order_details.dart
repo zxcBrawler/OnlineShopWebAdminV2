@@ -149,6 +149,8 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                     builder: (context, state) {
                                       if (state is RemoteStatusDone) {
                                         statuses = state.statuses!;
+                                        statuses.sort(((a, b) => a.idStatus!
+                                            .compareTo(b.idStatus!)));
                                         selectedStatusIndex =
                                             statuses.indexWhere((status) =>
                                                 status.idStatus ==
@@ -162,7 +164,10 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                           selectedIndex: selectedStatusIndex!,
                                           onIndexChanged: (value) {
                                             setState(() {
-                                              selectedStatusIndex = value;
+                                              selectedStatusIndex = state
+                                                      .statuses![value]
+                                                      .idStatus! -
+                                                  1;
                                             });
                                           },
                                           isColorDropdown: false,
@@ -188,8 +193,6 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
 
   // Widget for building custom buttons
 
-  //! FIXME: id of status got from selectedStatusIndex is not correct.
-
   /// Edit the status of an order.
   ///
   /// This function updates the status of an order by calling the [UpdateStatues] event
@@ -199,9 +202,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
     updatedStatus.id = widget.deliveryInfo.order!.idOrder!;
 
     // Set the status id of the updated status to the id of the selected status
-    updatedStatus.statusID = statuses
-        .firstWhere((status) => status.idStatus == selectedStatusIndex! + 1)
-        .idStatus!;
+    updatedStatus.statusID = selectedStatusIndex! - 1;
 
     // Add the UpdateStatues event to the RemoteStatusBloc
     service<RemoteStatusBloc>().add(UpdateStatues(updatedStatus));

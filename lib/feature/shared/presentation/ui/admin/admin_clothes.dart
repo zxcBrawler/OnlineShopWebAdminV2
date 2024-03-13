@@ -110,6 +110,7 @@ class _AdminClothesState extends State<AdminClothes> {
         ),
         AdminWeeklyItemsSold(),
         AdminColors(),
+        AdminSizes()
       ],
     );
   }
