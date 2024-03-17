@@ -11,6 +11,7 @@ import 'package:xc_web_admin/feature/shared/data/repository/employee_shop_repo_i
 import 'package:xc_web_admin/feature/shared/data/repository/gender_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/role_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/shop_address_repo_impl.dart';
+import 'package:xc_web_admin/feature/shared/data/repository/shop_garnish_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/size_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/status_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/user_repo_impl.dart';
@@ -23,6 +24,7 @@ import 'package:xc_web_admin/feature/shared/domain/repository/employee_shop_repo
 import 'package:xc_web_admin/feature/shared/domain/repository/gender_repository.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/role_repository.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/shop_address_repo.dart';
+import 'package:xc_web_admin/feature/shared/domain/repository/shop_garnish_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/size_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/status_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/user_repository.dart';
@@ -43,6 +45,8 @@ import 'package:xc_web_admin/feature/shared/domain/usecase/order/get_orders_usec
 import 'package:xc_web_admin/feature/shared/domain/usecase/role/get_roles_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/delete_shop_address_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/get_shop_addresses_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/shop_garnish/get_shop_garnish_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/shop_garnish/update_quantity_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/size/add_size_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/size/get_sizes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/status/get_statuses_usecase.dart';
@@ -60,6 +64,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/empl
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/status/status_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
@@ -96,6 +101,9 @@ Future<void> init() async {
   service.registerFactory<RemoteEmployeeShopBloc>(
       () => RemoteEmployeeShopBloc(service(), service()));
 
+  service.registerFactory<RemoteShopGarnishBloc>(
+      () => RemoteShopGarnishBloc(service(), service()));
+
   //Dio
 
   service.registerSingleton<Dio>(Dio());
@@ -114,6 +122,7 @@ Future<void> init() async {
   service.registerSingleton<ColorRepo>(ColorRepoImpl(service()));
   service.registerSingleton<SizeRepo>(SizeRepoImpl(service()));
   service.registerSingleton<EmployeeShopRepo>(EmployeeShopRepoImpl(service()));
+  service.registerSingleton<ShopGarnishRepo>(ShopGarnishRepoImpl(service()));
 
   //Use case
   service
@@ -163,4 +172,9 @@ Future<void> init() async {
 
   service.registerSingleton<GetShopAddressByEmployeeIdUsecase>(
       GetShopAddressByEmployeeIdUsecase(service()));
+  service.registerSingleton<GetShopGarnishUsecase>(
+      GetShopGarnishUsecase(service()));
+
+  service.registerSingleton<UpdateQuantityUsecase>(
+      UpdateQuantityUsecase(service()));
 }

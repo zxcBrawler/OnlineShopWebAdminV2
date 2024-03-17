@@ -14,13 +14,16 @@ enum Pages {
   adminShopAddressInfo,
   adminAllOrders,
   adminAllClothes,
-  adminOrderDetails,
-  adminClothesDetails,
+  adminOrderDetails, // separate window
+  adminClothesDetails, // separate window
   adminAllColors,
   adminAllSizes,
   directorDashboard,
   directorShop,
   directorEmployees,
+  directorClothes,
+  directorAllClothes,
+  directorClothesDetails, // separate window
   employeeDashboard,
 }
 
@@ -52,6 +55,9 @@ extension AppPageExtension on Pages {
       Pages.employeeDashboard => '/employeeDashboard',
       Pages.directorShop => '/directorShop',
       Pages.directorEmployees => '/directorEmployees',
+      Pages.directorClothes => '/directorClothes',
+      Pages.directorAllClothes => '/directorAllClothes',
+      Pages.directorClothesDetails => '/directorClothesDetails',
       Pages.adminAllColors => '/adminAllColors',
       Pages.adminAllSizes => '/adminAllSizes',
     };
@@ -79,6 +85,9 @@ extension AppPageExtension on Pages {
       Pages.directorDashboard => 'directorDashboard',
       Pages.directorShop => 'directorShop',
       Pages.directorEmployees => 'directorEmployees',
+      Pages.directorClothes => 'directorClothes',
+      Pages.directorAllClothes => 'directorAllClothes',
+      Pages.directorClothesDetails => 'directorClothesDetails',
       Pages.employeeDashboard => 'employeeDashboard',
       Pages.adminAllColors => 'adminAllColors',
       Pages.adminAllSizes => 'adminAllSizes',

@@ -5,10 +5,11 @@ import 'package:go_router/go_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/feature/shared/data/model/clothes.dart';
 import 'package:xc_web_admin/feature/shared/data/model/shop_address.dart';
+import 'package:xc_web_admin/feature/shared/data/model/shop_garnish.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/user_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_active_users.dart';
-import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_clothes.dart.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_colors.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_orders.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_sizes.dart';
@@ -26,6 +27,9 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_user_det
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_users_main.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_activity_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/auth/mobile_auth_page.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_all_clothes.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_clothes.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_clothes_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_dashboard.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_employees.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_main_screen.dart';
@@ -92,6 +96,18 @@ final router =
       );
     },
   ),
+  GoRoute(
+    parentNavigatorKey: _rootNavigatorKey,
+    path: Pages.directorClothesDetails.screenPath,
+    name: Pages.directorClothesDetails.screenName,
+    builder: (context, state) {
+      HashSet<ShopGarnishModel> clothes =
+          state.extra as HashSet<ShopGarnishModel>;
+      return DirectorClothesDetails(
+        clothes: clothes.first,
+      );
+    },
+  ),
   ShellRoute(
       parentNavigatorKey: _rootNavigatorKey,
       navigatorKey: _shellNavigatorKey,
@@ -119,11 +135,31 @@ final router =
           },
         ),
         GoRoute(
+          path: Pages.directorClothes.screenPath,
+          name: Pages.directorClothes.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: DirectorClothes());
+          },
+        ),
+        GoRoute(
           path: Pages.directorShop.screenPath,
           name: Pages.directorShop.screenName,
           parentNavigatorKey: _shellNavigatorKey,
           pageBuilder: (context, state) {
             return const NoTransitionPage(child: DirectorShopInfo());
+          },
+        ),
+        GoRoute(
+          parentNavigatorKey: _shellNavigatorKey,
+          path: Pages.directorAllClothes.screenPath,
+          name: Pages.directorAllClothes.screenName,
+          pageBuilder: (context, state) {
+            HashSet<String> title = state.extra as HashSet<String>;
+            return NoTransitionPage(
+                child: DirectorAllClothes(
+              title: title.first,
+            ));
           },
         ),
       ]),

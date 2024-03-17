@@ -43,7 +43,7 @@ List<Map<String, dynamic>> directorMenuItems = [
   {
     'tabIcon': Icons.checkroom,
     'title': 'clothes',
-    'route': Pages.directorDashboard.screenPath
+    'route': Pages.directorClothes.screenPath
   },
   {
     'tabIcon': Icons.location_on,

@@ -9,6 +9,7 @@ import 'package:xc_web_admin/feature/shared/data/model/clothes.dart';
 import 'package:xc_web_admin/feature/shared/data/model/color.dart';
 import 'package:xc_web_admin/feature/shared/data/model/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/data/model/shop_address.dart';
+import 'package:xc_web_admin/feature/shared/data/model/shop_garnish.dart';
 import 'package:xc_web_admin/feature/shared/data/model/user.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_event.dart';
@@ -113,6 +114,15 @@ class _TableIconsState extends State<TableIcons> {
         router.push(
           Pages.adminClothesDetails.screenPath,
           extra: {widget.data as ClothesModel},
+        );
+        break;
+
+      // Case for ShopGarnishModel, navigate to the detailed clothes information page
+      case "ShopGarnishModel":
+        // Navigate to the detailed clothes information page with the clothes data
+        router.push(
+          Pages.directorClothesDetails.screenPath,
+          extra: {widget.data as ShopGarnishModel},
         );
         break;
 

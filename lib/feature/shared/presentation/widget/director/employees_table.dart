@@ -26,20 +26,15 @@ class _EmployeesTableState extends State<EmployeesTable> {
         ..add(GetAllEmployeesByShopId(
             shopId: int.parse(SessionStorage.getValue("shopAddressId")))),
       child: BlocBuilder<RemoteEmployeeShopBloc, RemoteEmployeeShopState>(
-        // Builder method to render the widget based on the state of RemoteUserBloc
         builder: (_, state) {
-          // Switch on the runtime type of the state to handle different cases
           switch (state.runtimeType) {
-            // Case when the state is of type RemoteUserLoading
             case RemoteEmployeeShopLoading:
-              // Show loading indicator while fetching data
               return const Center(child: CircularProgressIndicator());
-            // Case when the state is of type RemoteUserDone
+
             case RemoteAllEmployeesByShopIdDone:
-              // Retrieve the properties of the first user in the list
               final List<String> columnTitles =
                   state.users!.first.employee!.getProperties();
-              // Build the BasicTable widget with the generated columns and data
+
               return BasicTable(
                 columns: generateColumns(columnTitles),
                 dataSource: BasicDataSource<UserEntity>(
@@ -48,12 +43,12 @@ class _EmployeesTableState extends State<EmployeesTable> {
                   data: state.users!.map((e) => e.employee!).toList(),
                 ),
               );
-            // Case when the state is of type RemoteUserError
+
             case RemoteEmployeeShopError:
               // Display error message
               return const Text("error");
           }
-          // Return an empty sized box as the default case
+
           return const SizedBox();
         },
       ),
