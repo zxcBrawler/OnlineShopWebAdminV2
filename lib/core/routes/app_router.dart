@@ -27,7 +27,9 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_users_ma
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_activity_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/auth/mobile_auth_page.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_dashboard.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_employees.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_main_screen.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_shop_info.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_dashboard.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_main_screen.dart';
 
@@ -106,6 +108,22 @@ final router =
           parentNavigatorKey: _shellNavigatorKey,
           pageBuilder: (context, state) {
             return const NoTransitionPage(child: DirectorDashboard());
+          },
+        ),
+        GoRoute(
+          path: Pages.directorEmployees.screenPath,
+          name: Pages.directorEmployees.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: DirectorEmployees());
+          },
+        ),
+        GoRoute(
+          path: Pages.directorShop.screenPath,
+          name: Pages.directorShop.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: DirectorShopInfo());
           },
         ),
       ]),

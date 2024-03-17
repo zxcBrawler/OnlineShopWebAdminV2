@@ -7,6 +7,7 @@ import 'package:xc_web_admin/feature/shared/data/repository/auth_repo_impl.dart'
 import 'package:xc_web_admin/feature/shared/data/repository/clothes_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/color_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/delivery_info_repo_impl.dart';
+import 'package:xc_web_admin/feature/shared/data/repository/employee_shop_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/gender_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/role_repo_impl.dart';
 import 'package:xc_web_admin/feature/shared/data/repository/shop_address_repo_impl.dart';
@@ -18,6 +19,7 @@ import 'package:xc_web_admin/feature/shared/domain/repository/auth_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/clothes_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/color_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/delivery_info_repo.dart';
+import 'package:xc_web_admin/feature/shared/domain/repository/employee_shop_repo.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/gender_repository.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/role_repository.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/shop_address_repo.dart';
@@ -34,6 +36,8 @@ import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_clothes_u
 import 'package:xc_web_admin/feature/shared/domain/usecase/clothes/get_type_clothes_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/color/add_color_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/color/get_colors_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/employee_shop/get_all_employees_by_shop_id_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/employee_shop/get_shop_address_by_employee_id_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/gender/get_genders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/order/get_orders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/role/get_roles_usecase.dart';
@@ -52,6 +56,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/auth/auth_bloc.dar
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/employee_shop_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
@@ -88,6 +93,9 @@ Future<void> init() async {
   service.registerFactory<RemoteSizeBloc>(
       () => RemoteSizeBloc(service(), service()));
 
+  service.registerFactory<RemoteEmployeeShopBloc>(
+      () => RemoteEmployeeShopBloc(service(), service()));
+
   //Dio
 
   service.registerSingleton<Dio>(Dio());
@@ -105,6 +113,7 @@ Future<void> init() async {
   service.registerSingleton<AuthRepo>(AuthRepoImpl(service()));
   service.registerSingleton<ColorRepo>(ColorRepoImpl(service()));
   service.registerSingleton<SizeRepo>(SizeRepoImpl(service()));
+  service.registerSingleton<EmployeeShopRepo>(EmployeeShopRepoImpl(service()));
 
   //Use case
   service
@@ -149,4 +158,9 @@ Future<void> init() async {
   service.registerSingleton<GetSizesUsecase>(GetSizesUsecase(service()));
   service.registerSingleton<AddColorUsecase>(AddColorUsecase(service()));
   service.registerSingleton<AddSizeUsecase>(AddSizeUsecase(service()));
+  service.registerSingleton<GetAllEmployeesByShopIdUsecase>(
+      GetAllEmployeesByShopIdUsecase(service()));
+
+  service.registerSingleton<GetShopAddressByEmployeeIdUsecase>(
+      GetShopAddressByEmployeeIdUsecase(service()));
 }

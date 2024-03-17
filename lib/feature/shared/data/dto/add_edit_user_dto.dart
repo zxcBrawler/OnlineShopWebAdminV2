@@ -7,6 +7,7 @@ class UserDTO {
   String passwordHash = "";
   int role = 0;
   String employeeNumber = "";
+  int shopAddressId = 0;
 
   Map<String, dynamic> toJson() {
     return {
@@ -18,6 +19,7 @@ class UserDTO {
       'employeeNumber': employeeNumber,
       'role': role,
       'gender': gender,
+      'shopAddressId': shopAddressId
     };
   }
 }

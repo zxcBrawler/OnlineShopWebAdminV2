@@ -1,5 +1,3 @@
-//implement app after routes
-
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/config/custom_scroll.dart';
 import 'package:xc_web_admin/config/themes.dart';

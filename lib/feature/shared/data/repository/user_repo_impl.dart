@@ -41,6 +41,7 @@ class UserRepoImpl implements UserRepo {
         phoneNumber: user.phoneNumber,
         username: user.username,
         email: user.email,
+        shopAddressId: user.shopAddressId,
       );
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);

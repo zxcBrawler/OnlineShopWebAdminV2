@@ -38,7 +38,7 @@ List<Map<String, dynamic>> directorMenuItems = [
   {
     'tabIcon': Icons.group,
     'title': 'employees',
-    'route': Pages.directorDashboard.screenPath
+    'route': Pages.directorEmployees.screenPath
   },
   {
     'tabIcon': Icons.checkroom,
@@ -48,7 +48,7 @@ List<Map<String, dynamic>> directorMenuItems = [
   {
     'tabIcon': Icons.location_on,
     'title': 'my shop',
-    'route': Pages.directorDashboard.screenPath
+    'route': Pages.directorShop.screenPath
   },
   {
     'tabIcon': Icons.assignment,

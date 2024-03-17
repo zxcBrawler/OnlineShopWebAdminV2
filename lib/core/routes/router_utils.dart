@@ -19,6 +19,8 @@ enum Pages {
   adminAllColors,
   adminAllSizes,
   directorDashboard,
+  directorShop,
+  directorEmployees,
   employeeDashboard,
 }
 
@@ -48,6 +50,8 @@ extension AppPageExtension on Pages {
       Pages.adminClothesDetails => '/adminClothesDetails',
       Pages.directorDashboard => '/directorDashboard',
       Pages.employeeDashboard => '/employeeDashboard',
+      Pages.directorShop => '/directorShop',
+      Pages.directorEmployees => '/directorEmployees',
       Pages.adminAllColors => '/adminAllColors',
       Pages.adminAllSizes => '/adminAllSizes',
     };
@@ -73,6 +77,8 @@ extension AppPageExtension on Pages {
       Pages.adminOrderDetails => 'adminOrderDetails',
       Pages.adminClothesDetails => 'adminClothesDetails',
       Pages.directorDashboard => 'directorDashboard',
+      Pages.directorShop => 'directorShop',
+      Pages.directorEmployees => 'directorEmployees',
       Pages.employeeDashboard => 'employeeDashboard',
       Pages.adminAllColors => 'adminAllColors',
       Pages.adminAllSizes => 'adminAllSizes',

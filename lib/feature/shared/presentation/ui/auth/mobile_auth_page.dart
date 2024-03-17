@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/config/responsive.dart';
+import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/text/auth_button_text.dart';
@@ -280,7 +281,8 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
       // Check the type of the state and perform the appropriate action
       if (state is AuthStateDone) {
         // Navigate to the appropriate dashboard screen based on the user's role
-        _navigateToDashboard(state.loginResponse!.userEntity!.role!.roleName!);
+        _navigateToDashboard(state.loginResponse!.userEntity!.role!.roleName!,
+            state.loginResponse!.userEntity!.id!);
       } else if (state is AuthStateError) {
         // Show an alert dialog with an error message
         _showErrorDialog();
@@ -295,20 +297,24 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
   ///
   /// Parameters:
   ///   - role: The role of the user.
-  void _navigateToDashboard(String role) {
+  void _navigateToDashboard(String role, int id) {
     // Switch statement based on the user's role
     switch (role) {
       // If the user is an admin, navigate to the admin dashboard
       case "admin":
         router.go(Pages.adminDashboard.screenPath);
         break;
-      // If the user is a director, navigate to the director dashboard
+      // If the user is a director, navigate to the director dashboard and save the director id
       case "director":
+        SessionStorage.saveLocalData("employeeId", id);
         router.go(Pages.directorDashboard.screenPath);
+
         break;
-      // If the user is an employee, navigate to the employee dashboard
+      // If the user is an employee, navigate to the employee dashboard and save the employee id
       case "employee":
+        SessionStorage.saveLocalData("employeeId", id);
         router.go(Pages.employeeDashboard.screenPath);
+
         break;
       // If the user's role is 'user', show an alert dialog with an error message
       case "user":

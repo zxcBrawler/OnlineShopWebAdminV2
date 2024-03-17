@@ -16,6 +16,9 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_stat
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_state.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_event.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_state.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
 
@@ -33,6 +36,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
 
   int? selectedRoleIndex = 0;
   int? selectedGenderIndex = 0;
+  int? selectedShopAddressIndex = 0;
 
   @override
 
@@ -152,6 +156,35 @@ class _AddUserDialogState extends State<AddUserDialog> {
                             Methods.getControllerForField(controllers, field),
                         isEnabled: true,
                       ),
+                    BlocProvider<RemoteShopAddressesBloc>(
+                      create: (context) =>
+                          service()..add(const GetShopAddresses()),
+                      child: BlocBuilder<RemoteShopAddressesBloc,
+                          RemoteShopAddressState>(builder: (_, state) {
+                        switch (state) {
+                          case RemoteShopAddressLoading():
+                            return const SizedBox();
+                          case RemoteShopAddressDone():
+                            return BasicDropdown(
+                              listTitle: "choose shop address",
+                              dropdownData: state.shopAddresses!
+                                  .map((e) => e.shopAddressDirection!)
+                                  .toList(),
+                              selectedIndex: selectedShopAddressIndex!,
+                              onIndexChanged: (value) {
+                                selectedShopAddressIndex = value;
+                                print(state
+                                    .shopAddresses![selectedShopAddressIndex!]
+                                    .shopAddressDirection);
+                              },
+                              isColorDropdown: false,
+                            );
+                          case RemoteShopAddressError():
+                            return const Text("error");
+                        }
+                        return const SizedBox();
+                      }),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
@@ -164,6 +197,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
                               controllers['employeeNumber']!.text;
                           newUser.role = selectedRoleIndex! + 1;
                           newUser.gender = selectedGenderIndex! + 1;
+                          newUser.shopAddressId = selectedShopAddressIndex! + 1;
                           service<RemoteUserBloc>().add(AddUser(user: newUser));
 
                           await Future.delayed(const Duration(seconds: 1));

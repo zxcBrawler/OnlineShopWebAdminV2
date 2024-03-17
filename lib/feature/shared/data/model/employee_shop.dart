@@ -14,7 +14,7 @@ class EmployeeShopModel extends EmployeeShopEntity {
   factory EmployeeShopModel.fromJson(Map<String, dynamic> map) {
     return EmployeeShopModel(
         id: map["id"],
-        employee: UserModel.fromJson(map["employee"]),
-        shopAddress: ShopAddressModel.fromJson(map["shopAddress"]));
+        employee: UserModel.fromJson(map["employee"] ?? {}),
+        shopAddress: ShopAddressModel.fromJson(map["shopAddresses"] ?? {}));
   }
 }
