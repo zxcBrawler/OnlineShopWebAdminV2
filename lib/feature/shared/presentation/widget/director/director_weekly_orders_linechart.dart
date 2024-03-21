@@ -2,26 +2,25 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/config/methods.dart';
+import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/widget/chart/basic_line_chart.dart';
 import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
 
-/// Widget representing the admin view of weekly orders, including a line chart
-class AdminWeeklyOrdersLinechart extends StatefulWidget {
-  const AdminWeeklyOrdersLinechart({Key? key}) : super(key: key);
+class DirectorWeeklyOrdersLinechart extends StatefulWidget {
+  const DirectorWeeklyOrdersLinechart({super.key});
 
   @override
-  State<AdminWeeklyOrdersLinechart> createState() =>
-      _AdminWeeklyOrdersLinechartState();
+  State<DirectorWeeklyOrdersLinechart> createState() =>
+      _DirectorWeeklyOrdersLinechartState();
 }
 
-class _AdminWeeklyOrdersLinechartState
-    extends State<AdminWeeklyOrdersLinechart> {
+class _DirectorWeeklyOrdersLinechartState
+    extends State<DirectorWeeklyOrdersLinechart> {
   @override
   Widget build(BuildContext context) {
-    // Provide the RemoteDeliveryInfoBloc to the widget tree
     return BlocProvider<RemoteDeliveryInfoBloc>(
       create: (context) => service()..add(const GetDeliveryInfo()),
       // Use BlocBuilder to rebuild the widget based on the state of RemoteDeliveryInfoBloc
@@ -35,19 +34,18 @@ class _AdminWeeklyOrdersLinechartState
             case RemoteDeliveryInfoDone:
               // Generate FlSpot lists for Pick Up and Delivery types
               List<FlSpot> flSpotListPickUp = Methods.generateFlSpotList(
-                state.info!,
+                state.info!
+                    .where((element) =>
+                        element.shopAddresses!.shopAddressId.toString() ==
+                        SessionStorage.getValue("shopAddressId"))
+                    .toList(),
                 typeDeliveryId: 1,
-              );
-
-              List<FlSpot> flSpotListDelivery = Methods.generateFlSpotList(
-                state.info!,
-                typeDeliveryId: 2,
               );
 
               // Display a BasicLineChart with the generated FlSpot lists
               return BasicLineChart(
-                spotsList: [flSpotListPickUp, flSpotListDelivery],
-                titles: const ["Pick up", "Delivery"],
+                spotsList: [flSpotListPickUp],
+                titles: const ["pick up"],
               );
 
             case RemoteDeliveryInfoError:

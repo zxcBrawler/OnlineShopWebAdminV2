@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:xc_web_admin/config/responsive.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_order_statuses_widget.dart';
+
 import 'package:xc_web_admin/feature/shared/presentation/widget/shared/charts/total_orders_pie_chart.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/shared/weekly_orders_widget.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_weekly_orders_widget.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 
 class AdminOrders extends StatefulWidget {
@@ -24,30 +27,64 @@ class _AdminOrdersState extends State<AdminOrders> {
   /// This method returns a [Widget].
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       // Wrap the content with SafeArea to avoid any overlap with system UI
       child: SingleChildScrollView(
           // Wrap the content with SingleChildScrollView to enable vertical
           // scrolling
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            // Create a column to stack the widgets vertically
-            children: [
-              Header(
-                // Display the header
-                title: 'orders',
-              ),
-              // Display a row containing the total orders widget
-              Row(
-                children: [
-                  AdminTotalOrders(),
-                ],
-              ),
-              // Display a row containing the weekly orders widget
+          padding: const EdgeInsets.all(16.0),
+          child: Responsive.isDesktop(context)
+              ? _buildDesktopUI(context)
+              : _buildMobileUI(context)),
+    );
+  }
 
-              AdminWeeklyOrders(),
-            ],
-          )),
+  Widget _buildDesktopUI(BuildContext context) {
+    return const Column(
+      // Create a column to stack the widgets vertically
+      children: [
+        Header(
+          // Display the header
+          title: 'orders',
+        ),
+        // Display a row containing the total orders widget
+        Row(
+          children: [AdminTotalOrders(), AdminOrderStatuses()],
+        ),
+        // Display a row containing the weekly orders widget
+
+        AdminWeeklyOrders(),
+        Row(
+          children: [
+            SizedBox(
+              height: 60,
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _buildMobileUI(BuildContext context) {
+    return const Column(
+      // Create a column to stack the widgets vertically
+      children: [
+        Header(
+          // Display the header
+          title: 'orders',
+        ),
+        // Display a row containing the total orders widget
+        Row(
+          children: [AdminTotalOrders()],
+        ),
+        // Display a row containing the weekly orders widget
+
+        AdminWeeklyOrders(),
+
+        Row(
+          children: [AdminOrderStatuses()],
+        )
+      ],
     );
   }
 }

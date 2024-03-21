@@ -278,6 +278,16 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
 
     // Listen to the bloc's state stream
     authBloc.stream.listen((state) {
+      if (state is AuthStateLoading) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              content: CircularProgressIndicator(),
+            );
+          },
+        );
+      }
       // Check the type of the state and perform the appropriate action
       if (state is AuthStateDone) {
         // Navigate to the appropriate dashboard screen based on the user's role

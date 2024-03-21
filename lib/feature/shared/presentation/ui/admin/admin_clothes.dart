@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_colors.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_sizes.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/shared/female_clothes_widget.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/shared/male_clothes_widget.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_female_clothes_widget.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_male_clothes_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_total_items.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_top_sold_items_.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_weekly_items_sold_overview.dart';

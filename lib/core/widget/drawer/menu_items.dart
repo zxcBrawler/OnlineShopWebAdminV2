@@ -53,7 +53,7 @@ List<Map<String, dynamic>> directorMenuItems = [
   {
     'tabIcon': Icons.assignment,
     'title': 'shop orders',
-    'route': Pages.directorDashboard.screenPath
+    'route': Pages.directorOrders.screenPath
   },
 ];
 

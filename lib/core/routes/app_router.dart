@@ -18,7 +18,7 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes.
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_dashboard.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_main_screen.dart';
-import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_order_details.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/shared/order_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_orders_main.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_shop_address_info.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_shops_main.dart';
@@ -28,12 +28,14 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_users_ma
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_activity_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/auth/mobile_auth_page.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_all_clothes.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_all_orders.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_clothes_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_dashboard.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_employees.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_main_screen.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_shop_info.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_shop_orders.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_dashboard.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_main_screen.dart';
 
@@ -68,7 +70,7 @@ final router =
     builder: (context, state) {
       Set<DeliveryInfoEntity> deliveryInfo =
           state.extra as Set<DeliveryInfoEntity>;
-      return AdminOrderDetails(
+      return OrderDetails(
         deliveryInfo: deliveryInfo.first,
       );
     },
@@ -160,6 +162,22 @@ final router =
                 child: DirectorAllClothes(
               title: title.first,
             ));
+          },
+        ),
+        GoRoute(
+          path: Pages.directorOrders.screenPath,
+          name: Pages.directorOrders.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: DirectorShopOrders());
+          },
+        ),
+        GoRoute(
+          path: Pages.directorAllOrders.screenPath,
+          name: Pages.directorAllOrders.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: DirectorAllOrders());
           },
         ),
       ]),

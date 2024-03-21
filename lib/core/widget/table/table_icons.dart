@@ -103,10 +103,12 @@ class _TableIconsState extends State<TableIcons> {
       // Case for DeliveryInfoModel, navigate to the detailed order information page
       case "DeliveryInfoModel":
         // Navigate to the detailed order information page with the delivery info data
+
         router.push(
           Pages.adminOrderDetails.screenPath,
           extra: {widget.data as DeliveryInfoModel},
         );
+
         break;
       // Case for ClothesModel, navigate to the detailed clothes information page
       case "ClothesModel":

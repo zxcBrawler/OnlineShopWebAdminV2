@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/config/methods.dart';
 import 'package:xc_web_admin/config/responsive.dart';
+import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/button/build_button.dart';
@@ -17,15 +18,15 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/status/status_bloc
 import 'package:xc_web_admin/feature/shared/presentation/bloc/status/status_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/status/status_state.dart';
 
-class AdminOrderDetails extends StatefulWidget {
+class OrderDetails extends StatefulWidget {
   final DeliveryInfoEntity deliveryInfo;
-  const AdminOrderDetails({super.key, required this.deliveryInfo});
+  const OrderDetails({super.key, required this.deliveryInfo});
 
   @override
-  State<AdminOrderDetails> createState() => _AdminOrderDetailsState();
+  State<OrderDetails> createState() => _OrderDetailsState();
 }
 
-class _AdminOrderDetailsState extends State<AdminOrderDetails> {
+class _OrderDetailsState extends State<OrderDetails> {
   Map<String, TextEditingController> controllers = {
     "date order": TextEditingController(),
     "time order": TextEditingController(),
@@ -39,7 +40,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
 
   late int? selectedStatusIndex;
 
-  /// Initializes the [_AdminOrderDetailsState] with the necessary text editing controllers
+  /// Initializes the [_OrderDetailsState] with the necessary text editing controllers
   /// and sets the initial values for the controllers based on the [widget.deliveryInfo] parameter.
   @override
   void initState() {
@@ -60,6 +61,9 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
     // Set the initial value for the "user address" controller
     controllers["user address"]!.text =
         widget.deliveryInfo.addresses!.directionAddress ?? "";
+
+    selectedStatusIndex =
+        widget.deliveryInfo.order!.currentStatus!.idStatus! - 1;
   }
 
   @override
@@ -146,16 +150,12 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                         ..add(const GetStatuses()),
                                   child: BlocBuilder<RemoteStatusBloc,
                                       RemoteStatusState>(
-                                    builder: (context, state) {
+                                    builder: (_, state) {
                                       if (state is RemoteStatusDone) {
                                         statuses = state.statuses!;
                                         statuses.sort(((a, b) => a.idStatus!
                                             .compareTo(b.idStatus!)));
-                                        selectedStatusIndex =
-                                            statuses.indexWhere((status) =>
-                                                status.idStatus ==
-                                                widget.deliveryInfo.order!
-                                                    .currentStatus!.idStatus);
+
                                         return BasicDropdown(
                                           listTitle: "status order",
                                           dropdownData: statuses
@@ -169,6 +169,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                                       .idStatus! -
                                                   1;
                                             });
+                                            print(selectedStatusIndex);
                                           },
                                           isColorDropdown: false,
                                         );
@@ -202,7 +203,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
     updatedStatus.id = widget.deliveryInfo.order!.idOrder!;
 
     // Set the status id of the updated status to the id of the selected status
-    updatedStatus.statusID = selectedStatusIndex! - 1;
+    updatedStatus.statusID = selectedStatusIndex! + 1;
 
     // Add the UpdateStatues event to the RemoteStatusBloc
     service<RemoteStatusBloc>().add(UpdateStatues(updatedStatus));
@@ -212,8 +213,15 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
 
     // Pop the current route and push to the adminAllOrders page
     router.pop();
-    router.push(
-      Pages.adminAllOrders.screenPath,
-    );
+
+    if (SessionStorage.getValue("shopAddressId") == "") {
+      router.push(
+        Pages.adminAllOrders.screenPath,
+      );
+    } else {
+      router.push(
+        Pages.directorAllOrders.screenPath,
+      );
+    }
   }
 }
