@@ -52,8 +52,8 @@ class _DirectorOrderStatusesState extends State<DirectorOrderStatuses> {
                         }
                         return Column(
                           children: [
-                            BasicText(
-                              title: 'orders by status: ${statusCount.length}',
+                            const BasicText(
+                              title: 'orders by status',
                             ),
                             BasicPieChart(inputData: statusCount)
                           ],

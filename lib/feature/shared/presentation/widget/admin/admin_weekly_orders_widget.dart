@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/shared/charts/weekly_orders_linechart.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_weekly_orders_linechart.dart';
 
 class AdminWeeklyOrders extends StatefulWidget {
   const AdminWeeklyOrders({super.key});

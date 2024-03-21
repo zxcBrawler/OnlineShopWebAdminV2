@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xc_web_admin/config/responsive.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_order_statuses_widget.dart';
 
-import 'package:xc_web_admin/feature/shared/presentation/widget/shared/charts/total_orders_pie_chart.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_orders_pie_chart.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_weekly_orders_widget.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 
@@ -54,13 +54,6 @@ class _AdminOrdersState extends State<AdminOrders> {
         // Display a row containing the weekly orders widget
 
         AdminWeeklyOrders(),
-        Row(
-          children: [
-            SizedBox(
-              height: 60,
-            )
-          ],
-        )
       ],
     );
   }
