@@ -43,7 +43,7 @@ class _HeaderState extends State<Header> {
         ),
         // Title
         if (Responsive.isMobile(context))
-          HeaderText(textSize: 35, title: widget.title)
+          HeaderText(textSize: 25, title: widget.title)
         else
           HeaderText(textSize: 45, title: widget.title),
         // Spacer to fill available space

@@ -40,7 +40,7 @@ class _BasicBarChartState extends State<BasicBarChart> {
             barGroups: generateBarGroupsData(),
             gridData: FlGridData(show: true),
             alignment: BarChartAlignment.spaceAround,
-            maxY: 10,
+            maxY: 50,
             minY: 0)),
       ),
     );

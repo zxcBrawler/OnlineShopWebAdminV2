@@ -19,6 +19,7 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes_
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_dashboard.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_main_screen.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_items_sold_details.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_weekly_items_sold_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/shared/order_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_orders_main.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_shop_address_info.dart';
@@ -179,6 +180,15 @@ final router =
           parentNavigatorKey: _shellNavigatorKey,
           pageBuilder: (context, state) {
             return const NoTransitionPage(child: DirectorAllOrders());
+          },
+        ),
+        GoRoute(
+          path: Pages.directorWeeklyItemsSoldDetails.screenPath,
+          name: Pages.directorWeeklyItemsSoldDetails.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(
+                child: DirectorWeeklyItemsSoldDetails());
           },
         ),
       ]),

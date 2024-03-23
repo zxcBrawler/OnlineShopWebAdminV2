@@ -24,7 +24,8 @@ enum Pages {
   directorEmployees,
   directorClothes,
   directorAllClothes,
-  directorClothesDetails, // separate window
+  directorClothesDetails,
+  directorWeeklyItemsSoldDetails, // separate window
   directorOrders,
   directorAllOrders,
   directorOrderDetails,
@@ -68,6 +69,7 @@ extension AppPageExtension on Pages {
       Pages.adminAllColors => '/adminAllColors',
       Pages.adminAllSizes => '/adminAllSizes',
       Pages.adminWeeklyItemsSoldDetails => '/adminWeeklyItemsSoldDetails',
+      Pages.directorWeeklyItemsSoldDetails => '/directorWeeklyItemsSoldDetails',
     };
   }
 
@@ -103,6 +105,7 @@ extension AppPageExtension on Pages {
       Pages.adminAllColors => 'adminAllColors',
       Pages.adminAllSizes => 'adminAllSizes',
       Pages.adminWeeklyItemsSoldDetails => 'adminWeeklyItemsSoldDetails',
+      Pages.directorWeeklyItemsSoldDetails => 'directorWeeklyItemsSoldDetails',
     };
   }
 }

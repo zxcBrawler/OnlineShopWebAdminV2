@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:xc_web_admin/config/color.dart';
 
 final ThemeData appTheme = ThemeData(
-  useMaterial3: false,
+    useMaterial3: false,
     inputDecorationTheme: InputDecorationTheme(
         focusColor: AppColors.darkBrown,
         floatingLabelStyle: GoogleFonts.hammersmithOne(
@@ -19,4 +19,6 @@ final ThemeData appTheme = ThemeData(
             textStyle: const TextStyle(fontSize: 20, letterSpacing: 2)),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
     textSelectionTheme: TextSelectionThemeData(
-        cursorColor: AppColors.darkBrown, selectionColor: AppColors.lightGray));
+        cursorColor: AppColors.darkBrown, selectionColor: AppColors.lightGray),
+    progressIndicatorTheme:
+        ProgressIndicatorThemeData(color: AppColors.darkBrown));

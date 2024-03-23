@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xc_web_admin/config/responsive.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_total_items.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_weelky_items_sold_overview.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_female_clothes_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_male_clothes_widget.dart';
 
@@ -37,14 +38,7 @@ class _DirectorClothesState extends State<DirectorClothes> {
           ],
         ),
         Row(
-          children: [
-            // AdminTopSoldItemsClothesWidget(
-            //   title: "top sold female items",
-            // ),
-            // AdminTopSoldItemsClothesWidget(
-            //   title: "top sold male items",
-            // ),
-          ],
+          children: [DirectorWeeklyItemsSold()],
         ),
         // AdminWeeklyItemsSold(),
       ],
