@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
-import 'package:xc_web_admin/core/widget/searchbar/basic_search_bar.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/employees_table.dart';
 
@@ -35,7 +34,6 @@ class _DirectorEmployeesState extends State<DirectorEmployees> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const BasicSearchBar(),
                 Expanded(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,

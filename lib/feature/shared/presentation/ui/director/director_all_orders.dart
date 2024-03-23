@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
-
-import 'package:xc_web_admin/core/widget/searchbar/basic_search_bar.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_orders_table.dart';
 
@@ -15,14 +13,14 @@ class DirectorAllOrders extends StatefulWidget {
 class _DirectorAllOrdersState extends State<DirectorAllOrders> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       // Wrap the content with a SingleChildScrollView to allow vertical scrolling
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
             // Header widget with the title 'all orders'
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: Header(
@@ -35,60 +33,16 @@ class _DirectorAllOrdersState extends State<DirectorAllOrders> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const BasicSearchBar(),
                 Expanded(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      // Filter icon 1
-                      SizedBox(
-                        height: 70,
-                        width: 70,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: BasicContainer(
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.filter_alt),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Filter icon 2
-                      SizedBox(
-                        height: 70,
-                        width: 70,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: BasicContainer(
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.filter),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Filter icon 3
-                      SizedBox(
-                        height: 70,
-                        width: 70,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: BasicContainer(
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.filter),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    children: [],
                   ),
                 )
               ],
             ),
             // Orders table widget
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: Padding(

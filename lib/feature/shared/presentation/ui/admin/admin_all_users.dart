@@ -52,23 +52,10 @@ class _AdminAllUsersState extends State<AdminAllUsers> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const BasicSearchBar(),
                 Expanded(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      // Filter users button
-                      SizedBox(
-                          height: 70,
-                          width: 70,
-                          child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: BasicContainer(
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.filter_alt),
-                                ),
-                              ))),
                       // Add user button
                       SizedBox(
                           height: 70,

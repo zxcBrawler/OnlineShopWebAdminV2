@@ -8,12 +8,14 @@ class BasicTextField extends StatefulWidget {
   final TextEditingController controller;
   final bool isEnabled;
   final Function(void)? onChanged;
+  final Function()? findAddress;
   const BasicTextField({
     super.key,
     required this.title,
     required this.controller,
     required this.isEnabled,
     this.onChanged,
+    this.findAddress,
   });
 
   @override
@@ -51,7 +53,15 @@ class BasicTextFieldState extends State<BasicTextField> {
                     },
                   ),
                 )
-              : null,
+              : widget.title == "shop address"
+                  ? IconButton(
+                      icon: Icon(
+                        Icons.find_in_page,
+                        color: AppColors.darkBrown,
+                      ),
+                      onPressed: widget.findAddress,
+                    )
+                  : null,
         ),
         onChanged: widget.onChanged,
       ),

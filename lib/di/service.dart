@@ -47,6 +47,7 @@ import 'package:xc_web_admin/feature/shared/domain/usecase/order/get_orders_usec
 import 'package:xc_web_admin/feature/shared/domain/usecase/orderComp/get_order_comp_by_order_id_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/orderComp/get_order_comp_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/role/get_roles_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/add_shop_address_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/delete_shop_address_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/get_shop_addresses_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shop_garnish/add_shop_garnish_usecase.dart';
@@ -85,7 +86,7 @@ Future<void> init() async {
   service.registerFactory<RemoteAddressesBloc>(
       () => RemoteAddressesBloc(service()));
   service.registerFactory<RemoteShopAddressesBloc>(
-      () => RemoteShopAddressesBloc(service(), service()));
+      () => RemoteShopAddressesBloc(service(), service(), service()));
   service.registerFactory<RemoteUserBloc>(
       () => RemoteUserBloc(service(), service(), service(), service()));
   service.registerFactory<RemoteDeliveryInfoBloc>(
@@ -195,4 +196,6 @@ Future<void> init() async {
       .registerSingleton<GetOrderCompUsecase>(GetOrderCompUsecase(service()));
   service.registerSingleton<GetOrderCompByOrderIdUsecase>(
       GetOrderCompByOrderIdUsecase(service()));
+  service.registerSingleton<AddShopAddressUsecase>(
+      AddShopAddressUsecase(service()));
 }

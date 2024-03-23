@@ -60,21 +60,6 @@ class _DirectorClothesState extends State<DirectorClothes> {
             DirectorMaleClothesWidget(),
           ],
         ),
-        // Row(
-        //   children: [
-        //     AdminTopSoldItemsClothesWidget(
-        //       title: "top sold female items",
-        //     ),
-        //   ],
-        // ),
-        // Row(
-        //   children: [
-        //     AdminTopSoldItemsClothesWidget(
-        //       title: "top sold male items",
-        //     ),
-        //   ],
-        // ),
-        // AdminWeeklyItemsSold(),
       ],
     );
   }

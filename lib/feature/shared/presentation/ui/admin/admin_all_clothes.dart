@@ -64,8 +64,6 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               // Spaces out the children horizontally
               children: [
-                const BasicSearchBar(),
-                // A widget for searching
                 Expanded(
                   // Expands to fill available horizontal space
                   child: Row(
@@ -73,20 +71,6 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     // Aligns the children to the right
                     children: [
-                      SizedBox(
-                          // A sized box for the filter button
-                          height: 70,
-                          width: 70,
-                          child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: BasicContainer(
-                                // A container for the filter button
-                                child: IconButton(
-                                  onPressed: () {},
-                                  // What happens when the filter button is pressed
-                                  icon: const Icon(Icons.filter_alt),
-                                ),
-                              ))),
                       SizedBox(
                           height: 70,
                           width: 70,

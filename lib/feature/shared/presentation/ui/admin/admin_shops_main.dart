@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
-import 'package:xc_web_admin/core/widget/searchbar/basic_search_bar.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_add_shop_dialog.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_shops_table.dart';
 
 class AdminShops extends StatefulWidget {
@@ -51,12 +51,10 @@ class _AdminShopsState extends State<AdminShops> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const BasicSearchBar(),
                 Expanded(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      // Filter icon 1
                       SizedBox(
                         height: 70,
                         width: 70,
@@ -64,36 +62,14 @@ class _AdminShopsState extends State<AdminShops> {
                           padding: const EdgeInsets.all(8.0),
                           child: BasicContainer(
                             child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.filter_alt),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Filter icon 2
-                      SizedBox(
-                        height: 70,
-                        width: 70,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: BasicContainer(
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.filter),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Filter icon 3
-                      SizedBox(
-                        height: 70,
-                        width: 70,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: BasicContainer(
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.filter),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const AddShopDialog();
+                                    });
+                              },
+                              icon: const Icon(Icons.add),
                             ),
                           ),
                         ),

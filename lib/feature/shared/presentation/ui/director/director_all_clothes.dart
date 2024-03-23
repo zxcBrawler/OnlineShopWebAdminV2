@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
-import 'package:xc_web_admin/core/widget/searchbar/basic_search_bar.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_event.dart';
@@ -48,7 +47,6 @@ class _DirectorAllClothesState extends State<DirectorAllClothes> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               // Spaces out the children horizontally
               children: [
-                const BasicSearchBar(),
                 // A widget for searching
                 Expanded(
                   // Expands to fill available horizontal space
@@ -57,20 +55,6 @@ class _DirectorAllClothesState extends State<DirectorAllClothes> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     // Aligns the children to the right
                     children: [
-                      SizedBox(
-                          // A sized box for the filter button
-                          height: 70,
-                          width: 70,
-                          child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: BasicContainer(
-                                // A container for the filter button
-                                child: IconButton(
-                                  onPressed: () {},
-                                  // What happens when the filter button is pressed
-                                  icon: const Icon(Icons.filter_alt),
-                                ),
-                              ))),
                       SizedBox(
                           height: 70,
                           width: 70,

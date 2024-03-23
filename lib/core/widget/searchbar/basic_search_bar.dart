@@ -3,7 +3,8 @@ import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield_style.dart';
 
 class BasicSearchBar extends StatefulWidget {
-  const BasicSearchBar({super.key});
+  final Function(String?) onChangedCallback;
+  const BasicSearchBar({super.key, required this.onChangedCallback});
 
   @override
   State<BasicSearchBar> createState() => _BasicSearchBarState();
@@ -14,33 +15,17 @@ class _BasicSearchBarState extends State<BasicSearchBar> {
       TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SearchBar(
-          textStyle: MaterialStatePropertyAll(
-            basicTextFieldStyle(),
-          ),
-          shadowColor: MaterialStatePropertyAll(AppColors.darkWhite),
-          controller: _searchEditingController,
-          onChanged: (String value) {
-            setState(() {
-              _searchEditingController.text == value;
-            });
-          },
-          leading: const Icon(Icons.search),
-          trailing: _searchEditingController.text.isNotEmpty
-              ? [
-                  IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _searchEditingController.clear();
-                        });
-                      },
-                      icon: const Icon(Icons.close))
-                ]
-              : null,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SearchBar(
+        hintText: 'search...',
+        textStyle: MaterialStatePropertyAll(
+          basicTextFieldStyle(),
         ),
+        shadowColor: MaterialStatePropertyAll(AppColors.darkWhite),
+        controller: _searchEditingController,
+        onChanged: widget.onChangedCallback,
+        leading: const Icon(Icons.search),
       ),
     );
   }

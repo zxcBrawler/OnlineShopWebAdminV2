@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/users_table.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_weekly_activity_linechart.dart';
-import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
-import 'package:xc_web_admin/core/widget/searchbar/basic_search_bar.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
+import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_weekly_activity_linechart.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/users_table.dart';
 
 class WeeklyActivityDetails extends StatefulWidget {
   const WeeklyActivityDetails({super.key});
@@ -63,7 +62,6 @@ class _WeeklyActivityDetailsState extends State<WeeklyActivityDetails> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const BasicSearchBar(),
                 Expanded(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,

@@ -63,7 +63,6 @@ class _AllActiveUsersState extends State<AllActiveUsers> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        const BasicSearchBar(),
         Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
