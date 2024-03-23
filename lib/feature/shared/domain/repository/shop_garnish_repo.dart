@@ -5,4 +5,7 @@ import 'package:xc_web_admin/feature/shared/domain/entities/shop_garnish_entity.
 abstract class ShopGarnishRepo {
   Future<DataState<List<ShopGarnishEntity>>> getShopGarnish({int? id});
   Future<DataState<void>> updateQuantity({ShopGarnishDTO? shopGarnishDTO});
+  Future<DataState<ShopGarnishEntity>> addShopGarnish(
+      {ShopGarnishDTO? shopGarnishDTO});
+  Future<DataState<void>> deleteShopGarnish({int? id});
 }

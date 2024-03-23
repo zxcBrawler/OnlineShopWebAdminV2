@@ -15,3 +15,13 @@ class UpdateQuantity extends RemoteShopGarnishEvent {
   final ShopGarnishDTO shopGarnishDTO;
   const UpdateQuantity({required this.shopGarnishDTO});
 }
+
+class AddShopGarnish extends RemoteShopGarnishEvent {
+  final ShopGarnishDTO shopGarnishDTO;
+  const AddShopGarnish({required this.shopGarnishDTO});
+}
+
+class DeleteShopGarnish extends RemoteShopGarnishEvent {
+  final int id;
+  const DeleteShopGarnish({required this.id});
+}

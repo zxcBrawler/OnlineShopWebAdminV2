@@ -45,6 +45,8 @@ import 'package:xc_web_admin/feature/shared/domain/usecase/order/get_orders_usec
 import 'package:xc_web_admin/feature/shared/domain/usecase/role/get_roles_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/delete_shop_address_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/get_shop_addresses_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/shop_garnish/add_shop_garnish_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/shop_garnish/delete_shop_garnish_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shop_garnish/get_shop_garnish_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shop_garnish/update_quantity_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/size/add_size_usecase.dart';
@@ -102,7 +104,7 @@ Future<void> init() async {
       () => RemoteEmployeeShopBloc(service(), service()));
 
   service.registerFactory<RemoteShopGarnishBloc>(
-      () => RemoteShopGarnishBloc(service(), service()));
+      () => RemoteShopGarnishBloc(service(), service(), service(), service()));
 
   //Dio
 
@@ -177,4 +179,8 @@ Future<void> init() async {
 
   service.registerSingleton<UpdateQuantityUsecase>(
       UpdateQuantityUsecase(service()));
+  service.registerSingleton<AddShopGarnishUsecase>(
+      AddShopGarnishUsecase(service()));
+  service.registerSingleton<DeleteShopGarnishUsecase>(
+      DeleteShopGarnishUsecase(service()));
 }

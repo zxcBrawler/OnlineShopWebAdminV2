@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:xc_web_admin/core/resources/data/data_state.dart';
@@ -37,6 +37,47 @@ class ShopGarnishRepoImpl implements ShopGarnishRepo {
         shopGarnishId: shopGarnishDTO!.shopGarnishId,
         quantity: shopGarnishDTO.quantity,
       );
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<ShopGarnishEntity>> addShopGarnish(
+      {ShopGarnishDTO? shopGarnishDTO}) async {
+    try {
+      final httpResponse = await _apiService.addShopGarnish(
+          sizeClothesId: shopGarnishDTO!.sizeClothesId,
+          colorClothesId: shopGarnishDTO.colorClothesId,
+          shopId: shopGarnishDTO.shopId,
+          quantity: shopGarnishDTO.quantity);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<void>> deleteShopGarnish({int? id}) async {
+    try {
+      final httpResponse = await _apiService.deleteShopGarnishById(id: id);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {

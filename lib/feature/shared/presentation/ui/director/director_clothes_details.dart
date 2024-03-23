@@ -197,6 +197,13 @@ class _DirectorClothesDetailsState extends State<DirectorClothesDetails> {
     );
   }
 
-//TODO
-  void _deleteFromShop() {}
+  void _deleteFromShop() async {
+    service<RemoteShopGarnishBloc>()
+        .add(DeleteShopGarnish(id: widget.clothes.shopGarnishId!));
+    // Wait for 1 second
+    await Future.delayed(const Duration(seconds: 1));
+    // Pop the current route and navigate to director clothes details page
+    router.pop();
+    router.push(Pages.directorAllClothes.screenPath, extra: {"clothes"});
+  }
 }

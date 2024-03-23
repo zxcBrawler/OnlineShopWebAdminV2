@@ -105,15 +105,14 @@ class RemoteClothesBloc extends Bloc<RemoteClothesEvent, RemoteClothesState> {
 
     // If the use case returns a DataSuccess with non-empty data,
     // emit a RemoteClothesSizeClothesDone state.
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
+    if (dataState is DataSuccess || dataState.data!.isNotEmpty) {
       // Emit the RemoteClothesSizeClothesDone state with the retrieved data.
-      emit(RemoteClothesSizeClothesDone(dataState.data!));
+      emit(RemoteClothesSizeClothesDone(dataState.data ?? []));
     }
 
     // If the use case returns a DataSuccess with empty data or a DataFailed,
     // emit a RemoteClothesError state.
-    if (dataState is DataSuccess && dataState.data!.isEmpty ||
-        dataState is DataFailed) {
+    if (dataState is DataFailed) {
       // Emit the RemoteClothesError state with the error message.
       emit(RemoteClothesError(dataState.error!));
     }

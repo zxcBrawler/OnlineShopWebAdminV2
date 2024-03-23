@@ -7,7 +7,7 @@ import 'package:xc_web_admin/core/widget/textfield/basic_textfield_style.dart';
 class BasicDropdown extends StatefulWidget {
   final String listTitle;
   final List<String>? dropdownData;
-  final int selectedIndex;
+  final int? selectedIndex;
   final Function(int)? onIndexChanged;
   final bool isColorDropdown;
   final List<String>? colorDropdownData;
@@ -40,11 +40,6 @@ class _BasicDropdownState extends State<BasicDropdown> {
   void initState() {
     // Call the superclass's initState() method.
     super.initState();
-
-    // Set the selected value to the value of the dropdown data at the
-    // specified selected index.
-
-    selectedValue = widget.dropdownData![widget.selectedIndex];
   }
 
   @override
@@ -65,6 +60,9 @@ class _BasicDropdownState extends State<BasicDropdown> {
   /// Returns:
   /// - A widget representing the built dropdown.
   Widget build(BuildContext context) {
+    // Set the selected value to the value of the dropdown data at the
+    // specified selected index.
+    selectedValue = widget.dropdownData![widget.selectedIndex!];
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 8, left: 100, right: 100),
       child: Column(
@@ -88,6 +86,7 @@ class _BasicDropdownState extends State<BasicDropdown> {
               // Build the dropdown items
               items: widget.isColorDropdown == false
                   ? widget.dropdownData!
+                      .toSet()
                       .map((item) => DropdownMenuItem<String>(
                             value: item,
                             // Display the item value
@@ -102,6 +101,7 @@ class _BasicDropdownState extends State<BasicDropdown> {
                           ))
                       .toList()
                   : widget.dropdownData!
+                      .toSet()
                       .map((item) => DropdownMenuItem<String>(
                             value: item,
                             // Display the item value
@@ -124,7 +124,7 @@ class _BasicDropdownState extends State<BasicDropdown> {
                             ),
                           ))
                       .toList(),
-              // Set the initial value
+
               value: selectedValue,
               // Handle the onChanged callback
               onChanged: (value) {

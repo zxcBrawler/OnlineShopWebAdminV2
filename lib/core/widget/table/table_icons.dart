@@ -13,6 +13,8 @@ import 'package:xc_web_admin/feature/shared/data/model/shop_garnish.dart';
 import 'package:xc_web_admin/feature/shared/data/model/user.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_event.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
 
@@ -238,6 +240,20 @@ class _TableIconsState extends State<TableIcons> {
       case "DeliveryInfoModel":
         // Do nothing (TODO: handle case when user wants to delete order)
         router.pop();
+        break;
+
+      // Case for ShopGarnishModel
+      case "ShopGarnishModel":
+        // Cast widget.data to ShopGarnishModel
+        ShopGarnishModel shopGarnish = widget.data as ShopGarnishModel;
+        // Delete shop garnish from remote database
+        service<RemoteShopGarnishBloc>()
+            .add(DeleteShopGarnish(id: shopGarnish.shopGarnishId!));
+        // Wait for 1 second
+        await Future.delayed(const Duration(seconds: 1));
+        // Pop the current route and navigate to director clothes details page
+        router.pop();
+        router.push(Pages.directorAllClothes.screenPath, extra: {"clothes"});
         break;
 
       // Default case, do nothing

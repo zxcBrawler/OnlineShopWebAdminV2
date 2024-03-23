@@ -6,6 +6,7 @@ import 'package:xc_web_admin/core/widget/searchbar/basic_search_bar.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_event.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_add_clothes_dialog.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_table.dart';
 
 import '../../../../../di/service.dart';
@@ -78,11 +79,11 @@ class _DirectorAllClothesState extends State<DirectorAllClothes> {
                               child: BasicContainer(
                                 child: IconButton(
                                   onPressed: () {
-                                    // showDialog(
-                                    //     context: context,
-                                    //     builder: (BuildContext context) {
-                                    //       return const AddClothesDialog();
-                                    //     });
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return const DirectorAddClothesDialog();
+                                        });
                                   },
                                   icon: const Icon(Icons.add),
                                 ),

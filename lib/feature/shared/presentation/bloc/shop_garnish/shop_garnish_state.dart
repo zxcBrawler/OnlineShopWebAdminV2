@@ -3,8 +3,10 @@ import 'package:xc_web_admin/feature/shared/domain/entities/shop_garnish_entity.
 
 abstract class RemoteShopGarnishState {
   final List<ShopGarnishEntity>? shopGarnish;
+  final ShopGarnishEntity? addedShopGarnish;
   final DioException? error;
-  const RemoteShopGarnishState({this.shopGarnish, this.error});
+  const RemoteShopGarnishState(
+      {this.shopGarnish, this.error, this.addedShopGarnish});
 }
 
 class RemoteShopGarnishLoading extends RemoteShopGarnishState {
@@ -14,6 +16,15 @@ class RemoteShopGarnishLoading extends RemoteShopGarnishState {
 class RemoteShopGarnishDone extends RemoteShopGarnishState {
   const RemoteShopGarnishDone(List<ShopGarnishEntity> shopGarnish)
       : super(shopGarnish: shopGarnish);
+}
+
+class RemoteAddShopGarnishDone extends RemoteShopGarnishState {
+  const RemoteAddShopGarnishDone(ShopGarnishEntity addedShopGarnish)
+      : super(addedShopGarnish: addedShopGarnish);
+}
+
+class RemoteDeleteShopGarnishDone extends RemoteShopGarnishState {
+  const RemoteDeleteShopGarnishDone();
 }
 
 class RemoteShopGarnishError extends RemoteShopGarnishState {
