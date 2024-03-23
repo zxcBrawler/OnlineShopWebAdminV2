@@ -67,7 +67,11 @@ class _AdminClothesState extends State<AdminClothes> {
             ),
           ],
         ),
-        AdminWeeklyItemsSold(),
+        Row(
+          children: [
+            AdminWeeklyItemsSold(),
+          ],
+        ),
         Row(
           children: [
             Expanded(child: AdminColors()),
@@ -108,7 +112,11 @@ class _AdminClothesState extends State<AdminClothes> {
             ),
           ],
         ),
-        AdminWeeklyItemsSold(),
+        Row(
+          children: [
+            AdminWeeklyItemsSold(),
+          ],
+        ),
         AdminColors(),
         AdminSizes()
       ],

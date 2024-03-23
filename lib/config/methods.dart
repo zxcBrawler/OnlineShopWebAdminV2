@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/delivery_info.dart';
+import 'package:xc_web_admin/feature/shared/domain/entities/order_comp_entity.dart';
 
 /// A utility class containing static methods for common functionalities.
 class Methods {
@@ -77,6 +78,37 @@ class Methods {
       // Return FlSpot object with x-axis representing the day and
       // y-axis representing the occurrences
       return FlSpot(index.toDouble(), occurrences.toDouble());
+    });
+  }
+
+  static List<BarChartRodData> generateFlSpotListForOrdersComp(
+      List<OrderCompositionEntity> orderCompList,
+      {required int genderId}) {
+    // Get the current date
+    DateTime currentDate = DateTime.now();
+
+    // Filter and map deliveryInfoList to get DateTime objects within the current week
+    List<DateTime> dateTimeList = orderCompList
+        .where((info) =>
+            info.clothesComp!.typeClothes!.categoryClothes!.id! == genderId &&
+            DateTime.parse(info.orderId!.dateOrder!).isAfter(
+              currentDate.subtract(
+                Duration(days: currentDate.weekday),
+              ),
+            ))
+        .map((info) => DateTime.parse(info.orderId!.dateOrder!))
+        .toList();
+
+    // Generate FlSpot objects for each day of the week
+    return List.generate(7, (index) {
+      // Calculate occurrences for the current day (1 to 7)
+      int occurrences = dateTimeList
+          .where((dateTime) => dateTime.weekday == (index + 1))
+          .length;
+
+      // Return FlSpot object with x-axis representing the day and
+      // y-axis representing the occurrences
+      return BarChartRodData(toY: occurrences.toDouble());
     });
   }
 }
