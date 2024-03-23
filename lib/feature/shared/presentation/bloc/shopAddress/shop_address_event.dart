@@ -16,6 +16,11 @@ class AddShopAddress extends RemoteShopAddressesEvent {
   const AddShopAddress(this.shopAddressDTO);
 }
 
+class UpdateShopAddress extends RemoteShopAddressesEvent {
+  final ShopAddressDTO? shopAddressDTO;
+  const UpdateShopAddress(this.shopAddressDTO);
+}
+
 class DeleteShopAddress extends RemoteShopAddressesEvent {
   final int? id;
   const DeleteShopAddress(this.id);

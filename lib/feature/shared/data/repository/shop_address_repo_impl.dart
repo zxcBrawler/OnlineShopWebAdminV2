@@ -70,4 +70,29 @@ class ShopAddressRepoImpl implements ShopAddressRepo {
       return DataFailed(e);
     }
   }
+
+  @override
+  Future<DataState<ShopAddressEntity>> updateShopAddress(
+      {ShopAddressDTO? shopAddressDTO}) async {
+    try {
+      final httpResponse = await _apiService.updateShopAddress(
+          shopMetro: shopAddressDTO!.shopMetro!,
+          shopAddressDirection: shopAddressDTO.shopAddressDirection!,
+          contactNumber: shopAddressDTO.contactNumber!,
+          latitude: shopAddressDTO.latitude!,
+          longitude: shopAddressDTO.longitude!,
+          id: shopAddressDTO.shopAddressesId!);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
 }

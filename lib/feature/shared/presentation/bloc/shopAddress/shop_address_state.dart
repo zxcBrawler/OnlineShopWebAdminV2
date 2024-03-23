@@ -24,6 +24,11 @@ class RemoteAddShopAddressDone extends RemoteShopAddressState {
       : super(shopAddress: shopAddress);
 }
 
+class RemoteUpdateShopAddressDone extends RemoteShopAddressState {
+  const RemoteUpdateShopAddressDone(ShopAddressEntity shopAddress)
+      : super(shopAddress: shopAddress);
+}
+
 class RemoteShopAddressError extends RemoteShopAddressState {
   const RemoteShopAddressError(DioException error) : super(error: error);
 }

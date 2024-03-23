@@ -7,4 +7,7 @@ abstract class ShopAddressRepo {
   Future<DataState<void>> deleteAddress(int? id);
   Future<DataState<ShopAddressEntity>> addShopAddress(
       {ShopAddressDTO? shopAddressDTO});
+
+  Future<DataState<ShopAddressEntity>> updateShopAddress(
+      {ShopAddressDTO? shopAddressDTO});
 }

@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:xc_web_admin/config/color.dart';
-import 'package:xc_web_admin/config/methods.dart';
 import 'package:xc_web_admin/config/responsive.dart';
+import 'package:xc_web_admin/core/constants/constants.dart';
+import 'package:xc_web_admin/core/routes/app_router.dart';
+import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/header/basic_header_text.dart';
+import 'package:xc_web_admin/core/widget/text/base_button_text.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
+import 'package:xc_web_admin/di/service.dart';
+import 'package:xc_web_admin/feature/shared/data/dto/shop_address_dto.dart';
 import 'package:xc_web_admin/feature/shared/data/model/shop_address.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_event.dart';
+import 'package:yandex_geocoder/yandex_geocoder.dart';
 
 class AdminShopAddressInfo extends StatefulWidget {
   final ShopAddressModel shopAddressModel;
@@ -17,13 +25,23 @@ class AdminShopAddressInfo extends StatefulWidget {
 }
 
 class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
-  Map<String, TextEditingController> controllers = {
-    "shopAddressDirection": TextEditingController(),
-    "shopMetro": TextEditingController(),
-    "contactNumber": TextEditingController(),
-    "latitude": TextEditingController(),
-    "longitude": TextEditingController(),
-  };
+  final TextEditingController shopAddressController =
+      TextEditingController(text: '');
+  final TextEditingController shopMetroController =
+      TextEditingController(text: '');
+  final TextEditingController contactNumberController =
+      TextEditingController(text: '');
+  final TextEditingController latitudeController =
+      TextEditingController(text: '');
+  final TextEditingController longitudeController =
+      TextEditingController(text: '');
+
+  final ShopAddressDTO shopAddressDTO = ShopAddressDTO();
+  List<Marker> markers = []; // List to hold markers
+  final YandexGeocoder geo = YandexGeocoder(apiKey: yandexApiKey);
+
+  String shopLatitude = "";
+  String shopLongitude = "";
 
   /// Initialize the state of the widget.
   ///
@@ -35,24 +53,32 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
 
     // Set the text of the 'shopAddressDirection' controller to the
     // shopAddressDirection property of the shopAddressModel.
-    controllers["shopAddressDirection"]!.text =
-        widget.shopAddressModel.shopAddressDirection!;
+    shopAddressController.text = widget.shopAddressModel.shopAddressDirection!;
 
     // Set the text of the 'shopMetro' controller to the shopMetro property
     // of the shopAddressModel.
-    controllers["shopMetro"]!.text = widget.shopAddressModel.shopMetro!;
+    shopMetroController.text = widget.shopAddressModel.shopMetro!;
 
     // Set the text of the 'contactNumber' controller to the contactNumber
     // property of the shopAddressModel.
-    controllers["contactNumber"]!.text = widget.shopAddressModel.contactNumber!;
+    contactNumberController.text = widget.shopAddressModel.contactNumber!;
 
     // Set the text of the 'latitude' controller to the latitude property
     // of the shopAddressModel.
-    controllers["latitude"]!.text = widget.shopAddressModel.latitude!;
+    latitudeController.text = widget.shopAddressModel.latitude!;
 
     // Set the text of the 'longitude' controller to the longitude property
     // of the shopAddressModel.
-    controllers["longitude"]!.text = widget.shopAddressModel.longitude!;
+    longitudeController.text = widget.shopAddressModel.longitude!;
+
+    // Add a marker to the list of markers
+    markers.add(Marker(
+      width: 80.0,
+      height: 80.0,
+      point: LatLng(double.parse(widget.shopAddressModel.latitude!),
+          double.parse(widget.shopAddressModel.longitude!)),
+      child: const Icon(Icons.location_on, color: Colors.red),
+    ));
   }
 
   @override
@@ -130,22 +156,7 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
                                 'dev.fleaflet.flutter_map.example',
                             tileDisplay: const TileDisplay.fadeIn(),
                           ),
-                          MarkerLayer(markers: [
-                            Marker(
-                                point: LatLng(
-                                    double.parse(
-                                        widget.shopAddressModel.latitude!),
-                                    double.parse(
-                                        widget.shopAddressModel.longitude!)),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.location_on,
-                                  ),
-                                  iconSize: 30,
-                                  color: AppColors.red,
-                                ))
-                          ])
+                          MarkerLayer(markers: markers)
                         ]),
                   ),
                 ),
@@ -153,20 +164,90 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        for (var field in controllers.keys)
-                          BasicTextField(
-                            title: field,
-                            controller: Methods.getControllerForField(
-                                controllers, field),
-                            isEnabled: true,
-                          ),
+                        BasicTextField(
+                          title: "shop address",
+                          controller: shopAddressController,
+                          isEnabled: true,
+                          findAddress: () async {
+                            final GeocodeResponse geocodeFromAddress =
+                                await geo.getGeocode(DirectGeocodeRequest(
+                              addressGeocode: shopAddressController.text,
+                              lang: Lang.ru,
+                            ));
+                            _addMarker(LatLng(
+                                geocodeFromAddress.firstPoint!.lon,
+                                geocodeFromAddress.firstPoint!.lat));
+                          },
+                        ),
+                        BasicTextField(
+                            title: "shop metro",
+                            controller: shopMetroController,
+                            isEnabled: true),
+                        BasicTextField(
+                            title: "contact number",
+                            controller: contactNumberController,
+                            isEnabled: true),
+                        BasicTextField(
+                            title: "latitude",
+                            controller: latitudeController,
+                            isEnabled: false),
+                        BasicTextField(
+                            title: "longitude",
+                            controller: longitudeController,
+                            isEnabled: false),
                       ]),
                 )
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () async {
+                  _updateShopAddress();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.darkBrown,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: const BaseButtonText(title: "update shop"),
+              ),
+            )
           ]),
         ),
       )),
     );
+  }
+
+  void _updateShopAddress() async {
+    shopAddressDTO.shopAddressesId = widget.shopAddressModel.shopAddressId!;
+    shopAddressDTO.contactNumber = contactNumberController.text;
+    shopAddressDTO.latitude = latitudeController.text;
+    shopAddressDTO.longitude = longitudeController.text;
+    shopAddressDTO.shopAddressDirection = shopAddressController.text;
+    shopAddressDTO.shopMetro = shopMetroController.text;
+
+    service<RemoteShopAddressesBloc>().add(UpdateShopAddress(shopAddressDTO));
+    await Future.delayed(const Duration(seconds: 3));
+    router.pop();
+    router.push(Pages.adminShops.screenPath);
+  }
+
+  void _addMarker(LatLng latLng) {
+    setState(() {
+      // Clear existing markers
+      markers.clear();
+
+      // Add new marker
+      markers.add(Marker(
+        width: 80.0,
+        height: 80.0,
+        point: latLng,
+        child: const Icon(Icons.location_on, color: Colors.red),
+      ));
+      latitudeController.text = latLng.latitude.toString();
+      longitudeController.text = latLng.longitude.toString();
+    });
   }
 }
