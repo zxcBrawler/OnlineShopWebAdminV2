@@ -18,6 +18,7 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes.
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_dashboard.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_main_screen.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_items_sold_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/shared/order_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_orders_main.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_shop_address_info.dart';
@@ -316,6 +317,14 @@ final router =
         name: Pages.adminAllSizes.screenName,
         pageBuilder: (context, state) {
           return const NoTransitionPage(child: AdminAllSizes());
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _shellNavigatorKey,
+        path: Pages.adminWeeklyItemsSoldDetails.screenPath,
+        name: Pages.adminWeeklyItemsSoldDetails.screenName,
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: AdminWeeklyItemsSoldDetails());
         },
       ),
     ],

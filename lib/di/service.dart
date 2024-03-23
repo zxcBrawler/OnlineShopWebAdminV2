@@ -44,6 +44,7 @@ import 'package:xc_web_admin/feature/shared/domain/usecase/employee_shop/get_all
 import 'package:xc_web_admin/feature/shared/domain/usecase/employee_shop/get_shop_address_by_employee_id_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/gender/get_genders_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/order/get_orders_usecase.dart';
+import 'package:xc_web_admin/feature/shared/domain/usecase/orderComp/get_order_comp_by_order_id_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/orderComp/get_order_comp_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/role/get_roles_usecase.dart';
 import 'package:xc_web_admin/feature/shared/domain/usecase/shopAddress/delete_shop_address_usecase.dart';
@@ -110,7 +111,7 @@ Future<void> init() async {
   service.registerFactory<RemoteShopGarnishBloc>(
       () => RemoteShopGarnishBloc(service(), service(), service(), service()));
   service.registerFactory<RemoteOrderCompBloc>(
-      () => RemoteOrderCompBloc(service()));
+      () => RemoteOrderCompBloc(service(), service()));
 
   //Dio
 
@@ -192,4 +193,6 @@ Future<void> init() async {
       DeleteShopGarnishUsecase(service()));
   service
       .registerSingleton<GetOrderCompUsecase>(GetOrderCompUsecase(service()));
+  service.registerSingleton<GetOrderCompByOrderIdUsecase>(
+      GetOrderCompByOrderIdUsecase(service()));
 }

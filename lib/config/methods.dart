@@ -83,7 +83,8 @@ class Methods {
 
   static List<BarChartRodData> generateFlSpotListForOrdersComp(
       List<OrderCompositionEntity> orderCompList,
-      {required int genderId}) {
+      {required int genderId,
+      String? currentDate}) {
     // Get the current date
     DateTime currentDate = DateTime.now();
 
@@ -110,5 +111,15 @@ class Methods {
       // y-axis representing the occurrences
       return BarChartRodData(toY: occurrences.toDouble());
     });
+  }
+
+  static String displayCurrentWeek() {
+    DateTime currentDate = DateTime.now();
+    DateTime startDate =
+        currentDate.subtract(Duration(days: currentDate.weekday - 1));
+    DateTime endDate = startDate.add(const Duration(days: 6));
+    String currentWeek =
+        'Week of ${startDate.year}/${startDate.month}/${startDate.day} - ${endDate.year}/${endDate.month}/${endDate.day}';
+    return currentWeek;
   }
 }

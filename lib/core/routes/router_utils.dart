@@ -8,6 +8,7 @@ enum Pages {
   adminOrders,
   adminUserInfo, // separate window
   adminWeeklyActivityDetails,
+  adminWeeklyItemsSoldDetails,
   adminAllUsers,
   adminAllActiveUsers,
   adminUserAddresses,
@@ -66,6 +67,7 @@ extension AppPageExtension on Pages {
       Pages.directorOrderDetails => '/directorOrderDetails',
       Pages.adminAllColors => '/adminAllColors',
       Pages.adminAllSizes => '/adminAllSizes',
+      Pages.adminWeeklyItemsSoldDetails => '/adminWeeklyItemsSoldDetails',
     };
   }
 
@@ -100,6 +102,7 @@ extension AppPageExtension on Pages {
       Pages.employeeDashboard => 'employeeDashboard',
       Pages.adminAllColors => 'adminAllColors',
       Pages.adminAllSizes => 'adminAllSizes',
+      Pages.adminWeeklyItemsSoldDetails => 'adminWeeklyItemsSoldDetails',
     };
   }
 }

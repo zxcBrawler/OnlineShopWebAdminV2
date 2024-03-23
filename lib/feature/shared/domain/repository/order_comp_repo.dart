@@ -3,4 +3,6 @@ import 'package:xc_web_admin/feature/shared/domain/entities/order_comp_entity.da
 
 abstract class OrderCompRepo {
   Future<DataState<List<OrderCompositionEntity>>> getOrderComposition();
+  Future<DataState<List<OrderCompositionEntity>>> getOrderCompositionByOrderId(
+      {int? id});
 }

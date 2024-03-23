@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_colors.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_sizes.dart';
+import 'package:xc_web_admin/config/responsive.dart';
+import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_total_items.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_weekly_items_sold_overview.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_female_clothes_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_male_clothes_widget.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_total_items.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_top_sold_items_.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_weekly_items_sold_overview.dart';
-import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
-import 'package:xc_web_admin/config/responsive.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_colors.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_sizes.dart';
 
 class AdminClothes extends StatefulWidget {
   const AdminClothes({super.key});
@@ -59,16 +58,6 @@ class _AdminClothesState extends State<AdminClothes> {
         ),
         Row(
           children: [
-            AdminTopSoldItemsClothesWidget(
-              title: "top sold female items",
-            ),
-            AdminTopSoldItemsClothesWidget(
-              title: "top sold male items",
-            ),
-          ],
-        ),
-        Row(
-          children: [
             AdminWeeklyItemsSold(),
           ],
         ),
@@ -96,20 +85,6 @@ class _AdminClothesState extends State<AdminClothes> {
         Row(
           children: [
             MaleClothesWidget(),
-          ],
-        ),
-        Row(
-          children: [
-            AdminTopSoldItemsClothesWidget(
-              title: "top sold female items",
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            AdminTopSoldItemsClothesWidget(
-              title: "top sold male items",
-            ),
           ],
         ),
         Row(

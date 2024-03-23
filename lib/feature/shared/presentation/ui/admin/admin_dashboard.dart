@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xc_web_admin/config/responsive.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_users.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/shared/charts/total_items_piechart.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_items_piechart.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_orders_pie_chart.dart';
 
 class AdminDashboard extends StatefulWidget {
