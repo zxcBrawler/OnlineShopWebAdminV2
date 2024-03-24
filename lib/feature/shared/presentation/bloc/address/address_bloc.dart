@@ -15,10 +15,13 @@ class RemoteAddressesBloc
 
   void onGetAddresses(
       GetAddresses event, Emitter<RemoteAddressState> emitter) async {
-    final dataState = await _getAddressesUsecase();
+    final dataState = await _getAddressesUsecase(params: event.id);
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emitter(RemoteAddressDone(dataState.data!));
+    }
+    if (dataState is DataSuccess && dataState.data!.isEmpty) {
+      emitter(const RemoteAddressDone([]));
     }
     if (dataState is DataFailed) {
       emitter(RemoteAddressError(dataState.error!));

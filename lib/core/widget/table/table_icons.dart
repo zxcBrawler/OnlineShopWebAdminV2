@@ -12,12 +12,14 @@ import 'package:xc_web_admin/feature/shared/data/model/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/data/model/shop_address.dart';
 import 'package:xc_web_admin/feature/shared/data/model/shop_garnish.dart';
 import 'package:xc_web_admin/feature/shared/data/model/user.dart';
+import 'package:xc_web_admin/feature/shared/data/model/user_address.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_user_address_info_dialog.dart';
 
 class TableIcons<T> extends StatefulWidget {
   final String type;
@@ -49,6 +51,26 @@ class _TableIconsState extends State<TableIcons> {
   /// Returns:
   ///   - A row widget containing two icon buttons.
   Widget build(BuildContext ctx) {
+    bool isUser = false;
+    UserModel? userData;
+    if (widget.data is UserModel) {
+      userData = widget.data as UserModel;
+      if (userData.role!.roleName == 'user') {
+        isUser = true;
+      } else {
+        isUser = false;
+      }
+    }
+    bool isUserAddress = false;
+
+    if (widget.data is UserAddressModel) {
+      isUserAddress = true;
+    } else {
+      isUserAddress = false;
+    }
+
+    // Build the widget tree for the table icons with the delete option
+
     // Build the widget tree for the table icons.
     return Row(
       children: [
@@ -65,7 +87,9 @@ class _TableIconsState extends State<TableIcons> {
         ),
         // Build the delete option icon button
 
-        SessionStorage.getValue('role') != 'employee'
+        SessionStorage.getValue('role') != 'employee' &&
+                isUser == false &&
+                isUserAddress == false
             ? IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: () => _handleDeleteOption(
@@ -122,6 +146,14 @@ class _TableIconsState extends State<TableIcons> {
           Pages.adminClothesDetails.screenPath,
           extra: {widget.data as ClothesModel},
         );
+        break;
+      case "UserAddressModel":
+        // Navigate to the detailed clothes information page with the clothes data
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => UserAddressDialog(
+                  address: widget.data as UserAddressModel,
+                ));
         break;
 
       // Case for ShopGarnishModel, navigate to the detailed clothes information page

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:xc_web_admin/core/resources/data/data_state.dart';
 import 'package:xc_web_admin/feature/shared/data/data_source/api_service.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/address_entity.dart';
+import 'package:xc_web_admin/feature/shared/domain/entities/user_address_entity.dart';
 import 'package:xc_web_admin/feature/shared/domain/repository/address_repo.dart';
 
 class AddressRepoImpl implements AddressRepo {
@@ -29,9 +30,9 @@ class AddressRepoImpl implements AddressRepo {
   }
 
   @override
-  Future<DataState<AddressEntity>> getAddressById({int? id}) async {
+  Future<DataState<List<UserAddressEntity>>> getAddressById({int? id}) async {
     try {
-      final httpResponse = await _apiService.getAddressesById(idAddress: id);
+      final httpResponse = await _apiService.getAddressesById(id: id);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {

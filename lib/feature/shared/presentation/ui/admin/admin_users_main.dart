@@ -45,18 +45,6 @@ class _AdminUsersState extends State<AdminUsers> {
                   AdminTotalUsers(),
                 ],
               ),
-              // Display the number of active users over time
-              AdminTotalActiveUsers(title: "total active users"),
-              // Display the weekly activity of users
-              AdminUsersWeeklyActivity(),
-              // Display the user addresses
-              Row(
-                children: [
-                  UserAddresses(
-                    title: "user addresses",
-                  ),
-                ],
-              ),
             ],
           )),
     );

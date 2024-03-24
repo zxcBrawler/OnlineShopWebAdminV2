@@ -8,7 +8,6 @@ import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/button/build_button.dart';
 import 'package:xc_web_admin/core/widget/dropdown/basic_dropdown.dart';
 import 'package:xc_web_admin/core/widget/header/basic_header_text.dart';
-import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/di/service.dart';
@@ -22,6 +21,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_event.da
 import 'package:xc_web_admin/feature/shared/presentation/bloc/role/role_state.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_user_addresses_table.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_user_orders_table.dart';
 
 class AdminUserDetails extends StatefulWidget {
@@ -138,8 +138,6 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // User icon
-                  Icon(Icons.group, size: 500, color: AppColors.darkBrown),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -153,68 +151,136 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                             isEnabled: false,
                           ),
                         // Dropdowns for role and gender
-                        Row(
-                          children: [
-                            // Role dropdown
-                            Expanded(
-                              child: BlocProvider<RemoteRoleBloc>(
-                                create: (context) =>
-                                    service()..add(const GetRoles()),
-                                child: BlocBuilder<RemoteRoleBloc,
-                                    RemoteRoleState>(
-                                  builder: (context, state) {
-                                    if (state is RemoteRoleDone) {
-                                      return BasicDropdown(
-                                        listTitle: "role",
-                                        dropdownData: state.roles!
-                                            .map((e) => e.roleName!)
-                                            .toList(),
-                                        selectedIndex: selectedRoleIndex!,
-                                        onIndexChanged: (value) {
-                                          setState(() {
-                                            selectedRoleIndex = value;
-                                          });
-                                        },
-                                        isColorDropdown: false,
-                                      );
-                                    }
-                                    return const SizedBox();
-                                  },
+                        if (!isMobile) ...[
+                          Row(
+                            children: [
+                              // Role dropdown
+                              Expanded(
+                                child: BlocProvider<RemoteRoleBloc>(
+                                  create: (context) =>
+                                      service()..add(const GetRoles()),
+                                  child: BlocBuilder<RemoteRoleBloc,
+                                      RemoteRoleState>(
+                                    builder: (context, state) {
+                                      if (state is RemoteRoleDone) {
+                                        return BasicDropdown(
+                                          listTitle: "role",
+                                          dropdownData: state.roles!
+                                              .map((e) => e.roleName!)
+                                              .toList(),
+                                          selectedIndex: selectedRoleIndex!,
+                                          onIndexChanged: (value) {
+                                            setState(() {
+                                              selectedRoleIndex = value;
+                                            });
+                                          },
+                                          isColorDropdown: false,
+                                        );
+                                      }
+                                      return const SizedBox();
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
-                            // Gender dropdown
-                            Expanded(
-                              child: BlocProvider<RemoteGendersBloc>(
-                                create: (context) =>
-                                    service()..add(const GetGenders()),
-                                child: BlocBuilder<RemoteGendersBloc,
-                                    RemoteGenderState>(
-                                  builder: (_, state) {
-                                    if (state is RemoteGenderDone) {
-                                      return BasicDropdown(
-                                        listTitle: "gender",
-                                        dropdownData: state.genders!
-                                            .map((e) => e.nameCategory!)
-                                            .toList()
-                                            .reversed
-                                            .toList(),
-                                        selectedIndex: selectedGenderIndex!,
-                                        onIndexChanged: (value) {
-                                          setState(() {
-                                            selectedGenderIndex = value;
-                                          });
-                                        },
-                                        isColorDropdown: false,
-                                      );
-                                    }
-                                    return const SizedBox();
-                                  },
+                              // Gender dropdown
+                              Expanded(
+                                child: BlocProvider<RemoteGendersBloc>(
+                                  create: (context) =>
+                                      service()..add(const GetGenders()),
+                                  child: BlocBuilder<RemoteGendersBloc,
+                                      RemoteGenderState>(
+                                    builder: (_, state) {
+                                      if (state is RemoteGenderDone) {
+                                        return BasicDropdown(
+                                          listTitle: "gender",
+                                          dropdownData: state.genders!
+                                              .map((e) => e.nameCategory!)
+                                              .toList()
+                                              .reversed
+                                              .toList(),
+                                          selectedIndex: selectedGenderIndex!,
+                                          onIndexChanged: (value) {
+                                            setState(() {
+                                              selectedGenderIndex = value;
+                                            });
+                                          },
+                                          isColorDropdown: false,
+                                        );
+                                      }
+                                      return const SizedBox();
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                        ] else ...[
+                          Row(
+                            children: [
+                              Expanded(
+                                child: BlocProvider<RemoteRoleBloc>(
+                                  create: (context) =>
+                                      service()..add(const GetRoles()),
+                                  child: BlocBuilder<RemoteRoleBloc,
+                                      RemoteRoleState>(
+                                    builder: (context, state) {
+                                      if (state is RemoteRoleDone) {
+                                        return BasicDropdown(
+                                          listTitle: "role",
+                                          dropdownData: state.roles!
+                                              .map((e) => e.roleName!)
+                                              .toList(),
+                                          selectedIndex: selectedRoleIndex!,
+                                          onIndexChanged: (value) {
+                                            setState(() {
+                                              selectedRoleIndex = value;
+                                            });
+                                          },
+                                          isColorDropdown: false,
+                                        );
+                                      }
+                                      return const SizedBox();
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Gender dropdown
+                          Row(
+                            children: [
+                              Expanded(
+                                child: BlocProvider<RemoteGendersBloc>(
+                                  create: (context) =>
+                                      service()..add(const GetGenders()),
+                                  child: BlocBuilder<RemoteGendersBloc,
+                                      RemoteGenderState>(
+                                    builder: (_, state) {
+                                      if (state is RemoteGenderDone) {
+                                        return BasicDropdown(
+                                          listTitle: "gender",
+                                          dropdownData: state.genders!
+                                              .map((e) => e.nameCategory!)
+                                              .toList()
+                                              .reversed
+                                              .toList(),
+                                          selectedIndex: selectedGenderIndex!,
+                                          onIndexChanged: (value) {
+                                            setState(() {
+                                              selectedGenderIndex = value;
+                                            });
+                                          },
+                                          isColorDropdown: false,
+                                        );
+                                      }
+                                      return const SizedBox();
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ]
                       ],
                     ),
                   ),
@@ -238,31 +304,20 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                   ),
                 ),
                 // User payment info section
-                HeaderText(
-                  textSize: isMobile ? 35 : 45,
-                  title: 'user payment info',
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: BasicContainer(
-                    child: Column(
-                      children: [
-                        BasicText(title: 'user payment info'),
-                      ],
-                    ),
-                  ),
-                ),
+
                 // User addresses section
                 HeaderText(
                   textSize: isMobile ? 35 : 45,
                   title: 'user addresses',
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: BasicContainer(
                     child: Column(
                       children: [
-                        BasicText(title: 'user addresses'),
+                        UserAddressesTable(
+                          user: widget.user!,
+                        )
                       ],
                     ),
                   ),
@@ -275,7 +330,9 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                   // Edit button
                   buildButton("Edit", AppColors.darkBrown, _editUserInfo),
                   // Delete button
-                  buildButton("Delete", AppColors.red, _deleteUser),
+                  widget.user!.role!.roleName != "user"
+                      ? buildButton("Delete", AppColors.red, _deleteUser)
+                      : const SizedBox(),
                 ],
               ),
             ],
