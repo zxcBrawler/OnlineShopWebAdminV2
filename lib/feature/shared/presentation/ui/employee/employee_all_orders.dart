@@ -1,36 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/director/employees_table.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_orders_table.dart';
 
-class DirectorEmployees extends StatefulWidget {
-  const DirectorEmployees({super.key});
+class EmployeeAllOrders extends StatefulWidget {
+  const EmployeeAllOrders({super.key});
 
   @override
-  State<DirectorEmployees> createState() => _DirectorEmployeesState();
+  State<EmployeeAllOrders> createState() => _EmployeeAllOrdersState();
 }
 
-class _DirectorEmployeesState extends State<DirectorEmployees> {
+class _EmployeeAllOrdersState extends State<EmployeeAllOrders> {
   @override
   Widget build(BuildContext context) {
     return const SafeArea(
-      // Container that wraps the scrollable widget
+      // Wrap the content with a SingleChildScrollView to allow vertical scrolling
       child: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
-        // Column of widgets
         child: Column(
           children: [
-            // Header widget with title 'all users'
+            // Header widget with the title 'all orders'
             Row(
               children: [
                 Expanded(
                   child: Header(
-                    title: 'all employees',
+                    title: 'all orders',
                   ),
                 ),
               ],
             ),
-            // Row with search bar and filter/add buttons
+            // Row with  search bar and three filter icons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -42,7 +41,7 @@ class _DirectorEmployeesState extends State<DirectorEmployees> {
                 )
               ],
             ),
-            // Row with users table
+            // Orders table widget
             Row(
               children: [
                 Expanded(
@@ -52,8 +51,9 @@ class _DirectorEmployeesState extends State<DirectorEmployees> {
                       child: Column(
                         children: [
                           Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: EmployeesTable()),
+                            padding: EdgeInsets.all(8.0),
+                            child: DirectorOrdersTable(),
+                          ),
                         ],
                       ),
                     ),

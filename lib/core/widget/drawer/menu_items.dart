@@ -66,11 +66,11 @@ List<Map<String, dynamic>> employeeMenuItems = [
   {
     'tabIcon': Icons.checkroom,
     'title': 'clothes',
-    'route': Pages.directorDashboard.screenPath
+    'route': Pages.employeeClothes.screenPath
   },
   {
     'tabIcon': Icons.assignment,
     'title': 'shop orders',
-    'route': Pages.directorDashboard.screenPath
+    'route': Pages.employeeOrders.screenPath
   },
 ];

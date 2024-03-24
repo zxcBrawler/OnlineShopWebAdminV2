@@ -7,6 +7,7 @@ import 'package:xc_web_admin/core/widget/text/card_text.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/order_comp_entity.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_comp_state.dart';
 
 /// A utility class containing static methods for common functionalities.
@@ -196,6 +197,56 @@ class Methods {
     );
   }
 
+  static Widget buildWeeklyOrders(RemoteDeliveryInfoState state, bool isMobile,
+      List<DeliveryInfoEntity> orders) {
+    // List of order compositions for the week
+
+    // Start and end of the week
+    DateTime startOfWeek = DateTime.now().subtract(
+      Duration(days: DateTime.now().weekday - 1),
+    );
+    DateTime endOfWeek = startOfWeek.add(const Duration(days: 6));
+
+    // Filter compositions to include only those within the week
+    List<DeliveryInfoEntity> weeklyCompositions = orders.where(
+      (composition) {
+        DateTime compositionDate =
+            DateTime.parse(composition.order!.dateOrder!);
+        return compositionDate
+                .isAfter(startOfWeek.subtract(const Duration(days: 1))) &&
+            compositionDate.isBefore(endOfWeek);
+      },
+    ).toList();
+
+    // Group compositions by date
+    Map<DateTime, List<DeliveryInfoEntity>> groupedCompositions = groupBy(
+        weeklyCompositions,
+        (composition) => DateTime.parse(composition.order!.dateOrder!));
+
+    // Sort entries by date
+    List<MapEntry<DateTime, List<DeliveryInfoEntity>>> sortedEntries =
+        groupedCompositions.entries.toList()
+          ..sort((a, b) => a.key.compareTo(b.key));
+
+    // Build ListView.builder widget to display each date and its list of
+    // order compositions
+    return SizedBox(
+      height: 500,
+      child: ListView.builder(
+        itemCount: sortedEntries.length,
+        itemBuilder: (context, index) {
+          MapEntry<DateTime, List<DeliveryInfoEntity>> entry =
+              sortedEntries[index];
+          DateTime date = entry.key;
+          List<DeliveryInfoEntity> compositionsForDate = entry.value;
+
+          // Build composition card for each date and its list of compositions
+          return buildOrderCard(compositionsForDate, date, isMobile);
+        },
+      ),
+    );
+  }
+
   /// Widget that builds a card representing a composition for a specific date.
   ///
   /// The card consists of a BasicContainer with a Column as its child.
@@ -226,6 +277,29 @@ class Methods {
             // Map each composition to a row widget and add them to a list.
             ...compositionsForDate.map(
                 (composition) => buildCompositionRow(composition, isMobile)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget buildOrderCard(
+      List<DeliveryInfoEntity> deliveryInfo, DateTime date, bool isMobile) {
+    // Padding for the card.
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      // Basic container for the card.
+      child: BasicContainer(
+        child: Column(
+          // Align the cross axis to the start.
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Basic text displaying the date.
+            BasicText(
+              title: '${date.year}/${date.month}/${date.day}',
+            ),
+            // Map each composition to a row widget and add them to a list.
+            ...deliveryInfo.map((info) => buildOrderRow(info, isMobile)),
           ],
         ),
       ),
@@ -281,6 +355,26 @@ class Methods {
     );
   }
 
+  static Widget buildOrderRow(DeliveryInfoEntity deliveryInfo, bool isMobile) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            // Padding for the image.
+
+            // Details of the composed clothes.
+            buildOrderDetails(deliveryInfo),
+            // Fills the remaining space in the row.
+          ],
+        ),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Divider(thickness: 3),
+        ),
+      ],
+    );
+  }
+
   /// Widget that displays the details of an order composition.
   ///
   /// Displays the name of the clothes, barcode, size, color and gender.
@@ -317,6 +411,39 @@ class Methods {
         ),
         CardText(
           title: 'order number: ${composition.orderId!.numberOrder}',
+        ),
+      ],
+    );
+  }
+
+  static Widget buildOrderDetails(DeliveryInfoEntity deliveryInfoEntity) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Display the name of the clothes.
+        BasicText(
+          title: "№: ${deliveryInfoEntity.order!.numberOrder!}",
+        ),
+        // Display the barcode of the clothes.
+        CardText(
+          title:
+              'date time order: ${deliveryInfoEntity.order!.dateOrder!} ${deliveryInfoEntity.order!.timeOrder!}',
+        ),
+        // Display the size of the clothes.
+        CardText(
+          title: 'sum order: ${deliveryInfoEntity.order!.sumOrder}',
+        ),
+        // Display the color of the clothes.
+        CardText(
+          title: 'type delivery: ${deliveryInfoEntity.typeDelivery!.nameType}',
+        ),
+
+        // Display the gender of the clothes.
+        CardText(
+          title: deliveryInfoEntity.shopAddresses!.shopAddressDirection == null
+              ? 'delivery address: ${deliveryInfoEntity.addresses!.directionAddress}'
+              : 'shop address: ${deliveryInfoEntity.shopAddresses!.shopAddressDirection}',
         ),
       ],
     );

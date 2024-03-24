@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:xc_web_admin/core/constants/session_storage.dart';
+import 'package:xc_web_admin/core/routes/app_router.dart';
+import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_weekly_orders_linechart.dart';
@@ -25,10 +28,8 @@ class _DirectorWeeklyOrdersWidgetState
                 children: [
                   const BasicText(title: "weekly orders made overview"),
                   const Padding(
-                    padding: EdgeInsets.only(right: 30),
-                    child: SizedBox(
-                        height: 300, child: DirectorWeeklyOrdersLinechart()),
-                  ),
+                      padding: EdgeInsets.only(right: 30),
+                      child: DirectorWeeklyOrdersLinechart()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -37,8 +38,11 @@ class _DirectorWeeklyOrdersWidgetState
                         child: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
-                              // router.go(
-                              //     Pages.adminWeeklyActivityDetails.screenPath);
+                              SessionStorage.getValue('role') == 'director'
+                                  ? router.go(Pages
+                                      .directorWeeklyOrdersDetails.screenPath)
+                                  : router.go(Pages
+                                      .employeeWeeklyOrdersDetails.screenPath);
                             },
                             icon: const Icon(
                               Icons.chevron_right,

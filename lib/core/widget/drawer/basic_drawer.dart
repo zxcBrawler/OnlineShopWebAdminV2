@@ -53,14 +53,26 @@ class _BasicDrawerState extends State<BasicDrawer> {
               ),
 
             // Display an IconButton which allows the user to logout.
-            IconButton(
-                // Call the logout function when the button is pressed.
-                onPressed: () {
-                  SessionStorage.clearAll();
-                  router.pushReplacement(Pages.auth.screenPath);
-                },
-                // Set the icon of the button to an exit to app icon.
-                icon: const Icon(Icons.exit_to_app_rounded)),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                      tooltip: "logout",
+                      // Call the logout function when the button is pressed.
+                      onPressed: () {
+                        SessionStorage.clearAll();
+                        router.pushReplacement(Pages.auth.screenPath);
+                      },
+                      // Set the icon of the button to an exit to app icon.
+                      icon: Icon(
+                        Icons.exit_to_app_rounded,
+                        color: AppColors.white,
+                      )),
+                ],
+              ),
+            ),
           ],
         ),
       ),

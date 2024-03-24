@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/config/methods.dart';
+import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
@@ -64,16 +65,18 @@ class _TableIconsState extends State<TableIcons> {
         ),
         // Build the delete option icon button
 
-        IconButton(
-          padding: EdgeInsets.zero,
-          onPressed: () =>
-              _handleDeleteOption(ctx), // Call the handling method when pressed
-          icon: const Icon(
-            Icons.delete,
-            size: 30,
-            color: Colors.red, // Set the color to red
-          ),
-        ),
+        SessionStorage.getValue('role') != 'employee'
+            ? IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () => _handleDeleteOption(
+                    ctx), // Call the handling method when pressed
+                icon: const Icon(
+                  Icons.delete,
+                  size: 30,
+                  color: Colors.red, // Set the color to red
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }
@@ -124,10 +127,15 @@ class _TableIconsState extends State<TableIcons> {
       // Case for ShopGarnishModel, navigate to the detailed clothes information page
       case "ShopGarnishModel":
         // Navigate to the detailed clothes information page with the clothes data
-        router.push(
-          Pages.directorClothesDetails.screenPath,
-          extra: {widget.data as ShopGarnishModel},
-        );
+        SessionStorage.getValue('role') != 'employee'
+            ? router.push(
+                Pages.directorClothesDetails.screenPath,
+                extra: {widget.data as ShopGarnishModel},
+              )
+            : router.push(
+                Pages.employeeClothesDetails.screenPath,
+                extra: {widget.data as ShopGarnishModel},
+              );
         break;
 
       // Case for ColorModel, show a dialog with the color preview

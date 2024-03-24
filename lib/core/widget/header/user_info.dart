@@ -50,19 +50,8 @@ class _UserInfoState extends State<UserInfo> {
                           TextStyle(color: AppColors.white, fontSize: 20)),
                 ),
               ),
-              // Add a dropdown menu icon
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  icon: const Icon(
-                    Icons.expand_more,
-                    size: 40,
-                  ),
-                  color: AppColors.white,
-                  iconSize: 30,
-                  onPressed: () {},
-                ),
+              const SizedBox(
+                width: 10,
               )
             ],
           ),

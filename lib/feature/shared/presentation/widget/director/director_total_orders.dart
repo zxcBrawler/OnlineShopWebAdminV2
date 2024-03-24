@@ -60,7 +60,11 @@ class _DirectorTotalOrdersState extends State<DirectorTotalOrders> {
                               child: IconButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
-                                  router.go(Pages.directorAllOrders.screenPath);
+                                  SessionStorage.getValue('role') == 'employee'
+                                      ? router.go(
+                                          Pages.employeeAllOrders.screenPath)
+                                      : router.go(
+                                          Pages.directorAllOrders.screenPath);
                                 },
                                 icon: const Icon(
                                   Icons.chevron_right,

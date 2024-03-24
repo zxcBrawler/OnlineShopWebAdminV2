@@ -47,34 +47,38 @@ class _BasicLineChartState extends State<BasicLineChart> {
         ///
         /// Returns:
         /// - An [Expanded] widget containing a [LineChart].
-        Expanded(
-          child: LineChart(
-            LineChartData(
-              // Chart configurations
-              gridData: FlGridData(show: false), // Hide grid lines
-              titlesData: FlTitlesData(
-                  show: true,
-                  rightTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  topTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                    interval: 1,
-                    getTitlesWidget:
-                        getTitles, // Define titles on the bottom axis
-                    showTitles: true,
-                  ))),
-              borderData: FlBorderData(
-                show: false, // Hide chart border
+        Padding(
+          padding: const EdgeInsets.only(right: 30),
+          child: SizedBox(
+            height: 300,
+            child: LineChart(
+              LineChartData(
+                // Chart configurations
+                gridData: FlGridData(show: false), // Hide grid lines
+                titlesData: FlTitlesData(
+                    show: true,
+                    rightTitles: AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    topTitles: AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                      interval: 1,
+                      getTitlesWidget:
+                          getTitles, // Define titles on the bottom axis
+                      showTitles: true,
+                    ))),
+                borderData: FlBorderData(
+                  show: false, // Hide chart border
+                ),
+                lineBarsData: generateLineBarsData(), // Generate line bars data
+                minX: 0, // Set minimum X-axis value
+                maxY: 10, // Set maximum Y-axis value
+                minY: 0, // Set minimum Y-axis value
+                maxX: 6, // Set maximum X-axis value
               ),
-              lineBarsData: generateLineBarsData(), // Generate line bars data
-              minX: 0, // Set minimum X-axis value
-              maxY: 10, // Set maximum Y-axis value
-              minY: 0, // Set minimum Y-axis value
-              maxX: 6, // Set maximum X-axis value
             ),
           ),
         ),

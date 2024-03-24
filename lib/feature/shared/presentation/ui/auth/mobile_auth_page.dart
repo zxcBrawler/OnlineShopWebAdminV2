@@ -291,8 +291,10 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
       // Check the type of the state and perform the appropriate action
       if (state is AuthStateDone) {
         // Navigate to the appropriate dashboard screen based on the user's role
-        _navigateToDashboard(state.loginResponse!.userEntity!.role!.roleName!,
-            state.loginResponse!.userEntity!.id!);
+        _navigateToDashboard(
+          state.loginResponse!.userEntity!.role!.roleName!,
+          state.loginResponse!.userEntity!.id!,
+        );
       } else if (state is AuthStateError) {
         // Show an alert dialog with an error message
         _showErrorDialog();
@@ -316,12 +318,14 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
         break;
       // If the user is a director, navigate to the director dashboard and save the director id
       case "director":
+        SessionStorage.saveLocalData("role", role);
         SessionStorage.saveLocalData("employeeId", id);
         router.go(Pages.directorDashboard.screenPath);
 
         break;
       // If the user is an employee, navigate to the employee dashboard and save the employee id
       case "employee":
+        SessionStorage.saveLocalData("role", role);
         SessionStorage.saveLocalData("employeeId", id);
         router.go(Pages.employeeDashboard.screenPath);
 

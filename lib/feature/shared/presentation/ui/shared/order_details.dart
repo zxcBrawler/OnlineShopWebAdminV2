@@ -309,13 +309,19 @@ class _OrderDetailsState extends State<OrderDetails> {
     // Pop the current route and push to the adminAllOrders page
     router.pop();
 
-    if (SessionStorage.getValue("shopAddressId") == "") {
+    if (SessionStorage.getValue("role") == "admin") {
       router.push(
         Pages.adminAllOrders.screenPath,
       );
-    } else {
+    }
+    if (SessionStorage.getValue("role") == "director") {
       router.push(
         Pages.directorAllOrders.screenPath,
+      );
+    }
+    if (SessionStorage.getValue("role") == "employee") {
+      router.push(
+        Pages.employeeAllOrders.screenPath,
       );
     }
   }

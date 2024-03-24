@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:xc_web_admin/core/routes/app_router.dart';
+import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_weekly_orders_linechart.dart';
@@ -23,10 +25,8 @@ class _AdminWeeklyOrdersState extends State<AdminWeeklyOrders> {
                 children: [
                   const BasicText(title: "weekly orders made overview"),
                   const Padding(
-                    padding: EdgeInsets.only(right: 30),
-                    child: SizedBox(
-                        height: 300, child: AdminWeeklyOrdersLinechart()),
-                  ),
+                      padding: EdgeInsets.only(right: 30),
+                      child: AdminWeeklyOrdersLinechart()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -35,8 +35,8 @@ class _AdminWeeklyOrdersState extends State<AdminWeeklyOrders> {
                         child: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
-                              // router.go(
-                              //     Pages.adminWeeklyActivityDetails.screenPath);
+                              router.go(
+                                  Pages.adminWeeklyOrdersDetails.screenPath);
                             },
                             icon: const Icon(
                               Icons.chevron_right,

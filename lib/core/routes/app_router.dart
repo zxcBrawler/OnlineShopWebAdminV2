@@ -19,7 +19,15 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_clothes_
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_dashboard.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_main_screen.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_items_sold_details.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_orders_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_weekly_items_sold_details.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_weekly_orders_details.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_all_clothes.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_all_orders.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_clothes.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_clothes_details.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_orders.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_weekly_orders_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/shared/order_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_orders_main.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_shop_address_info.dart';
@@ -112,6 +120,18 @@ final router =
       );
     },
   ),
+  GoRoute(
+    parentNavigatorKey: _rootNavigatorKey,
+    path: Pages.employeeClothesDetails.screenPath,
+    name: Pages.employeeClothesDetails.screenName,
+    builder: (context, state) {
+      HashSet<ShopGarnishModel> clothes =
+          state.extra as HashSet<ShopGarnishModel>;
+      return EmployeeClothesDetails(
+        clothes: clothes.first,
+      );
+    },
+  ),
   ShellRoute(
       parentNavigatorKey: _rootNavigatorKey,
       navigatorKey: _shellNavigatorKey,
@@ -191,6 +211,14 @@ final router =
                 child: DirectorWeeklyItemsSoldDetails());
           },
         ),
+        GoRoute(
+          path: Pages.directorWeeklyOrdersDetails.screenPath,
+          name: Pages.directorWeeklyOrdersDetails.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: DirectorWeeklyOrdersDetails());
+          },
+        ),
       ]),
   ShellRoute(
       parentNavigatorKey: _rootNavigatorKey,
@@ -208,6 +236,50 @@ final router =
           parentNavigatorKey: _shellNavigatorKey,
           pageBuilder: (context, state) {
             return const NoTransitionPage(child: EmployeeDashboard());
+          },
+        ),
+        GoRoute(
+          path: Pages.employeeClothes.screenPath,
+          name: Pages.employeeClothes.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: EmployeeClothes());
+          },
+        ),
+        GoRoute(
+          path: Pages.employeeOrders.screenPath,
+          name: Pages.employeeOrders.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: EmployeeShopOrders());
+          },
+        ),
+        GoRoute(
+          path: Pages.employeeAllClothes.screenPath,
+          name: Pages.employeeAllClothes.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            HashSet<String> title = state.extra as HashSet<String>;
+            return NoTransitionPage(
+                child: EmployeeAllClothes(
+              title: title.first,
+            ));
+          },
+        ),
+        GoRoute(
+          path: Pages.employeeAllOrders.screenPath,
+          name: Pages.employeeAllOrders.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: EmployeeAllOrders());
+          },
+        ),
+        GoRoute(
+          path: Pages.employeeWeeklyOrdersDetails.screenPath,
+          name: Pages.employeeWeeklyOrdersDetails.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: EmployeeWeeklyOrdersDetails());
           },
         ),
       ]),
@@ -335,6 +407,14 @@ final router =
         name: Pages.adminWeeklyItemsSoldDetails.screenName,
         pageBuilder: (context, state) {
           return const NoTransitionPage(child: AdminWeeklyItemsSoldDetails());
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _shellNavigatorKey,
+        path: Pages.adminWeeklyOrdersDetails.screenPath,
+        name: Pages.adminWeeklyOrdersDetails.screenName,
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: AdminWeeklyOrdersDetails());
         },
       ),
     ],

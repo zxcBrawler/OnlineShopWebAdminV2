@@ -7,6 +7,9 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/employee_shop_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/employee_shop_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/employee_shop_state.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_total_items.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_weelky_items_sold_overview.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_weekly_orders_widget.dart';
 
 class DirectorDashboard extends StatefulWidget {
   const DirectorDashboard({super.key});
@@ -37,51 +40,72 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
         // Wrap the content with SingleChildScrollView to enable vertical scrolling
         padding: const EdgeInsets.all(16.0),
         child: Responsive.isDesktop(context)
-            ? Column(
-                // Build the UI for a desktop device
-                children: [
-                  // Display the header
-                  const Header(
-                    title: 'dashboard',
-                  ),
-                  // Display an empty row for desktop devices
-                  Row(
-                    children: [
-                      BlocProvider<RemoteEmployeeShopBloc>(
-                          create: (context) => service()
-                            ..add(GetShopAddressByEmployeeId(
-                                employeeId: int.parse(
-                                    SessionStorage.getValue("employeeId")))),
-                          child: BlocBuilder<RemoteEmployeeShopBloc,
-                                  RemoteEmployeeShopState>(
-                              builder: (context, state) {
-                            switch (state.runtimeType) {
-                              case RemoteEmployeeShopLoading:
-                                return const SizedBox();
-                              case RemoteShopAddressByEmployeeIdDone:
-                                SessionStorage.saveLocalData("shopAddressId",
-                                    state.shop!.shopAddresses!.shopAddressId!);
-                                return const SizedBox();
+            ? BlocProvider<RemoteEmployeeShopBloc>(
+                create: (context) => service()
+                  ..add(GetShopAddressByEmployeeId(
+                      employeeId:
+                          int.parse(SessionStorage.getValue("employeeId")))),
+                child: BlocBuilder<RemoteEmployeeShopBloc,
+                    RemoteEmployeeShopState>(builder: (context, state) {
+                  switch (state.runtimeType) {
+                    case RemoteEmployeeShopLoading:
+                      return const SizedBox();
+                    case RemoteShopAddressByEmployeeIdDone:
+                      SessionStorage.saveLocalData("shopAddressId",
+                          state.shop!.shopAddresses!.shopAddressId!);
+                      return const Column(
+                        children: [
+                          Header(
+                            title: 'dashboard',
+                          ),
+                          DirectorTotalItems(),
+                          Row(
+                            children: [
+                              DirectorWeeklyItemsSold(),
+                            ],
+                          ),
+                          DirectorWeeklyOrdersWidget(),
+                        ],
+                      );
 
-                              case RemoteEmployeeShopError:
-                                return Text(state.error.toString());
-                            }
-                            return const SizedBox();
-                          })),
-                    ],
-                  ),
-                ],
-              )
-            : const Column(
-                // Build the UI for a non-desktop device
-                children: [
-                  // Display the header
-                  Header(
-                    title: 'dashboard',
-                  ),
-                  // Don't display anything for non-desktop devices
-                ],
-              ),
+                    case RemoteEmployeeShopError:
+                      return Text(state.error.toString());
+                  }
+                  return const SizedBox();
+                }))
+            : BlocProvider<RemoteEmployeeShopBloc>(
+                create: (context) => service()
+                  ..add(GetShopAddressByEmployeeId(
+                      employeeId:
+                          int.parse(SessionStorage.getValue("employeeId")))),
+                child: BlocBuilder<RemoteEmployeeShopBloc,
+                    RemoteEmployeeShopState>(builder: (context, state) {
+                  switch (state.runtimeType) {
+                    case RemoteEmployeeShopLoading:
+                      return const SizedBox();
+                    case RemoteShopAddressByEmployeeIdDone:
+                      SessionStorage.saveLocalData("shopAddressId",
+                          state.shop!.shopAddresses!.shopAddressId!);
+                      return const Column(
+                        children: [
+                          Header(
+                            title: 'dashboard',
+                          ),
+                          DirectorTotalItems(),
+                          Row(
+                            children: [
+                              DirectorWeeklyItemsSold(),
+                            ],
+                          ),
+                          DirectorWeeklyOrdersWidget(),
+                        ],
+                      );
+
+                    case RemoteEmployeeShopError:
+                      return Text(state.error.toString());
+                  }
+                  return const SizedBox();
+                })),
       ),
     );
   }

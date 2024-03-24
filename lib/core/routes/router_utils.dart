@@ -30,6 +30,14 @@ enum Pages {
   directorAllOrders,
   directorOrderDetails,
   employeeDashboard,
+  employeeClothes,
+  employeeOrders,
+  employeeAllClothes,
+  employeeClothesDetails,
+  employeeAllOrders,
+  adminWeeklyOrdersDetails,
+  directorWeeklyOrdersDetails,
+  employeeWeeklyOrdersDetails
 }
 
 enum DirectorPages { director }
@@ -70,6 +78,14 @@ extension AppPageExtension on Pages {
       Pages.adminAllSizes => '/adminAllSizes',
       Pages.adminWeeklyItemsSoldDetails => '/adminWeeklyItemsSoldDetails',
       Pages.directorWeeklyItemsSoldDetails => '/directorWeeklyItemsSoldDetails',
+      Pages.employeeClothes => '/employeeClothes',
+      Pages.employeeOrders => '/employeeOrders',
+      Pages.employeeAllClothes => '/employeeAllClothes',
+      Pages.employeeClothesDetails => '/employeeClothesDetails',
+      Pages.employeeAllOrders => '/employeeAllOrders',
+      Pages.adminWeeklyOrdersDetails => '/adminWeeklyOrdersDetails',
+      Pages.directorWeeklyOrdersDetails => '/directorWeeklyOrdersDetails',
+      Pages.employeeWeeklyOrdersDetails => '/employeeWeeklyOrdersDetails',
     };
   }
 
@@ -106,6 +122,14 @@ extension AppPageExtension on Pages {
       Pages.adminAllSizes => 'adminAllSizes',
       Pages.adminWeeklyItemsSoldDetails => 'adminWeeklyItemsSoldDetails',
       Pages.directorWeeklyItemsSoldDetails => 'directorWeeklyItemsSoldDetails',
+      Pages.employeeClothes => 'employeeClothes',
+      Pages.employeeOrders => 'employeeOrders',
+      Pages.employeeAllClothes => 'employeeAllClothes',
+      Pages.employeeClothesDetails => 'employeeClothesDetails',
+      Pages.employeeAllOrders => 'employeeAllOrders',
+      Pages.adminWeeklyOrdersDetails => 'adminWeeklyOrdersDetails',
+      Pages.directorWeeklyOrdersDetails => 'directorWeeklyOrdersDetails',
+      Pages.employeeWeeklyOrdersDetails => 'employeeWeeklyOrdersDetails',
     };
   }
 }
