@@ -1,0 +1,32 @@
+name: Flutter test check style
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  check-style:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone repository
+        uses: actions/checkout@v2
+
+      - name: Install Dart
+        uses: actions/setup-dart@v2
+        with:
+          dart-version: '3.2.6'
+
+      - name: Install Flutter
+        uses: actions/setup-flutter@v2
+        with:
+          flutter-version: '3.16.9'
+          
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check style
+        run: flutter analyze
+      
+    

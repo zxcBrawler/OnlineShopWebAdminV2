@@ -114,7 +114,7 @@ class Methods {
     return List.generate(7, (index) {
       // Calculate the date for the current day of the week
       DateTime currentDay =
-          currentDate.subtract(Duration(days: currentDate.weekday - index));
+          currentDate.subtract(Duration(days: currentDate.weekday - index - 1));
       DateTime dayKey =
           DateTime(currentDay.year, currentDay.month, currentDay.day);
       int itemsSold = soldItemsByDate[dayKey] ?? 0;
@@ -153,7 +153,7 @@ class Methods {
 
     // Start and end of the week
     DateTime startOfWeek = DateTime.now().subtract(
-      Duration(days: DateTime.now().weekday - 1),
+      Duration(days: DateTime.now().weekday),
     );
     DateTime endOfWeek = startOfWeek.add(const Duration(days: 6));
 
@@ -164,7 +164,7 @@ class Methods {
             DateTime.parse(composition.orderId!.dateOrder!);
         return compositionDate
                 .isAfter(startOfWeek.subtract(const Duration(days: 1))) &&
-            compositionDate.isBefore(endOfWeek);
+            compositionDate.isBefore(endOfWeek.add(const Duration(days: 1)));
       },
     ).toList();
 
