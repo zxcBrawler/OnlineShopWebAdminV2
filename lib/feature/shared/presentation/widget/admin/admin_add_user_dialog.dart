@@ -173,9 +173,6 @@ class _AddUserDialogState extends State<AddUserDialog> {
                               selectedIndex: selectedShopAddressIndex!,
                               onIndexChanged: (value) {
                                 selectedShopAddressIndex = value;
-                                print(state
-                                    .shopAddresses![selectedShopAddressIndex!]
-                                    .shopAddressDirection);
                               },
                               isColorDropdown: false,
                             );

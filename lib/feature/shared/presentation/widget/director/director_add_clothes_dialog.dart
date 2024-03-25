@@ -178,6 +178,7 @@ class _DirectorAddClothesDialogState extends State<DirectorAddClothesDialog> {
     service<RemoteShopGarnishBloc>()
         .add(AddShopGarnish(shopGarnishDTO: newShopGarnish));
     await Future.delayed(const Duration(seconds: 1));
+    // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Item added to shop'),
@@ -214,6 +215,7 @@ class _DirectorAddClothesDialogState extends State<DirectorAddClothesDialog> {
         onPressed: () async {
           ifExists = await _checkIfExists();
           if (ifExists) {
+            // ignore: use_build_context_synchronously
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Item already exists in the shop.'),

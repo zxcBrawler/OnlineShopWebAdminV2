@@ -175,7 +175,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                       .idStatus! -
                                                   1;
                                             });
-                                            print(selectedStatusIndex);
                                           },
                                           isColorDropdown: false,
                                         );
