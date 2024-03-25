@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/config/responsive.dart';
-import 'package:xc_web_admin/core/constants/constants.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/header/basic_header_text.dart';
@@ -38,7 +38,8 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
 
   final ShopAddressDTO shopAddressDTO = ShopAddressDTO();
   List<Marker> markers = []; // List to hold markers
-  final YandexGeocoder geo = YandexGeocoder(apiKey: yandexApiKey);
+  final YandexGeocoder geo =
+      YandexGeocoder(apiKey: dotenv.env['YANDEX_API_KEY']!);
 
   String shopLatitude = "";
   String shopLongitude = "";

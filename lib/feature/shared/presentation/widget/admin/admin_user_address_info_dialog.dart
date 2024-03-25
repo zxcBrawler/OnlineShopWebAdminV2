@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:xc_web_admin/core/constants/constants.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
 import 'package:xc_web_admin/feature/shared/data/model/user_address.dart';
 import 'package:yandex_geocoder/yandex_geocoder.dart';
@@ -22,7 +22,8 @@ class _UserAddressDialogState extends State<UserAddressDialog> {
   final TextEditingController addressCityController =
       TextEditingController(text: '');
   List<Marker> markers = []; // List to hold markers
-  final YandexGeocoder geo = YandexGeocoder(apiKey: yandexApiKey);
+  final YandexGeocoder geo =
+      YandexGeocoder(apiKey: dotenv.env['YANDEX_API_KEY']!);
   double latitude = 0.0;
   double longitude = 0.0;
 
