@@ -21,6 +21,11 @@ An app has 3 roles which are:
 
 The OnlineShopWebAdminV2 application provides a user-friendly interface for managing various aspects of an online shop. Below is an overview of the main UI components and features:
 
+
+### Login page
+After logging in with specific credentials the dashboard of logged in user is showed based on user role
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/5619b035-fbdf-4684-8a7f-3e70afb959af)
+
 ### Side menu
 
 Each role has it own side menu items that manage each role navigation. Also every side menu has a **Logout** button that clears local window storage and navigates back to login page.
