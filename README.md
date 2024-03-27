@@ -108,11 +108,50 @@ Show all employees assigned to specific shop
 
 The product catalog enables administrators to manage the shop's inventory, including adding new products, updating existing ones, and categorizing items. It provides a comprehensive view of product details, such as name, description, price, and availability.
 
+#### Admin Clothes
+Shows all info about clothes such as total quantity, quantity of female and male items filtered by type clothes in Pie Chart, total items that were sold, total colors and sizes
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/9edcba2f-4df4-4295-88d0-1c7825af50e1)
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/32364cc8-06f0-4e3c-a1cd-3c9f3cd642ab)
+
+By pressing **Arrow Button** of total clothes widget the table containing all items info is shown. This page includes such functionallity as adding new items, searching items by name and forming a PDF file that contains all info about clothes presented in a table
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/ab0d9091-0556-40f8-8727-c1ae7c444eeb)
+
+By pressing **Options Button** the details of specific clothes item is shown. 
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/9e691b5d-45d4-4579-a912-0c53426ad3f4)
+
+By pressing **Add button** the dialog for adding new item to database is shown.
+To add new items it's required to choose item gender, type of future item, fill all additional info, choose sizes and colors of item and uploading URL of clothes image
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/6059bc33-abb6-4e0d-a5cd-c8f8be3b7d55)
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/5a5f4330-bedb-4792-b46d-2d3c216c783c)
+
+Pressing **generate pdf** button is forming a PDF file that contains all info about clothes presented in a table
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/ee3fd790-fbe4-466e-ae09-ae211a473991)
+
+#### Director Clothes
+Shows all info about clothes in shop that director is assigned to such as total quantity, quantity of female and male items filtered by type clothes in Pie Chart and total items that were sold by current week.
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/8f3d042a-c82c-42b9-a33b-55ea3f347318)
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/2eb19684-ed44-4539-ad89-3e61c0896a4b)
+
+Same as admin by pressing **Arrow Button** of total clothes widget the table containing all items info is shown. This page includes such functionallity as adding new items to shop, searching items by name and forming a PDF file that contains all info about clothes presented in a table
+
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/70cb1f8e-4db1-4a97-8e57-32c71b78ae71)
+
+By pressing **Add button** the dialog for adding new item to shop is shown.
+To add new items it's required to choose item from dropdwon, size and color of item and quantity of item with specific size and color
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/dc83ae2a-6481-471b-9de6-f0cd9bbfe145)
+
+
+
+
+#### Employee Clothes
+
+Employee clothes page has the same functionallity as Director clothes page excluding an abillity to add and delete clothes from the shop
+
 
 ### Shops overview
 
 
 
-### Order Management
+### Orders overview
 
 The order management module facilitates the processing and fulfillment of customer orders. It allows administrators to track order statuses, manage shipping and delivery details, and generate invoices.
