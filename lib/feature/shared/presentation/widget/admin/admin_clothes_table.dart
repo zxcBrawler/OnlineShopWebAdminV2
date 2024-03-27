@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xc_web_admin/config/pdf_service.dart';
 import 'package:xc_web_admin/core/widget/searchbar/basic_search_bar.dart';
 import 'package:xc_web_admin/core/widget/table/basic_data_source.dart';
 import 'package:xc_web_admin/core/widget/table/basic_table.dart';
 import 'package:xc_web_admin/core/widget/table/colums_generator.dart';
+import 'package:xc_web_admin/core/widget/text/card_text.dart';
+import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/clothes_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_state.dart';
@@ -31,11 +34,13 @@ class _ClothesTableState extends State<ClothesTable> {
   /// Returns a [Widget] tree that represents the built UI.
   @override
   Widget build(BuildContext context) {
+    List<ClothesEntity> clothes = [];
     // Build the widget tree based on the state of RemoteClothesBloc
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Search bar
+
         BasicSearchBar(
           onChangedCallback: (value) {
             setState(() {
@@ -43,6 +48,25 @@ class _ClothesTableState extends State<ClothesTable> {
                   value?.toLowerCase() ?? ''; // Update the search query
             });
           },
+        ),
+
+        Row(
+          children: [
+            const CardText(title: "generate pdf"),
+            SizedBox(
+                height: 70,
+                width: 70,
+                child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: BasicContainer(
+                      child: IconButton(
+                        onPressed: () {
+                          PdfService().printsClothesPDF(clothes);
+                        },
+                        icon: const Icon(Icons.description),
+                      ),
+                    ))),
+          ],
         ),
 
         const SizedBox(
@@ -57,7 +81,7 @@ class _ClothesTableState extends State<ClothesTable> {
                 return const Center(child: CircularProgressIndicator());
               // If the state is RemoteClothesDone, render a table with clothes data
               case RemoteClothesDone:
-                List<ClothesEntity> clothes = [];
+
                 // Filter clothes based on the title provided and the search query
                 switch (widget.title) {
                   case "male clothes":

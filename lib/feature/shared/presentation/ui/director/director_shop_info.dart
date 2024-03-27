@@ -56,12 +56,14 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
                                 ? Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: SizedBox(
-                                          width: 200,
-                                          height: 200,
+                                          width: 300,
+                                          height: 300,
                                           child: FlutterMap(
                                               options: MapOptions(
                                                   initialZoom: 15,
@@ -106,48 +108,22 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
                                               ]),
                                         ),
                                       ),
-                                      Row(
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  const BasicText(
-                                                      title:
-                                                          "shop contact number: "),
-                                                  CardText(
-                                                      title: state
-                                                          .shop!
-                                                          .shopAddresses!
-                                                          .contactNumber!),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  const BasicText(
-                                                      title: "shop address: "),
-                                                  CardText(
-                                                      title: state
-                                                          .shop!
-                                                          .shopAddresses!
-                                                          .shopAddressDirection!),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  const BasicText(
-                                                      title: "shop metro: "),
-                                                  CardText(
-                                                      title: state
-                                                          .shop!
-                                                          .shopAddresses!
-                                                          .shopMetro!),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      )
+                                      const BasicText(
+                                          title: "shop contact number: "),
+                                      CardText(
+                                          title: state.shop!.shopAddresses!
+                                              .contactNumber!),
+                                      const BasicText(title: "shop address: "),
+                                      SizedBox(
+                                        width: 400,
+                                        child: CardText(
+                                            title: state.shop!.shopAddresses!
+                                                .shopAddressDirection!),
+                                      ),
+                                      const BasicText(title: "shop metro: "),
+                                      CardText(
+                                          title: state
+                                              .shop!.shopAddresses!.shopMetro!),
                                     ],
                                   )
                                 : Row(
@@ -157,8 +133,8 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: SizedBox(
-                                          width: 600,
-                                          height: 600,
+                                          width: 500,
+                                          height: 500,
                                           child: FlutterMap(
                                               options: MapOptions(
                                                   initialZoom: 15,
@@ -205,40 +181,60 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
                                       ),
                                       Column(
                                         children: [
-                                          Row(
+                                          const Row(
                                             children: [
-                                              const BasicText(
+                                              BasicText(
                                                   title:
                                                       "shop contact number: "),
-                                              CardText(
-                                                  title: state
-                                                      .shop!
-                                                      .shopAddresses!
-                                                      .contactNumber!),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              const BasicText(
+                                              SizedBox(
+                                                width: 300,
+                                                child: CardText(
+                                                    title: state
+                                                        .shop!
+                                                        .shopAddresses!
+                                                        .contactNumber!),
+                                              ),
+                                            ],
+                                          ),
+                                          const Row(
+                                            children: [
+                                              BasicText(
                                                   title: "shop address: "),
-                                              CardText(
-                                                  title: state
-                                                      .shop!
-                                                      .shopAddresses!
-                                                      .shopAddressDirection!),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              const BasicText(
-                                                  title: "shop metro: "),
-                                              CardText(
-                                                  title: state
-                                                      .shop!
-                                                      .shopAddresses!
-                                                      .shopMetro!),
+                                              SizedBox(
+                                                width: 300,
+                                                child: CardText(
+                                                    title: state
+                                                        .shop!
+                                                        .shopAddresses!
+                                                        .shopAddressDirection!),
+                                              ),
                                             ],
                                           ),
+                                          const Row(
+                                            children: [
+                                              BasicText(title: "shop metro: "),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              SizedBox(
+                                                width: 300,
+                                                child: CardText(
+                                                    title: state
+                                                        .shop!
+                                                        .shopAddresses!
+                                                        .shopMetro!),
+                                              ),
+                                            ],
+                                          )
                                         ],
                                       )
                                     ],

@@ -11,6 +11,7 @@ class CardText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Text(
+        maxLines: 3,
         title,
         style: GoogleFonts.hammersmithOne(
             textStyle: TextStyle(
