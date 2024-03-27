@@ -22,35 +22,52 @@ class AdminWeeklySoldItemsByWeek extends StatefulWidget {
 class _AdminWeeklySoldItemsByWeekState
     extends State<AdminWeeklySoldItemsByWeek> {
   @override
+
+  /// Builds the UI for the [AdminWeeklySoldItemsByWeek] widget.
+  ///
+  /// This widget uses the BlocProvider to provide the [RemoteOrderCompBloc] to
+  /// its children. It also uses the BlocBuilder to listen to the state changes
+  /// of the [RemoteOrderCompBloc] and build the UI accordingly.
   Widget build(BuildContext context) {
+    // Wraps the widget with BlocProvider to provide the RemoteOrderCompBloc
     return BlocProvider<RemoteOrderCompBloc>(
       create: (context) => service()..add(const GetOrderComp()),
+      // Wraps the widget with Expanded to take up all the available space
       child: Expanded(
+        // Applies padding to the child widget
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8, top: 20, left: 8, right: 8),
+          // Wraps the child widget with BasicContainer
           child: BasicContainer(
+            // Builds the Column widget with children
             child: Column(
               children: [
+                // Uses BlocBuilder to listen to the state changes of RemoteOrderCompBloc
                 BlocBuilder<RemoteOrderCompBloc, RemoteOrderCompState>(
                   builder: (_, state) {
+                    // Checks the runtime type of the state
                     switch (state.runtimeType) {
+                      // When the state is RemoteOrderCompLoading, displays CircularProgressIndicator
                       case RemoteOrderCompLoading:
                         return const Center(child: CircularProgressIndicator());
+                      // When the state is RemoteOrderCompDone, displays the weekly sold items chart
                       case RemoteOrderCompDone:
+                        // Retrieves the compositions from the state
                         List<OrderCompositionEntity> compositions =
                             state.compositions!;
+                        // Generates the bar chart data for male and female
                         List<BarChartRodData> flSpotListMale =
                             Methods.generateFlSpotListForOrdersComp(
                           compositions,
                           genderId: 1,
                         );
-
                         List<BarChartRodData> flSpotListFemale =
                             Methods.generateFlSpotListForOrdersComp(
                           compositions,
                           genderId: 2,
                         );
 
+                        // Displays the current week and the bar chart
                         return Column(
                           children: [
                             BasicText(title: Methods.displayCurrentWeek()),
@@ -58,10 +75,11 @@ class _AdminWeeklySoldItemsByWeekState
                                 barsList: [flSpotListMale, flSpotListFemale]),
                           ],
                         );
-
+                      // When the state is RemoteOrderCompError, displays error text
                       case RemoteOrderCompError:
                         return const Text("error");
                     }
+                    // Returns SizedBox when the state is not handled
                     return const SizedBox();
                   },
                 ),

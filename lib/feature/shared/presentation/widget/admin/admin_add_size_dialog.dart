@@ -25,7 +25,6 @@ class _AddSizeDialogState extends State<AddSizeDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controllers = {
       'size name': TextEditingController(text: ''),
@@ -33,31 +32,54 @@ class _AddSizeDialogState extends State<AddSizeDialog> {
   }
 
   @override
+
+  /// Builds the widget representing the dialog for adding a new size.
+  ///
+  /// This method returns a [Dialog] widget that contains a [Column]
+  /// with the necessary widgets for adding a new size. It includes a
+  /// [BasicText] widget for the title, a loop that generates [BasicTextField]
+  /// widgets for each field in the [controllers] map, and a [Padding] widget
+  /// that contains an [ElevatedButton] widget for adding the size.
+  ///
+  /// The [Dialog] widget is the root of the returned widget tree.
+  @override
   Widget build(BuildContext context) {
     return Dialog(
+      // The root of the widget tree
       child: Column(
+        // The column widget that contains all the child widgets
         children: [
+          // The widget for displaying the title
           const BasicText(
             title: "add new size",
           ),
+          // Loop that generates widgets for each field
           for (var field in controllers.keys)
             BasicTextField(
+              // The title of the field
               title: field,
+              // The controller for the field
               controller: Methods.getControllerForField(controllers, field),
+              // The field is enabled for editing
               isEnabled: true,
             ),
           Padding(
+            // The padding around the button
             padding: const EdgeInsets.all(8.0),
+            // The button for adding the size
             child: ElevatedButton(
+              // The function to be called when the button is pressed
               onPressed: () async {
                 addSize();
               },
+              // The style of the button
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.darkBrown,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
+              // The text to be displayed on the button
               child: const BaseButtonText(title: "add new size"),
             ),
           )
@@ -66,11 +88,29 @@ class _AddSizeDialogState extends State<AddSizeDialog> {
     );
   }
 
-  void addSize() async {
+  /// Adds the new size to the database.
+  ///
+  /// This function retrieves the text from the 'size name' field,
+  /// adds the new size to the database using the [RemoteSizeBloc],
+  /// waits for 1 second, and then pops the current route and navigates
+  /// to the "All Sizes" screen.
+  ///
+  /// Parameters:
+  /// None
+  ///
+  /// Returns:
+  /// Future<void>
+  Future<void> addSize() async {
+    // Retrieve the text from the 'size name' field
     newSize.nameSize = controllers['size name']!.text;
 
+    // Add the new size to the database using the [RemoteSizeBloc]
     service<RemoteSizeBloc>().add(AddSize(size: newSize));
+
+    // Wait for 1 second
     await Future.delayed(const Duration(seconds: 1));
+
+    // Pop the current route and navigate to the "All Sizes" screen
     router.pop();
     router.push(Pages.adminAllSizes.screenPath);
   }

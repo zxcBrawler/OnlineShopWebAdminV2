@@ -1,3 +1,4 @@
+// App pages
 enum Pages {
   auth,
   adminMain, // separate window
@@ -40,10 +41,7 @@ enum Pages {
   employeeWeeklyOrdersDetails
 }
 
-enum DirectorPages { director }
-
-enum EmployeePages { emp }
-
+// Pages routes
 extension AppPageExtension on Pages {
   String get screenPath {
     return switch (this) {
@@ -89,6 +87,7 @@ extension AppPageExtension on Pages {
     };
   }
 
+// Pages names
   String get screenName {
     return switch (this) {
       Pages.auth => 'auth',

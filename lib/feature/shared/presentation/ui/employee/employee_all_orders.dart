@@ -29,18 +29,7 @@ class _EmployeeAllOrdersState extends State<EmployeeAllOrders> {
                 ),
               ],
             ),
-            // Row with  search bar and three filter icons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [],
-                  ),
-                )
-              ],
-            ),
+
             // Orders table widget
             Row(
               children: [

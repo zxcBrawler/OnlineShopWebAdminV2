@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_active_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_users.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_users_addresses.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_users_weekly_activity.dart';
 
 class AdminUsers extends StatefulWidget {
   const AdminUsers({super.key});
@@ -39,7 +36,7 @@ class _AdminUsersState extends State<AdminUsers> {
               Header(
                 title: 'users',
               ),
-              // Display the total number of active users
+              // Display the total number of  users
               Row(
                 children: [
                   AdminTotalUsers(),

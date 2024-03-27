@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+// Base class for all data states in the application that can be used to manage data state
 abstract class DataState<T> {
   final T? data;
   final DioException? error;

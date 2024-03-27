@@ -31,17 +31,7 @@ class _DirectorEmployeesState extends State<DirectorEmployees> {
               ],
             ),
             // Row with search bar and filter/add buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [],
-                  ),
-                )
-              ],
-            ),
+
             // Row with users table
             Row(
               children: [

@@ -1,3 +1,4 @@
+// Strings constants
 const String errorLoadingColors = "error loading colors";
 const String errorLoadingSizes = "error loading sizes";
 const String errorLoadingImage = "error loading image";

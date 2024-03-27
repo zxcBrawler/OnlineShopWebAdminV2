@@ -1,5 +1,6 @@
 import 'package:universal_html/html.dart';
 
+// Session storage class for storing different data in browser tab
 class SessionStorage {
   static Storage sessionStorage = window.sessionStorage;
 

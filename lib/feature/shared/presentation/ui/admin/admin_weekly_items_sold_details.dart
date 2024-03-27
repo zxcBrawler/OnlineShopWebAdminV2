@@ -10,7 +10,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_c
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_weekly_items_by_week.dart';
 
 class AdminWeeklyItemsSoldDetails extends StatefulWidget {
-  const AdminWeeklyItemsSoldDetails({Key? key}) : super(key: key);
+  const AdminWeeklyItemsSoldDetails({super.key});
 
   @override
   State<AdminWeeklyItemsSoldDetails> createState() =>

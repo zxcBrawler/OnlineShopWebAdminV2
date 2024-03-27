@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/config/color.dart';
 
+// Style for the dropdown container
 Container dropdownContainer(Widget child) {
   return Container(
       decoration: BoxDecoration(

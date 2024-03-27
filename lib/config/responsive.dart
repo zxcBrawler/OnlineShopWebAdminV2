@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Responsive class for handling responsiveness of the app in different screen sizes
 class Responsive extends StatelessWidget {
   final Widget mobile;
   final Widget desktop;

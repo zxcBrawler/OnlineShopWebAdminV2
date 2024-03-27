@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xc_web_admin/config/color.dart';
 
+// App theme
 final ThemeData appTheme = ThemeData(
     useMaterial3: false,
     inputDecorationTheme: InputDecorationTheme(

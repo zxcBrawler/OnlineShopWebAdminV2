@@ -8,6 +8,21 @@ class BasicText extends StatelessWidget {
 
   const BasicText({super.key, required this.title});
   @override
+
+  /// Builds a [Text] widget with the provided [title].
+  ///
+  /// The [Text] widget is wrapped in a [Padding] widget with a padding of 25.0
+  /// on all sides. The [Text] widget is styled using the Google Fonts
+  /// 'Hammersmith One' font and has a color of [AppColors.darkBrown]. The font
+  /// size is determined based on the device's screen size using the
+  /// [Responsive.isMobile] method. If the device is a mobile device, the font
+  /// size is 20. Otherwise, it is 30.
+  ///
+  /// Parameters:
+  ///   - context: The build context of the widget tree.
+  ///
+  /// Returns:
+  ///   - A [Text] widget wrapped in a [Padding] widget.
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(25.0),

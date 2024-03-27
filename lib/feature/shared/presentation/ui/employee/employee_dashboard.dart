@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xc_web_admin/config/responsive.dart';
 import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 import 'package:xc_web_admin/di/service.dart';
@@ -21,91 +20,69 @@ class EmployeeDashboard extends StatefulWidget {
 class _EmployeeDashboardState extends State<EmployeeDashboard> {
   @override
 
-  /// Builds the user interface widget tree.
+  /// Builds the widget tree for the [EmployeeDashboard].
   ///
-  /// The method builds a scrollable widget tree that wraps its content
-  /// with a [SafeArea] to avoid any overlap with system UI. It uses a
-  /// [SingleChildScrollView] to enable vertical scrolling.
+  /// This method wraps the content with [SafeArea] to avoid any overlap with
+  /// system UI. It also wraps the content with [SingleChildScrollView] to enable
+  /// vertical scrolling.
   ///
-  /// The UI is built differently depending on whether the device is a
-  /// desktop or not. For a desktop device, it displays a [Header] widget
-  /// with a 'dashboard' title and a [Row] widget with no children. For a
-  /// non-desktop device, it also displays a [Header] widget with a
-  /// 'dashboard' title.
-  @override
+  /// The method uses [BlocProvider] to provide an instance of
+  /// [RemoteEmployeeShopBloc] to its child. It creates a new instance of the
+  /// bloc and adds a [GetShopAddressByEmployeeId] event to it, passing the
+  /// employee id stored in [SessionStorage].
+  ///
+  /// The method uses [BlocBuilder] to rebuild the UI whenever the state of the
+  /// [RemoteEmployeeShopBloc] changes. It renders different widgets based on
+  /// the runtime type of the state.
+  ///
+  /// Returns the built widget tree.
   Widget build(BuildContext context) {
+    // Wrap the content with SafeArea to avoid any overlap with system UI
     return SafeArea(
-      // Wrap the content with SafeArea to avoid any overlap with system UI
       child: SingleChildScrollView(
         // Wrap the content with SingleChildScrollView to enable vertical scrolling
         padding: const EdgeInsets.all(16.0),
-        child: Responsive.isDesktop(context)
-            ? BlocProvider<RemoteEmployeeShopBloc>(
-                create: (context) => service()
-                  ..add(GetShopAddressByEmployeeId(
-                      employeeId:
-                          int.parse(SessionStorage.getValue("employeeId")))),
-                child: BlocBuilder<RemoteEmployeeShopBloc,
-                    RemoteEmployeeShopState>(builder: (context, state) {
-                  switch (state.runtimeType) {
-                    case RemoteEmployeeShopLoading:
-                      return const SizedBox();
-                    case RemoteShopAddressByEmployeeIdDone:
-                      SessionStorage.saveLocalData("shopAddressId",
-                          state.shop!.shopAddresses!.shopAddressId!);
-                      return const Column(
-                        children: [
-                          Header(
-                            title: 'dashboard',
-                          ),
-                          EmployeeTotalItems(),
-                          Row(
-                            children: [
-                              DirectorWeeklyItemsSold(),
-                            ],
-                          ),
-                          DirectorWeeklyOrdersWidget(),
-                        ],
-                      );
-
-                    case RemoteEmployeeShopError:
-                      return Text(state.error.toString());
-                  }
+        child: BlocProvider<RemoteEmployeeShopBloc>(
+            // Use BlocProvider to provide an instance of RemoteEmployeeShopBloc
+            create: (context) => service()
+              ..add(GetShopAddressByEmployeeId(
+                  employeeId:
+                      int.parse(SessionStorage.getValue("employeeId")))),
+            // Use BlocBuilder to rebuild the UI whenever the state changes
+            child: BlocBuilder<RemoteEmployeeShopBloc, RemoteEmployeeShopState>(
+                builder: (context, state) {
+              // Render different widgets based on the state type
+              switch (state.runtimeType) {
+                case RemoteEmployeeShopLoading:
+                  // Render nothing if the state is still loading
                   return const SizedBox();
-                }))
-            : BlocProvider<RemoteEmployeeShopBloc>(
-                create: (context) => service()
-                  ..add(GetShopAddressByEmployeeId(
-                      employeeId:
-                          int.parse(SessionStorage.getValue("employeeId")))),
-                child: BlocBuilder<RemoteEmployeeShopBloc,
-                    RemoteEmployeeShopState>(builder: (context, state) {
-                  switch (state.runtimeType) {
-                    case RemoteEmployeeShopLoading:
-                      return const SizedBox();
-                    case RemoteShopAddressByEmployeeIdDone:
-                      SessionStorage.saveLocalData("shopAddressId",
-                          state.shop!.shopAddresses!.shopAddressId!);
-                      return const Column(
+                case RemoteShopAddressByEmployeeIdDone:
+                  // Save the shop address id to SessionStorage
+                  SessionStorage.saveLocalData("shopAddressId",
+                      state.shop!.shopAddresses!.shopAddressId!);
+                  // Render the main widgets
+                  return const Column(
+                    children: [
+                      Header(
+                        title: 'dashboard',
+                      ),
+                      EmployeeTotalItems(),
+                      Row(
                         children: [
-                          Header(
-                            title: 'dashboard',
-                          ),
-                          EmployeeTotalItems(),
-                          Row(
-                            children: [
-                              DirectorWeeklyItemsSold(),
-                            ],
-                          ),
-                          DirectorWeeklyOrdersWidget(),
+                          DirectorWeeklyItemsSold(),
                         ],
-                      );
+                      ),
+                      DirectorWeeklyOrdersWidget(),
+                    ],
+                  );
 
-                    case RemoteEmployeeShopError:
-                      return Text(state.error.toString());
-                  }
-                  return const SizedBox();
-                })),
+                case RemoteEmployeeShopError:
+                  // Render the error message if there's an error
+                  return Text(state.error.toString());
+              }
+              // Render nothing if the state is of an unknown type
+              return const SizedBox();
+            })),
       ),
     );
   }

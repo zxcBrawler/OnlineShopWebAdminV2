@@ -19,6 +19,19 @@ class MaleClothesWidget extends StatefulWidget {
 
 class _MaleClothesWidgetState extends State<MaleClothesWidget> {
   @override
+
+  /// Builds the MaleClothesWidget.
+  ///
+  /// This method creates a [BlocProvider] with a [RemoteClothesBloc]
+  /// that loads clothes data using the [GetClothes] event.
+  /// It also creates a [Padding] widget with a [BasicContainer]
+  /// that displays a pie chart and a text widget displaying the
+  /// total number of male clothes.
+  /// Finally, it creates a [Row] with an [IconButton]
+  /// that navigates to the [adminAllClothes] page.
+  ///
+  /// The [context] parameter is required for building the
+  /// [BlocProvider] and the [Padding] widget.
   Widget build(BuildContext context) {
     return BlocProvider<RemoteClothesBloc>(
       create: (context) => service()..add(const GetClothes()),
@@ -28,36 +41,43 @@ class _MaleClothesWidgetState extends State<MaleClothesWidget> {
           child: BasicContainer(
             child: Column(
               children: [
+                // Builds a pie chart and a text widget based on the state of RemoteClothesBloc
                 BlocBuilder<RemoteClothesBloc, RemoteClothesState>(
                   builder: (_, state) {
-                    switch (state.runtimeType) {
-                      case RemoteClothesLoading:
-                        return const Center(child: CircularProgressIndicator());
-                      case RemoteClothesDone:
-                        List<String> clothesTypes = state.clothes!
-                            .where((element) =>
-                                element.typeClothes!.categoryClothes!
-                                    .nameCategory ==
-                                'male')
-                            .map((element) => element.typeClothes!.nameType!)
-                            .toList();
-                        Map<String, double> clothesCount = {};
-                        for (var type in clothesTypes) {
-                          clothesCount[type] = (clothesCount[type] ?? 0) + 1;
-                        }
-                        return Column(
-                          children: [
-                            BasicText(
-                              title:
-                                  'total male clothes: ${clothesTypes.length}',
-                            ),
-                            BasicPieChart(inputData: clothesCount)
-                          ],
-                        );
-
-                      case RemoteClothesError:
-                        return const Text("error");
+                    // Display a circular progress indicator while loading
+                    if (state is RemoteClothesLoading) {
+                      return const Center(child: CircularProgressIndicator());
                     }
+
+                    // Display a pie chart and a text widget with the total number of male clothes
+                    if (state is RemoteClothesDone) {
+                      List<String> clothesTypes = state.clothes!
+                          .where((element) =>
+                              element
+                                  .typeClothes!.categoryClothes!.nameCategory ==
+                              'male')
+                          .map((element) => element.typeClothes!.nameType!)
+                          .toList();
+                      Map<String, double> clothesCount = {};
+                      for (var type in clothesTypes) {
+                        clothesCount[type] = (clothesCount[type] ?? 0) + 1;
+                      }
+                      return Column(
+                        children: [
+                          BasicText(
+                            title: 'total male clothes: ${clothesTypes.length}',
+                          ),
+                          BasicPieChart(inputData: clothesCount)
+                        ],
+                      );
+                    }
+
+                    // Display an error message if the state is RemoteClothesError
+                    if (state is RemoteClothesError) {
+                      return const Text("error");
+                    }
+
+                    // Return an empty widget if the state is not one of the previous cases
                     return const SizedBox();
                   },
                 ),

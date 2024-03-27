@@ -35,7 +35,6 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_shops_ma
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_user_addresses.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_user_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_users_main.dart';
-import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_activity_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/auth/mobile_auth_page.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_all_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_all_orders.dart';
@@ -52,6 +51,7 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_ma
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
+// Go router routes to different screens
 final router =
     GoRouter(initialLocation: '/', navigatorKey: _rootNavigatorKey, routes: [
   GoRoute(
@@ -347,14 +347,6 @@ final router =
         parentNavigatorKey: _shellNavigatorKey,
         pageBuilder: (context, state) {
           return const NoTransitionPage(child: AllActiveUsers());
-        },
-      ),
-      GoRoute(
-        parentNavigatorKey: _shellNavigatorKey,
-        path: Pages.adminWeeklyActivityDetails.screenPath,
-        name: Pages.adminWeeklyActivityDetails.screenName,
-        pageBuilder: (context, state) {
-          return const NoTransitionPage(child: WeeklyActivityDetails());
         },
       ),
       GoRoute(

@@ -23,11 +23,23 @@ class OrdersTable extends StatefulWidget {
 class _OrdersTableState extends State<OrdersTable> {
   String _searchQuery = ''; // Store the search query
   @override
+
+  /// Builds the widget tree based on the state of the [RemoteDeliveryInfoBloc].
+  ///
+  /// Wraps the widget with [BlocProvider] to provide the [RemoteDeliveryInfoBloc].
+  /// Creates an instance of [RemoteDeliveryInfoBloc] using the [service] method.
+  /// Listens for changes in the state of [RemoteDeliveryInfoBloc] using [BlocBuilder].
+  ///
+  /// Returns the widget tree based on the runtime type of the state.
+  @override
   Widget build(BuildContext context) {
+    // Initialize list to store all the orders
     List<DeliveryInfoEntity> allOrders = [];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // Add search bar widget to filter orders
         BasicSearchBar(
           onChangedCallback: (value) {
             setState(() {
@@ -36,36 +48,44 @@ class _OrdersTableState extends State<OrdersTable> {
             });
           },
         ),
+        // Add button to generate pdf of all orders
         Row(
           children: [
             const CardText(title: "generate pdf"),
             SizedBox(
-                height: 70,
-                width: 70,
-                child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: BasicContainer(
-                      child: IconButton(
-                        onPressed: () {
-                          PdfService().printOrdersPDF(allOrders);
-                        },
-                        icon: const Icon(Icons.description),
-                      ),
-                    ))),
+              height: 70,
+              width: 70,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: BasicContainer(
+                  child: IconButton(
+                    onPressed: () {
+                      PdfService().printOrdersPDF(
+                          allOrders); // Generate pdf of all orders
+                    },
+                    icon: const Icon(Icons.description),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
+        // Add bloc provider to listen for changes in state of RemoteDeliveryInfoBloc
         BlocProvider<RemoteDeliveryInfoBloc>(
           create: (context) => service()..add(const GetDeliveryInfo()),
           child: BlocBuilder<RemoteDeliveryInfoBloc, RemoteDeliveryInfoState>(
             builder: (_, state) {
+              // Handle different states of RemoteDeliveryInfoBloc
               switch (state.runtimeType) {
                 case RemoteDeliveryInfoLoading:
                   return const Center(child: CircularProgressIndicator());
                 case RemoteDeliveryInfoDone:
+                  // Filter orders based on search query and update allOrders list
                   allOrders = state.info!
                       .where((element) =>
                           element.order!.numberOrder!.contains(_searchQuery))
                       .toList();
+                  // Return table widget with filtered orders
                   return BasicTable(
                     columns: generateColumns(state.info!.first.getProperties()),
                     dataSource: BasicDataSource<DeliveryInfoEntity>(

@@ -148,131 +148,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                                         isEnabled: false,
                                       )
                                     : const SizedBox(),
-
-                              // Build the dropdown menu for status selection
-                              BlocProvider<RemoteStatusBloc>(
-                                  create: (context) =>
-                                      service<RemoteStatusBloc>()
-                                        ..add(const GetStatuses()),
-                                  child: BlocBuilder<RemoteStatusBloc,
-                                      RemoteStatusState>(
-                                    builder: (_, state) {
-                                      if (state is RemoteStatusDone) {
-                                        statuses = state.statuses!;
-                                        statuses.sort(((a, b) => a.idStatus!
-                                            .compareTo(b.idStatus!)));
-
-                                        return BasicDropdown(
-                                          listTitle: "status order",
-                                          dropdownData: statuses
-                                              .map((e) => e.nameStatus!)
-                                              .toList(),
-                                          selectedIndex: selectedStatusIndex!,
-                                          onIndexChanged: (value) {
-                                            setState(() {
-                                              selectedStatusIndex = state
-                                                      .statuses![value]
-                                                      .idStatus! -
-                                                  1;
-                                            });
-                                          },
-                                          isColorDropdown: false,
-                                        );
-                                      }
-                                      return const SizedBox();
-                                    },
-                                  )),
-                            ]))
+                              _buildStatusesDropdown()
+                            ])),
                       ],
                     ),
                     const BasicText(title: "order composition"),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: BlocProvider<RemoteOrderCompBloc>(
-                            create: (context) => service<RemoteOrderCompBloc>()
-                              ..add(GetOrderCompByOrderId(
-                                  id: widget.deliveryInfo.order!.idOrder!)),
-                            child: BlocBuilder<RemoteOrderCompBloc,
-                                RemoteOrderCompState>(
-                              builder: (_, state) {
-                                switch (state.runtimeType) {
-                                  case RemoteOrderCompDone:
-                                    List<OrderCompositionEntity> compositions =
-                                        state.compositions!;
-                                    return SizedBox(
-                                      height: 500, // Set a fixed height
-                                      child: ListView.builder(
-                                        itemCount: compositions.length,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: BasicContainer(
-                                                child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: SizedBox(
-                                                      height:
-                                                          isMobile ? 75 : 200,
-                                                      width:
-                                                          isMobile ? 75 : 200,
-                                                      child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            compositions[index]
-                                                                .clothesComp!
-                                                                .clothesPhoto!,
-                                                        fit: BoxFit.fill,
-                                                        height: 200,
-                                                        width: 200,
-                                                      )),
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    BasicText(
-                                                        title: compositions[
-                                                                index]
-                                                            .clothesComp!
-                                                            .nameClothesEn!),
-                                                    CardText(
-                                                        title:
-                                                            "barcode: ${compositions[index].clothesComp!.barcode!}"),
-                                                    CardText(
-                                                        title:
-                                                            "size: ${compositions[index].sizeClothes!.nameSize!}"),
-                                                    CardText(
-                                                        title:
-                                                            "color: ${compositions[index].colorClothes!.nameColor!}"),
-                                                  ],
-                                                ),
-                                                const Spacer(),
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    CardText(
-                                                        title:
-                                                            "${compositions[index].clothesComp!.priceClothes}₽ X ${compositions[index].quantity} "),
-                                                  ],
-                                                )
-                                              ],
-                                            )),
-                                          );
-                                        },
-                                      ),
-                                    );
-
-                                  case RemoteOrderCompError:
-                                    return const Text("error");
-                                }
-                                return const SizedBox();
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    _buildOrderCompList(),
 
                     // Build the edit status button
                     Row(
@@ -286,7 +167,131 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ))));
   }
 
-  // Widget for building custom buttons
+  /// Builds a dropdown widget that displays a list of statuses retrieved from a
+  /// RemoteStatusBloc. When a status is selected, the selected status index is
+  /// stored in [selectedStatusIndex].
+  ///
+  /// Returns a [BasicDropdown] widget.
+  Widget _buildStatusesDropdown() {
+    // Provides the RemoteStatusBloc to its child
+    return BlocProvider<RemoteStatusBloc>(
+      create: (context) =>
+          service<RemoteStatusBloc>()..add(const GetStatuses()),
+      // Builds the dropdown based on the state of the RemoteStatusBloc
+      child: BlocBuilder<RemoteStatusBloc, RemoteStatusState>(
+        builder: (_, state) {
+          // If the RemoteStatusBloc has retrieved the statuses
+          if (state is RemoteStatusDone) {
+            // Sort the statuses by their id
+            statuses = state.statuses!;
+            statuses.sort((a, b) => a.idStatus!.compareTo(b.idStatus!));
+
+            // Build the dropdown widget
+            return BasicDropdown(
+              listTitle: "status order",
+              // Map the status names to a list of strings
+              dropdownData: statuses.map((e) => e.nameStatus!).toList(),
+              // Set the selected index to the stored selected status index
+              selectedIndex: selectedStatusIndex!,
+              // When the selected index changes, update the selected status index
+              onIndexChanged: (value) {
+                setState(() {
+                  selectedStatusIndex = state.statuses![value].idStatus! - 1;
+                });
+              },
+              isColorDropdown: false,
+            );
+          }
+          // If the RemoteStatusBloc has not retrieved the statuses, return an empty SizedBox
+          return const SizedBox();
+        },
+      ),
+    );
+  }
+
+  Widget _buildOrderCompList() {
+    final isMobile = Responsive.isMobile(context);
+    return Row(
+      children: [
+        Expanded(
+          child: BlocProvider<RemoteOrderCompBloc>(
+            create: (context) => service<RemoteOrderCompBloc>()
+              ..add(GetOrderCompByOrderId(
+                  id: widget.deliveryInfo.order!.idOrder!)),
+            child: BlocBuilder<RemoteOrderCompBloc, RemoteOrderCompState>(
+              builder: (_, state) {
+                switch (state.runtimeType) {
+                  case RemoteOrderCompDone:
+                    List<OrderCompositionEntity> compositions =
+                        state.compositions!;
+                    return SizedBox(
+                      height: 500, // Set a fixed height
+                      child: ListView.builder(
+                        itemCount: compositions.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: BasicContainer(
+                                child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                      height: isMobile ? 75 : 200,
+                                      width: isMobile ? 75 : 200,
+                                      child: CachedNetworkImage(
+                                        imageUrl: compositions[index]
+                                            .clothesComp!
+                                            .clothesPhoto!,
+                                        fit: BoxFit.fill,
+                                        height: 200,
+                                        width: 200,
+                                      )),
+                                ),
+                                Column(
+                                  children: [
+                                    BasicText(
+                                        title: compositions[index]
+                                            .clothesComp!
+                                            .nameClothesEn!),
+                                    CardText(
+                                        title:
+                                            "barcode: ${compositions[index].clothesComp!.barcode!}"),
+                                    CardText(
+                                        title:
+                                            "size: ${compositions[index].sizeClothes!.nameSize!}"),
+                                    CardText(
+                                        title:
+                                            "color: ${compositions[index].colorClothes!.nameColor!}"),
+                                  ],
+                                ),
+                                const Spacer(),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    CardText(
+                                        title:
+                                            "${compositions[index].clothesComp!.priceClothes}₽ X ${compositions[index].quantity} "),
+                                  ],
+                                )
+                              ],
+                            )),
+                          );
+                        },
+                      ),
+                    );
+
+                  case RemoteOrderCompError:
+                    return const Text("error");
+                }
+                return const SizedBox();
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   /// Edit the status of an order.
   ///

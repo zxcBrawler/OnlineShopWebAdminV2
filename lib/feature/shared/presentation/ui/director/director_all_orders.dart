@@ -29,18 +29,7 @@ class _DirectorAllOrdersState extends State<DirectorAllOrders> {
                 ),
               ],
             ),
-            // Row with  search bar and three filter icons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [],
-                  ),
-                )
-              ],
-            ),
+
             // Orders table widget
             Row(
               children: [

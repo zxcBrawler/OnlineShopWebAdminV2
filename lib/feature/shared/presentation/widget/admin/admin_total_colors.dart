@@ -18,8 +18,20 @@ class AdminColors extends StatefulWidget {
 
 class _AdminColorsState extends State<AdminColors> {
   @override
+
+  /// Builds the UI for the [AdminColors] widget.
+  ///
+  /// This method uses the BlocProvider and BlocBuilder widgets to interact
+  /// with the [RemoteColorBloc] bloc and build the UI based on the state of
+  /// the bloc.
+  ///
+  /// The UI consists of a row containing a container with a text widget that
+  /// displays the total number of colors and an icon button that navigates to
+  /// the [adminAllColors] screen when pressed.
   Widget build(BuildContext context) {
     return BlocProvider<RemoteColorBloc>(
+      /// Create an instance of [RemoteColorBloc] and add a [GetColors] event
+      /// to it.
       create: (context) => service()..add(const GetColors()),
       child: Row(
         children: [
@@ -34,17 +46,27 @@ class _AdminColorsState extends State<AdminColors> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       BlocBuilder<RemoteColorBloc, RemoteColorState>(
+                        /// Build different widgets based on the state of
+                        /// [RemoteColorBloc].
                         builder: (_, state) {
                           switch (state.runtimeType) {
                             case RemoteColorsLoading:
+
+                              /// Display a circular progress indicator when the
+                              /// state is [RemoteColorsLoading].
                               return const Center(
                                   child: CircularProgressIndicator());
                             case RemoteColorsDone:
+
+                              /// Display the total number of colors when the
+                              /// state is [RemoteColorsDone].
                               return BasicText(
                                 title: 'total colors: ${state.colors!.length}',
                               );
                             case RemoteColorsError:
-                              // Display the text "error" when the state is RemoteClothesError
+
+                              /// Display the text "error" when the state is
+                              /// [RemoteColorsError].
                               return const Text("error");
                           }
                           return const SizedBox();
@@ -55,9 +77,9 @@ class _AdminColorsState extends State<AdminColors> {
                         child: IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            router.go(
-                              Pages.adminAllColors.screenPath,
-                            );
+                            /// Navigate to the [adminAllColors] screen when the
+                            /// icon button is pressed.
+                            router.go(Pages.adminAllColors.screenPath);
                           },
                           icon: const Icon(
                             Icons.chevron_right,

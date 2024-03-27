@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 
+// Menu items for each role
 List<Map<String, dynamic>> adminMenuItems = [
   {
     'tabIcon': Icons.dashboard,

@@ -20,33 +20,53 @@ class AdminTotalItemsPiechart extends StatefulWidget {
 
 class _AdminTotalItemsPiechartState extends State<AdminTotalItemsPiechart> {
   @override
+
+  /// Builds the stateful widget.
+  ///
+  /// This widget builds a stateful widget that displays the total number
+  /// of clothes and a pie chart of the clothes types. It also provides a
+  /// button to navigate to the [AdminAllClothesScreen].
   Widget build(BuildContext context) {
+    // Wrap the widget with a BlocProvider to provide a [RemoteClothesBloc]
+    // instance to its descendants.
     return BlocProvider<RemoteClothesBloc>(
       create: (context) => service()..add(const GetClothes()),
+      // Set the child widget which will be wrapped with the BlocProvider.
       child: Expanded(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8, top: 20, left: 8, right: 8),
+          // Wrap the child widget with a BasicContainer widget.
           child: BasicContainer(
             child: Column(
               children: [
+                // Build a BlocBuilder to listen to changes in the state of the
+                // [RemoteClothesBloc].
                 BlocBuilder<RemoteClothesBloc, RemoteClothesState>(
                   builder: (_, state) {
+                    // Handle the different possible states of the
+                    // [RemoteClothesBloc].
                     switch (state.runtimeType) {
                       case RemoteClothesLoading:
+                        // Display a circular progress indicator while the
+                        // clothes are being fetched.
                         return const Center(child: CircularProgressIndicator());
                       case RemoteClothesDone:
+                        // Get the list of clothes types.
                         List<String> clothesTypes = state.clothes!
                             .map((clothes) => clothes.typeClothes!.nameType!)
                             .toList();
+                        // Count the number of occurences of each clothes type.
                         Map<String, double> clothesCount = {};
                         for (var type in clothesTypes) {
                           clothesCount[type] = (clothesCount[type] ?? 0) + 1;
                         }
                         return Column(
                           children: [
+                            // Display the total number of clothes.
                             BasicText(
                               title: 'total clothes: ${clothesTypes.length}',
                             ),
+                            // Display a pie chart of the clothes types.
                             BasicPieChart(inputData: clothesCount)
                           ],
                         );
@@ -57,6 +77,7 @@ class _AdminTotalItemsPiechartState extends State<AdminTotalItemsPiechart> {
                     return const SizedBox();
                   },
                 ),
+                // Add a button to navigate to the [AdminAllClothesScreen].
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

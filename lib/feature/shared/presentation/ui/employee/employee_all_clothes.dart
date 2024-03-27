@@ -40,23 +40,6 @@ class _EmployeeAllClothesState extends State<EmployeeAllClothes> {
                 ),
               ],
             ),
-            const Row(
-              // A horizontally expanding widget that contains search bar and filter buttons
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              // Spaces out the children horizontally
-              children: [
-                // A widget for searching
-                Expanded(
-                  // Expands to fill available horizontal space
-                  child: Row(
-                    // A horizontally expanding widget that contains two filter buttons
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    // Aligns the children to the right
-                    children: [],
-                  ),
-                )
-              ],
-            ),
             Row(
               // A horizontally expanding widget that contains a table widget
               children: [

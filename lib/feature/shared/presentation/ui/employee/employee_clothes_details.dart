@@ -54,112 +54,190 @@ class _EmployeeClothesDetailsState extends State<EmployeeClothesDetails> {
   }
 
   @override
+
+  /// Builds the main widget for the clothes details page.
+  ///
+  /// This function returns a [Scaffold] widget that contains a [SafeArea] widget.
+  /// The [SafeArea] widget contains a [SingleChildScrollView] widget. The
+  /// [SingleChildScrollView] widget contains a [Column] widget. The [Column]
+  /// widget contains two [Row] widgets. The first [Row] widget contains an
+  /// [IconButton] and an [Expanded] widget. The second [Row] widget contains two
+  /// widgets returned by [_buildPhotosCarousel] and [_buildInfo] functions.
+  ///
+  /// Parameters:
+  ///   - context: The [BuildContext] of the widget.
+  ///
+  /// Returns:
+  ///   A [Scaffold] widget that contains a [SafeArea] widget.
   Widget build(BuildContext context) {
-    final isMobile = Responsive.isMobile(context);
+    // Check if the device is a mobile device
+    final bool isMobile = Responsive.isMobile(context);
+
+    // Build the main Scaffold widget
     return Scaffold(
       body: SafeArea(
-          child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
+        // Wrap the content in a SingleChildScrollView
+        child: SingleChildScrollView(
+          // Set padding for the content
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            // Build the main content
+            children: [
+              // Build the first Row widget
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () {
-                          router.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: AppColors.darkBrown,
-                          size: 30,
-                        ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: HeaderText(
-                                textSize: isMobile ? 35 : 45,
-                                title: 'clothes details',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(children: [
-                    BlocProvider(
-                      create: (context) => service<RemoteClothesBloc>()
-                        ..add(GetClothesPhoto(
-                            id: widget.clothes.sizeClothesGarnish!.clothes!
-                                .idClothes!)),
-                      child: BlocBuilder<RemoteClothesBloc, RemoteClothesState>(
-                        builder: (context, state) {
-                          switch (state.runtimeType) {
-                            case RemoteClothesLoading:
-                              return const CircularProgressIndicator();
-                            case RemotePhotosOfClothesDone:
-                              return SizedBox(
-                                height: 500,
-                                width: 500,
-                                child: CarouselSlider(
-                                  items: state.photosOfClothes!
-                                      .map((photo) => Center(
-                                              child: CachedNetworkImage(
-                                            imageUrl: photo
-                                                .clothesPhoto!.photoAddress!,
-                                            fit: BoxFit.fill,
-                                            height: 500,
-                                            width: 500,
-                                          )))
-                                      .toList(),
-                                  options: CarouselOptions(
-                                    aspectRatio: 16 / 9,
-                                    viewportFraction: 0.8,
-                                    initialPage: 0,
-                                    enableInfiniteScroll: true,
-                                    reverse: false,
-                                    autoPlay: true,
-                                    autoPlayInterval:
-                                        const Duration(seconds: 3),
-                                    autoPlayAnimationDuration:
-                                        const Duration(milliseconds: 800),
-                                    autoPlayCurve: Curves.fastOutSlowIn,
-                                    enlargeCenterPage: true,
-                                    scrollDirection: Axis.horizontal,
-                                  ),
-                                ),
-                              );
-                            case RemoteClothesError:
-                              return const Text(errorLoadingImage);
-                          }
-                          return const SizedBox();
-                        },
-                      ),
+                  // Build the back button
+                  IconButton(
+                    // Set padding for the back button
+                    padding: EdgeInsets.zero,
+                    // Set the function to call when the back button is pressed
+                    onPressed: () {
+                      router.pop(context);
+                    },
+                    // Set the icon for the back button
+                    icon: Icon(
+                      Icons.arrow_back,
+                      // Set the color of the back button icon
+                      color: AppColors.darkBrown,
+                      // Set the size of the back button icon
+                      size: 30,
                     ),
-                    Expanded(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  ),
+                  // Build the second Row widget
+                  Expanded(
+                    // Build the header text widget
+                    child: Row(
+                      // Set the main axis alignment to start
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      // Build the header text widget
                       children: [
-                        for (var field in controllers.keys)
-                          BasicTextField(
-                              title: field,
-                              controller: Methods.getControllerForField(
-                                  controllers, field),
-                              isEnabled: false),
-                        const BasicText(title: "color"),
-                        ColorContainer(
-                          color: Methods.getColorFromHex(
-                              widget.clothes.colorClothesGarnish!.colors!.hex!),
-                        )
+                        // Build the header text widget
+                        Expanded(
+                          child: HeaderText(
+                            // Set the text size based on the device type
+                            textSize: isMobile ? 35 : 45,
+                            // Set the title of the header text
+                            title: 'clothes details',
+                          ),
+                        ),
                       ],
-                    )),
-                  ]),
+                    ),
+                  ),
                 ],
-              ))),
+              ),
+              // Build the second Row widget
+              Row(
+                // Build the photos carousel widget and the info widget
+                children: [_buildPhotosCarousel(), _buildInfo()],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Builds the photos carousel widget for the clothes details page.
+  ///
+  /// This function returns a [BlocProvider] widget that wraps a [BlocBuilder].
+  /// The [BlocProvider] is used to provide the [RemoteClothesBloc] to its child.
+  /// The [BlocBuilder] is used to build the widget based on the state of the
+  /// [RemoteClothesBloc]. The [GetClothesPhoto] event is added to the [RemoteClothesBloc].
+  /// The different states of the [RemoteClothesBloc] are handled in the switch
+  /// statement and the corresponding widget is returned.
+  Widget _buildPhotosCarousel() {
+    // Create a [BlocProvider] widget to provide the [RemoteClothesBloc] to its child.
+    return BlocProvider(
+      // Create the [RemoteClothesBloc] and add a [GetClothesPhoto] event to it.
+      create: (context) => service<RemoteClothesBloc>()
+        ..add(GetClothesPhoto(
+            id: widget.clothes.sizeClothesGarnish!.clothes!.idClothes!)),
+      // Build the widget based on the state of the [RemoteClothesBloc].
+      child: BlocBuilder<RemoteClothesBloc, RemoteClothesState>(
+        builder: (context, state) {
+          // Handle the different states of the [RemoteClothesBloc].
+          switch (state.runtimeType) {
+            // Display a loading indicator if the state is [RemoteClothesLoading].
+            case RemoteClothesLoading:
+              return const CircularProgressIndicator();
+            // Display a carousel of photos if the state is [RemotePhotosOfClothesDone].
+            case RemotePhotosOfClothesDone:
+              // Map each photo to a [CachedNetworkImage] widget and wrap it in a [Center] widget.
+              // Create a [CarouselSlider] widget with the photos.
+              return SizedBox(
+                height: 500,
+                width: 500,
+                child: CarouselSlider(
+                  items: state.photosOfClothes!
+                      .map((photo) => Center(
+                              child: CachedNetworkImage(
+                            imageUrl: photo.clothesPhoto!.photoAddress!,
+                            fit: BoxFit.fill,
+                            height: 500,
+                            width: 500,
+                          )))
+                      .toList(),
+                  options: CarouselOptions(
+                    aspectRatio: 16 / 9,
+                    viewportFraction: 0.8,
+                    initialPage: 0,
+                    enableInfiniteScroll: true,
+                    reverse: false,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 800),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enlargeCenterPage: true,
+                    scrollDirection: Axis.horizontal,
+                  ),
+                ),
+              );
+            // Display an error message if the state is [RemoteClothesError].
+            case RemoteClothesError:
+              return const Text(errorLoadingImage);
+          }
+          // Return an empty sized box if none of the states match.
+          return const SizedBox();
+        },
+      ),
+    );
+  }
+
+  /// Builds the info widget for the clothes details page.
+  ///
+  /// This function returns an [Expanded] widget containing a [Column]
+  /// with multiple [BasicTextField] widgets and a [ColorContainer] widget.
+  /// The [BasicTextField] widgets are generated using a loop that iterates
+  /// over the keys of the [controllers] map. Each [BasicTextField] is
+  /// initialized with the corresponding field name, controller, and disabled
+  /// state. The last item in the column is a [BasicText] widget with the
+  /// title "color", and a [ColorContainer] widget with the clothes' color.
+  Widget _buildInfo() {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          // Loop over each field in the controllers map and create a BasicTextField
+          // widget for it.
+          for (var field in controllers.keys)
+            BasicTextField(
+              // Set the title of the BasicTextField to the current field.
+              title: field,
+              // Get the controller for the current field from the controllers map.
+              controller: Methods.getControllerForField(controllers, field),
+              // Set the enabled state of the BasicTextField to false.
+              isEnabled: false,
+            ),
+          // Add a BasicText widget with the title "color".
+          const BasicText(title: "color"),
+          // Add a ColorContainer widget with the clothes' color.
+          ColorContainer(
+            color: Methods.getColorFromHex(
+                widget.clothes.colorClothesGarnish!.colors!.hex!),
+          ),
+        ],
+      ),
     );
   }
 }

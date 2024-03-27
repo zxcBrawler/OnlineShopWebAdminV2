@@ -17,7 +17,15 @@ class AdminOrderStatuses extends StatefulWidget {
 
 class _AdminOrderStatusesState extends State<AdminOrderStatuses> {
   @override
+
+  /// Builds the widget tree for the [AdminOrderStatusesWidget].
+  ///
+  /// Wraps the widget with [BlocProvider] to provide the [RemoteDeliveryInfoBloc].
+  /// Creates an instance of [RemoteDeliveryInfoBloc] using the [service] method.
+  /// Listens for changes in the state of [RemoteDeliveryInfoBloc] using [BlocBuilder].
+  /// Returns the widget tree based on the runtime type of the state.
   Widget build(BuildContext context) {
+    // Wrap the widget with BlocProvider to provide the RemoteDeliveryInfoBloc
     return BlocProvider<RemoteDeliveryInfoBloc>(
       create: (context) => service()..add(const GetDeliveryInfo()),
       child: Expanded(
@@ -26,11 +34,15 @@ class _AdminOrderStatusesState extends State<AdminOrderStatuses> {
           child: BasicContainer(
             child: Column(
               children: [
+                // Listen for changes in the state of RemoteDeliveryInfoBloc
                 BlocBuilder<RemoteDeliveryInfoBloc, RemoteDeliveryInfoState>(
                   builder: (_, state) {
+                    // Based on the runtime type of the state, return the appropriate widget
                     switch (state.runtimeType) {
+                      // If the state is of type RemoteDeliveryInfoLoading, show a circular progress indicator
                       case RemoteDeliveryInfoLoading:
                         return const Center(child: CircularProgressIndicator());
+                      // If the state is of type RemoteDeliveryInfoDone, show the pie chart widget
                       case RemoteDeliveryInfoDone:
                         List<String> statuses = state.info!
                             .map((element) =>
@@ -49,6 +61,7 @@ class _AdminOrderStatusesState extends State<AdminOrderStatuses> {
                           ],
                         );
 
+                      // If the state is of type RemoteDeliveryInfoError, show a text widget
                       case RemoteDeliveryInfoError:
                         return const Text("error");
                     }
