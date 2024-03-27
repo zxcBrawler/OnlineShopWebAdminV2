@@ -68,9 +68,9 @@ Shows widgets representing total clothes items that are stored in specific store
 #### Employee Dashboard
 Has the same widgets as **Director Dashboard**
 
-### User/Employee tab
+### Users/Employees tab
 
-The user management section allows administrators to view, add, edit, and delete user accounts associated with the online shop. It includes features for user authentication, role-based access control, and profile management.
+On the "Users/Employees" page, administrators and directors can manage the users and employees associated with the online shop system. This functionality encompasses tasks such as adding new users or employees, updating existing profiles, and maintaining access permissions and roles. Administrators can create accounts for new users, assign them roles and permissions within the system, and manage their personal information such as name, email, and contact details. Additionally, administrators and directors can view a list of all users and employees, filter and search for specific individuals based on criteria such as role or department, and access detailed profiles for each user/employee to review and update their information as needed. This page serves as a centralized hub for overseeing and managing the user and employee base of the online shop, ensuring efficient operation and accountability within the organization.
 
 #### Admin users 
 Shows a pie chart of all users divided by role
@@ -104,19 +104,23 @@ Show all employees assigned to specific shop
 ![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/9032bdb3-8ce7-4ae7-be94-ea05eaaf1444)
 
 
-### Product Catalog
-
-The product catalog enables administrators to manage the shop's inventory, including adding new products, updating existing ones, and categorizing items. It provides a comprehensive view of product details, such as name, description, price, and availability.
+### Clothes Catalog
+On the "Clothes" page, users can perform various functionalities related to managing the inventory of clothing items available for sale. This includes tasks such as adding new clothing items, updating existing item details, and categorizing items based on attributes such as type, size, color, and price. Users can input essential information such as the item's name, description, category, and stock availability. Additionally, they can view a list of all existing clothing items, filter and search for specific items based on various criteria, and navigate to individual item pages for more detailed management. This page serves as a centralized hub for overseeing and maintaining the inventory of clothing items associated with the online business, providing a seamless experience for administrators, directors, and employees alike.
 
 #### Admin Clothes
 Shows all info about clothes such as total quantity, quantity of female and male items filtered by type clothes in Pie Chart, total items that were sold, total colors and sizes
 ![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/9edcba2f-4df4-4295-88d0-1c7825af50e1)
 ![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/32364cc8-06f0-4e3c-a1cd-3c9f3cd642ab)
 
+By pressing **Arrow Button** of total items that were sold during current week the Bar Chart is shown representing the quantity of items that were sold during each day of the current week.
+It also includes info about which items were sold specifically by each date
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/601211d6-34da-4dbb-9697-3558670339ee)
+
 By pressing **Arrow Button** of total clothes widget the table containing all items info is shown. This page includes such functionallity as adding new items, searching items by name and forming a PDF file that contains all info about clothes presented in a table
 ![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/ab0d9091-0556-40f8-8727-c1ae7c444eeb)
 
-By pressing **Options Button** the details of specific clothes item is shown. 
+
+By pressing **Options Button** the details of specific clothes item are shown. 
 ![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/9e691b5d-45d4-4579-a912-0c53426ad3f4)
 
 By pressing **Add button** the dialog for adding new item to database is shown.
@@ -140,18 +144,62 @@ By pressing **Add button** the dialog for adding new item to shop is shown.
 To add new items it's required to choose item from dropdwon, size and color of item and quantity of item with specific size and color
 ![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/dc83ae2a-6481-471b-9de6-f0cd9bbfe145)
 
-
-
-
 #### Employee Clothes
 
 Employee clothes page has the same functionallity as Director clothes page excluding an abillity to add and delete clothes from the shop
 
 
 ### Shops overview
+On the "Shops" page, users can perform various functionalities related to managing information about shop locations. This includes tasks such as adding new shop locations, updating existing location details, and managing the availability status of each shop. Users can input essential information such as the shop's address, contact details, operating hours, and any additional notes. Additionally, they can view a list of all existing shop locations, filter and search for specific shops, and navigate to individual shop pages for more detailed management. This page serves as a centralized hub for overseeing and maintaining the network of shop locations associated with the online business, providing a seamless experience for administrators, directors, and employees alike.
 
+#### Admin Shops
+Shows all info about shops in a table which includes searching shop by address.
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/dde6e3a9-471b-42de-9eac-0eba50457b9c)
+
+By pressing **Options Button** the details of specific shop are shown. 
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/24305719-d2d2-458f-9354-6c9152ced44d)
+
+By pressing **Add button** the dialog for adding new shop to database is shown.
+To add new shop it is required to fill all info about shop such as shop address, shop subway/metro station and contact number
+While filling the address of shop a marker is placed on map to show the location of shop
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/12d7c59a-c558-4fb3-85f5-df9d45b9903b)
+
+
+#### Director My Shop
+Shows brief info about shop that director is assinged to
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/f12e0418-090d-422c-b3e9-ff134c68d358)
 
 
 ### Orders overview
 
-The order management module facilitates the processing and fulfillment of customer orders. It allows administrators to track order statuses, manage shipping and delivery details, and generate invoices.
+On the "Orders" page, administrators, directors, and employees can view, manage, and track orders placed within the online shop system. This functionality enables users to monitor the status of orders, process new orders, update order details, and manage order fulfillment. Administrators and directors have access to a comprehensive overview of all orders within the system, including details such as order ID, customer information, order date, items purchased, payment status, and shipping details. They can filter and search for specific orders based on various criteria, such as order status, customer name, or order date, to quickly locate and manage orders as needed. Additionally, administrators and directors can take actions such as updating order statuses, managing inventory levels, and resolving any issues or discrepancies related to orders. Employees involved in order fulfillment can use this page to view assigned orders, update order statuses as they progress through the fulfillment process, and communicate with customers regarding order updates or inquiries. Overall, the Orders page serves as a central hub for monitoring and managing the entire order lifecycle, ensuring smooth and efficient order processing and customer satisfaction.
+
+#### Admin Orders
+Shows info about total orders, including Pie Chart to represent orders by statuses and Line Chart that shows how much orders were made during each day of current week
+
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/c54c6adb-ad64-4a13-b5c8-da0ca99d9db5)
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/41e0b0a6-6256-4e50-9ac9-f87384f55077)
+
+By pressing **Arrow Button** of total orders widget the table containing all orders info is shown. This page includes such functionallity as searching orders by number and forming a PDF file that contains all info about orders presented in a table
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/b75007fd-b766-439d-873a-4c32e119e996)
+
+By pressing **Options Button** the details of specific order are shown. 
+
+It includes full order info and the item composition of current order.
+
+Each role has the abillity to only change status of order.
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/16b90bb5-43c7-415e-bb0e-2b277f3e6103)
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/55fab736-1b86-4e49-9811-0bc99591fb0d)
+
+By pressing **Arrow Button** of total orders that were made during current week the Line Chart is shown representing the quantity of orders that were made during each day of the current week.
+It also includes full info about which orders were made specifically by each date
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/59c5cda0-eb66-4ffa-b804-4121c0208789)
+
+
+#### Director Orders
+This page has the same functionallity as Admin Orders Page but only shows orders for shop that director is assigned to.
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/b6720312-a5db-4b9d-947c-1826ddee4771)
+![image](https://github.com/zxcBrawler/OnlineShopWebAdminV2/assets/97828450/e5dbe144-ead6-437c-ba96-63de084ba4c6)
+
+#### Employee Orders
+Has the same functionallity as Director Orders
