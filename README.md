@@ -19,8 +19,11 @@ An app has 3 roles which are:
 
 ## UI Overview
 
-The OnlineShopWebAdminV2 application provides a user-friendly interface for managing various aspects of an online shop. Below is an overview of the main UI components and features:
+### Responsive Design
 
+The user interface (UI) of the OnlineShopWebAdminV2 application is designed to be responsive, ensuring optimal usability across a variety of devices and screen sizes. Whether accessed on desktops, laptops, tablets, or mobile devices, the UI dynamically adjusts and adapts its layout and elements to provide a seamless and intuitive user experience. This responsiveness enhances accessibility and usability, allowing users to interact with the application comfortably and efficiently regardless of the device they are using. With fluid and flexible design principles, the UI ensures that users can access and utilize all features and functionalities of the application with ease, promoting engagement and satisfaction.
+
+The OnlineShopWebAdminV2 application provides a user-friendly interface for managing various aspects of an online shop. Below is an overview of the main UI components and features:
 
 ### Login page
 After logging in with specific credentials the dashboard of logged in user is showed based on user role
