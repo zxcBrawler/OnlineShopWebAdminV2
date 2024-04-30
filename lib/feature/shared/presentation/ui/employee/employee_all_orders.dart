@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_orders_table.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class EmployeeAllOrders extends StatefulWidget {
   const EmployeeAllOrders({super.key});
@@ -13,10 +14,10 @@ class EmployeeAllOrders extends StatefulWidget {
 class _EmployeeAllOrdersState extends State<EmployeeAllOrders> {
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       // Wrap the content with a SingleChildScrollView to allow vertical scrolling
       child: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             // Header widget with the title 'all orders'
@@ -24,14 +25,14 @@ class _EmployeeAllOrdersState extends State<EmployeeAllOrders> {
               children: [
                 Expanded(
                   child: Header(
-                    title: 'all orders',
+                    title: S.current.allOrders,
                   ),
                 ),
               ],
             ),
 
             // Orders table widget
-            Row(
+            const Row(
               children: [
                 Expanded(
                   child: Padding(

@@ -12,6 +12,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/employee_shop_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/employee_shop_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/employee_shop_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorShopInfo extends StatefulWidget {
   const DirectorShopInfo({super.key});
@@ -51,8 +52,8 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
           // The children of the column
           children: [
             // Display the header
-            const Header(
-              title: 'my shop',
+            Header(
+              title: S.current.myShop,
             ),
             // Display the shop information
             Row(
@@ -102,7 +103,7 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
                   : _buildDesktopInfo(state);
             // If the state is RemoteEmployeeShopError, show an error text
             case RemoteEmployeeShopError():
-              return const Text("error");
+              return Text(S.current.error);
           }
           // If none of the above states match, return an empty sized box
           return const SizedBox();
@@ -164,12 +165,12 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
           ),
         ),
         // The basic text widget displays the shop's contact number.
-        const BasicText(title: "shop contact number: "),
+        BasicText(title: "${S.current.contactNumber}: "),
         CardText(
           title: state.shop!.shopAddresses!.contactNumber!,
         ),
         // The basic text widget displays the shop's address.
-        const BasicText(title: "shop address: "),
+        BasicText(title: "${S.current.shopAddress}: "),
         // The sized box widget displays the shop's address.
         SizedBox(
           width: 400,
@@ -178,7 +179,7 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
           ),
         ),
         // The basic text widget displays the shop's metro.
-        const BasicText(title: "shop metro: "),
+        BasicText(title: "${S.current.shopMetro}: "),
         CardText(
           title: state.shop!.shopAddresses!.shopMetro!,
         ),
@@ -238,9 +239,9 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
         Column(
           children: [
             // The shop contact number.
-            const Row(
+            Row(
               children: [
-                BasicText(title: "shop contact number: "),
+                BasicText(title: "${S.current.contactNumber}: "),
               ],
             ),
             Row(
@@ -254,9 +255,9 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
               ],
             ),
             // The shop address.
-            const Row(
+            Row(
               children: [
-                BasicText(title: "shop address: "),
+                BasicText(title: "${S.current.shopAddress}: "),
               ],
             ),
             Row(
@@ -270,9 +271,9 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
               ],
             ),
             // The shop metro.
-            const Row(
+            Row(
               children: [
-                BasicText(title: "shop metro: "),
+                BasicText(title: "${S.current.shopMetro}: "),
               ],
             ),
             Row(

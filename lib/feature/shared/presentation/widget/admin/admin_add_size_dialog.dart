@@ -10,6 +10,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/data/dto/add_size_dto.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_event.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AddSizeDialog extends StatefulWidget {
   const AddSizeDialog({super.key});
@@ -22,13 +23,11 @@ class _AddSizeDialogState extends State<AddSizeDialog> {
   late final Map<String, TextEditingController> controllers;
 
   final SizeDTO newSize = SizeDTO();
+  bool isInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    controllers = {
-      'size name': TextEditingController(text: ''),
-    };
   }
 
   @override
@@ -44,14 +43,21 @@ class _AddSizeDialogState extends State<AddSizeDialog> {
   /// The [Dialog] widget is the root of the returned widget tree.
   @override
   Widget build(BuildContext context) {
+    if (isInitialized == false) {
+      controllers = {
+        S.of(context).sizeName: TextEditingController(text: ''),
+      };
+      isInitialized = true;
+    }
+
     return Dialog(
       // The root of the widget tree
       child: Column(
         // The column widget that contains all the child widgets
         children: [
           // The widget for displaying the title
-          const BasicText(
-            title: "add new size",
+          BasicText(
+            title: S.of(context).addNewSize,
           ),
           // Loop that generates widgets for each field
           for (var field in controllers.keys)
@@ -102,7 +108,7 @@ class _AddSizeDialogState extends State<AddSizeDialog> {
   /// Future<void>
   Future<void> addSize() async {
     // Retrieve the text from the 'size name' field
-    newSize.nameSize = controllers['size name']!.text;
+    newSize.nameSize = controllers[S.of(context).sizeName]!.text;
 
     // Add the new size to the database using the [RemoteSizeBloc]
     service<RemoteSizeBloc>().add(AddSize(size: newSize));

@@ -8,6 +8,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_c
 import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_comp_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_comp_state.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_weekly_items_by_week.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminWeeklyItemsSoldDetails extends StatefulWidget {
   const AdminWeeklyItemsSoldDetails({super.key});
@@ -28,18 +29,15 @@ class _AdminWeeklyItemsSoldDetailsState
         child: Column(
           children: [
             // Header widget
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: Header(
-                    title: 'items sold overview',
+                    title: S.of(context).itemsSoldOverview,
                   ),
                 ),
               ],
             ),
-            // Line chart
-
-            // Search bar and filters
 
             const Row(
               children: [AdminWeeklySoldItemsByWeek()],
@@ -64,7 +62,7 @@ class _AdminWeeklyItemsSoldDetailsState
                                 state, isMobile, state.compositions!);
 
                           case RemoteOrderCompError:
-                            return const Text("error");
+                            return Text(S.of(context).error);
                         }
                         return const SizedBox();
                       },

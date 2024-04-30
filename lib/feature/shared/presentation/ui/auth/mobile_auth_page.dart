@@ -12,6 +12,7 @@ import 'package:xc_web_admin/feature/shared/data/dto/login_dto.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/auth/auth_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/auth/auth_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/auth/auth_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class MobileAuthPage extends StatefulWidget {
   const MobileAuthPage({super.key});
@@ -170,7 +171,7 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
     // title, controller, and enabled state.
     return BasicTextField(
       key: const Key("authUsernameInput"), // Key for the field.
-      title: "username", // Title of the field.
+      title: S.of(context).username, // Title of the field.
       controller: usernameController, // Controller for the field's text.
       isEnabled: true, // The field is enabled.
     );
@@ -188,7 +189,7 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
     // title, controller, and enabled state.
     return BasicTextField(
       key: const Key("authPasswordInput"), // Key for the field.
-      title: "password", // Title of the field.
+      title: S.of(context).password, // Title of the field.
       controller: passController, // Controller for the field's text.
       isEnabled: true, // The field is enabled.
     );
@@ -228,7 +229,7 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              child: const AuthButtonText(title: "auth"),
+              child: AuthButtonText(title: S.of(context).auth),
             ),
           ),
         ],

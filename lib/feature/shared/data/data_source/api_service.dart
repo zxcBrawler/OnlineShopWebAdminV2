@@ -30,6 +30,9 @@ abstract class ApiService {
 
   void getToken();
 
+  @GET("clothes")
+  Future<HttpResponse<List<ClothesModel>>> getClothes();
+
   @GET('address')
   Future<HttpResponse<List<AddressModel>>> getAddresses();
 
@@ -122,9 +125,6 @@ abstract class ApiService {
 
   @GET("deliveryInfo")
   Future<HttpResponse<List<DeliveryInfoModel>>> getAllInfo();
-
-  @GET("clothes")
-  Future<HttpResponse<List<ClothesModel>>> getClothes();
 
   @FormUrlEncoded()
   @POST("clothes")

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/config/methods.dart';
 import 'package:xc_web_admin/config/responsive.dart';
-import 'package:xc_web_admin/core/constants/strings.dart';
+
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/widget/header/basic_header_text.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
@@ -16,6 +16,7 @@ import 'package:xc_web_admin/feature/shared/data/model/shop_garnish.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class EmployeeClothesDetails extends StatefulWidget {
   final ShopGarnishModel clothes;
@@ -27,30 +28,40 @@ class EmployeeClothesDetails extends StatefulWidget {
 
 class _EmployeeClothesDetailsState extends State<EmployeeClothesDetails> {
   Map<String, TextEditingController> controllers = {
-    "barcode": TextEditingController(),
-    "name clothes ru": TextEditingController(),
-    "name clothes en": TextEditingController(),
-    "price clothes": TextEditingController(),
-    "size clothes": TextEditingController(),
-    "quantity": TextEditingController(),
+    S.current.barcode: TextEditingController(),
+    S.current.nameClothesRu: TextEditingController(),
+    S.current.nameClothesEn: TextEditingController(),
+    S.current.priceClothes: TextEditingController(),
+    S.current.size: TextEditingController(),
+    S.current.quantity: TextEditingController(),
   };
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    controllers["barcode"]!.text =
+
+    /// Initialize the barcode controller
+    controllers[S.current.barcode]!.text =
         widget.clothes.sizeClothesGarnish!.clothes!.barcode!;
-    controllers["name clothes ru"]!.text =
+
+    /// Initialize the name clothes ru controller
+    controllers[S.current.nameClothesRu]!.text =
         widget.clothes.sizeClothesGarnish!.clothes!.nameClothesRu!;
-    controllers["name clothes en"]!.text =
+
+    /// Initialize the name clothes en controller
+    controllers[S.current.nameClothesEn]!.text =
         widget.clothes.sizeClothesGarnish!.clothes!.nameClothesEn!;
-    controllers["price clothes"]!.text =
+
+    /// Initialize the price clothes controller
+    controllers[S.current.priceClothes]!.text =
         widget.clothes.sizeClothesGarnish!.clothes!.priceClothes!;
-    controllers["size clothes"]!.text =
+
+    /// Initialize the size clothes controller
+    controllers[S.current.size]!.text =
         widget.clothes.sizeClothesGarnish!.sizeClothes!.nameSize!;
 
-    controllers["quantity"]!.text = widget.clothes.quantity!.toString();
+    /// Initialize the quantity controller
+    controllers[S.current.quantity]!.text = widget.clothes.quantity!.toString();
   }
 
   @override
@@ -117,7 +128,7 @@ class _EmployeeClothesDetailsState extends State<EmployeeClothesDetails> {
                             // Set the text size based on the device type
                             textSize: isMobile ? 35 : 45,
                             // Set the title of the header text
-                            title: 'clothes details',
+                            title: S.current.clothesDetails,
                           ),
                         ),
                       ],
@@ -195,7 +206,7 @@ class _EmployeeClothesDetailsState extends State<EmployeeClothesDetails> {
               );
             // Display an error message if the state is [RemoteClothesError].
             case RemoteClothesError:
-              return const Text(errorLoadingImage);
+              return Text(S.current.error);
           }
           // Return an empty sized box if none of the states match.
           return const SizedBox();
@@ -230,7 +241,7 @@ class _EmployeeClothesDetailsState extends State<EmployeeClothesDetails> {
               isEnabled: false,
             ),
           // Add a BasicText widget with the title "color".
-          const BasicText(title: "color"),
+          BasicText(title: S.current.color),
           // Add a ColorContainer widget with the clothes' color.
           ColorContainer(
             color: Methods.getColorFromHex(

@@ -54,7 +54,7 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
                   // Expands to fill available horizontal space
                   child: Header(
                     // A widget for displaying a title
-                    title: 'all ${widget.title}',
+                    title: '${widget.title}',
                   ),
                 ),
               ],

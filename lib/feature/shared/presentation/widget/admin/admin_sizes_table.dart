@@ -7,6 +7,7 @@ import 'package:xc_web_admin/core/widget/table/colums_generator.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/size_clothes_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class SizesTable extends StatefulWidget {
   const SizesTable({super.key});
@@ -65,7 +66,7 @@ class _SizesTableState extends State<SizesTable> {
 
               // If the state is RemoteSizesError, show an error message
               case RemoteSizesError:
-                return const Text("error");
+                return Text(S.of(context).error);
             }
             // If none of the states match, return an empty sized box
             return const SizedBox();

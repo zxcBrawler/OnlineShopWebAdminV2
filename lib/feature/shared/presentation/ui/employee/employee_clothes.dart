@@ -4,6 +4,7 @@ import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/employee/employee_female_items_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/employee/employee_male_items_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/employee/employee_total_items.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class EmployeeClothes extends StatefulWidget {
   const EmployeeClothes({super.key});
@@ -32,14 +33,14 @@ class _EmployeeClothesState extends State<EmployeeClothes> {
   /// containing EmployeeFemaleItemsWidget and EmployeeMaleItemsWidget.
   Widget _buildDesktopUI(BuildContext context) {
     // The Column widget is used to stack its children vertically.
-    return const Column(
+    return Column(
       // The Header widget displays the title 'clothes info'.
       children: [
-        Header(title: 'clothes info'),
+        Header(title: S.current.clothesInfo),
         // The EmployeeTotalItems widget displays the total number of clothes.
-        EmployeeTotalItems(),
+        const EmployeeTotalItems(),
         // The Row widget is used to stack its children horizontally.
-        Row(
+        const Row(
           // The EmployeeFemaleItemsWidget and EmployeeMaleItemsWidget are stacked
           // horizontally.
           children: [
@@ -58,19 +59,19 @@ class _EmployeeClothesState extends State<EmployeeClothes> {
   /// The first Row widget contains an EmployeeFemaleItemsWidget, and the second
   /// Row widget contains an EmployeeMaleItemsWidget.
   Widget _buildMobileUI(BuildContext context) {
-    return const Column(
+    return Column(
       // Contains the title 'clothes info' and the total number of clothes
       children: [
-        Header(title: 'clothes info'),
-        EmployeeTotalItems(),
+        Header(title: S.current.clothesInfo),
+        const EmployeeTotalItems(),
         // Contains the number of female clothes
-        Row(
+        const Row(
           children: [
             EmployeeFemaleItemsWidget(),
           ],
         ),
         // Contains the number of male clothes
-        Row(
+        const Row(
           children: [
             EmployeeMaleItemsWidget(),
           ],

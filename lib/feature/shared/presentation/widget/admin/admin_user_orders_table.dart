@@ -11,6 +11,7 @@ import 'package:xc_web_admin/feature/shared/domain/entities/user_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class UserOrdersTable extends StatefulWidget {
   final UserEntity user;
@@ -65,9 +66,9 @@ class _UserOrdersTableState extends State<UserOrdersTable> {
                   // Check if no orders are found for the user
                   if (userOrders.isEmpty) {
                     // Display a message
-                    return const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: BasicText(title: "no orders"),
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: BasicText(title: S.of(context).noOrders),
                     );
                   }
                   // Display a table with the user's orders
@@ -85,7 +86,7 @@ class _UserOrdersTableState extends State<UserOrdersTable> {
                   );
                 case RemoteDeliveryInfoError:
                   // Display error message
-                  return const Text("error");
+                  return Text(S.of(context).error);
                 default:
                   // Return an empty SizedBox if no case is matched
                   return const SizedBox();

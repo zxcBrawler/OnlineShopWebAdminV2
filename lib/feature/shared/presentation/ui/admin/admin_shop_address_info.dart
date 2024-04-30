@@ -14,6 +14,7 @@ import 'package:xc_web_admin/feature/shared/data/dto/shop_address_dto.dart';
 import 'package:xc_web_admin/feature/shared/data/model/shop_address.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_event.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 import 'package:yandex_geocoder/yandex_geocoder.dart';
 
 class AdminShopAddressInfo extends StatefulWidget {
@@ -125,10 +126,12 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
                     children: [
                       Expanded(
                           child: (Responsive.isMobile(context))
-                              ? const HeaderText(
-                                  textSize: 35, title: 'shop address details')
-                              : const HeaderText(
-                                  textSize: 45, title: 'shop address details')),
+                              ? HeaderText(
+                                  textSize: 35,
+                                  title: S.of(context).shopAddressDetails)
+                              : HeaderText(
+                                  textSize: 45,
+                                  title: S.of(context).shopAddressDetails)),
                     ],
                   ),
                 ),
@@ -166,7 +169,7 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         BasicTextField(
-                          title: "shop address",
+                          title: S.of(context).shopAddress,
                           controller: shopAddressController,
                           isEnabled: true,
                           findAddress: () async {
@@ -181,19 +184,19 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
                           },
                         ),
                         BasicTextField(
-                            title: "shop metro",
+                            title: S.of(context).shopMetro,
                             controller: shopMetroController,
                             isEnabled: true),
                         BasicTextField(
-                            title: "contact number",
+                            title: S.of(context).contactNumber,
                             controller: contactNumberController,
                             isEnabled: true),
                         BasicTextField(
-                            title: "latitude",
+                            title: S.of(context).latitude,
                             controller: latitudeController,
                             isEnabled: false),
                         BasicTextField(
-                            title: "longitude",
+                            title: S.of(context).longitude,
                             controller: longitudeController,
                             isEnabled: false),
                       ]),
@@ -212,7 +215,7 @@ class _AdminShopAddressInfoState extends State<AdminShopAddressInfo> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                child: const BaseButtonText(title: "update shop"),
+                child: BaseButtonText(title: S.of(context).updateShop),
               ),
             )
           ]),

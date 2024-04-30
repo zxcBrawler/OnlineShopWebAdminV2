@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
 import 'package:xc_web_admin/feature/shared/data/model/user_address.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 import 'package:yandex_geocoder/yandex_geocoder.dart';
 
 class UserAddressDialog extends StatefulWidget {
@@ -112,19 +113,19 @@ class _UserAddressDialogState extends State<UserAddressDialog> {
                     children: [
                       BasicTextField(
                         // Build the text field for the address name
-                        title: "address name",
+                        title: S.of(context).addressName,
                         controller: addressNameController,
                         isEnabled: false,
                       ),
                       BasicTextField(
                         // Build the text field for the address direction
-                        title: "address direction",
+                        title: S.of(context).addressDirection,
                         controller: addressDirectionController,
                         isEnabled: false,
                       ),
                       BasicTextField(
                         // Build the text field for the address city
-                        title: "address city",
+                        title: S.of(context).addressCity,
                         controller: addressCityController,
                         isEnabled: false,
                       ),

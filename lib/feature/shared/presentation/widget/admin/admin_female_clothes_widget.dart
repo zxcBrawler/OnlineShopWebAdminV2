@@ -9,6 +9,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class FemaleClothesWidget extends StatefulWidget {
   const FemaleClothesWidget({super.key});
@@ -68,7 +69,7 @@ class _FemaleClothesWidgetState extends State<FemaleClothesWidget> {
                             // Display the total number of female clothes.
                             BasicText(
                               title:
-                                  'total female clothes: ${clothesTypes.length}',
+                                  '${S.of(context).totalFemaleClothes}: ${clothesTypes.length}',
                             ),
                             // Display a pie chart of the female clothes types.
                             BasicPieChart(inputData: clothesCount)
@@ -78,7 +79,7 @@ class _FemaleClothesWidgetState extends State<FemaleClothesWidget> {
                       case RemoteClothesError:
                         // Display an error message if there is an error fetching
                         // the clothes.
-                        return const Text("error");
+                        return Text(S.of(context).error);
                     }
                     return const SizedBox();
                   },
@@ -94,7 +95,7 @@ class _FemaleClothesWidgetState extends State<FemaleClothesWidget> {
                           padding: EdgeInsets.zero,
                           onPressed: () {
                             router.go(Pages.adminAllClothes.screenPath,
-                                extra: {"female clothes"});
+                                extra: {S.of(context).allFemaleClothes});
                           },
                           icon: const Icon(
                             Icons.chevron_right,

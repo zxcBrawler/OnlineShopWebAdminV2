@@ -9,6 +9,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 /// Widget representing the admin view of total orders, including a pie chart
 /// showing the distribution of orders based on the type of delivery.
@@ -59,7 +60,8 @@ class _AdminTotalOrdersState extends State<AdminTotalOrders> {
                           children: [
                             BasicText(
                               // Display the total number of orders
-                              title: 'total orders: ${state.info?.length}',
+                              title:
+                                  '${S.of(context).totalOrders}: ${state.info?.length}',
                             ),
                             BasicPieChart(inputData: typeCounts)
                           ],
@@ -67,7 +69,7 @@ class _AdminTotalOrdersState extends State<AdminTotalOrders> {
 
                       case RemoteDeliveryInfoError:
                         // Show error message when there is an error fetching data
-                        return const Text("error");
+                        return Text(S.of(context).error);
                     }
                     return const SizedBox();
                   },

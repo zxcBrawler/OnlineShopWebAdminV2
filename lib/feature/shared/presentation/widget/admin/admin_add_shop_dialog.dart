@@ -12,6 +12,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/data/dto/shop_address_dto.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_event.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 import 'package:yandex_geocoder/yandex_geocoder.dart';
 
 class AddShopDialog extends StatefulWidget {
@@ -48,7 +49,7 @@ class _AddShopDialogState extends State<AddShopDialog> {
         child: Column(
           children: [
             // Display the title of the dialog.
-            const BasicText(title: "add new shop"),
+            BasicText(title: S.of(context).addNewShop),
 
             // Build the main content of the dialog.
             Row(
@@ -118,7 +119,7 @@ class _AddShopDialogState extends State<AddShopDialog> {
           // When the 'Find Address' button is pressed, it geocodes the
           // entered address and adds a marker to the map.
           BasicTextField(
-            title: "shop address",
+            title: S.of(context).shopAddress,
             controller: shopAddressController,
             isEnabled: true,
             findAddress: () async {
@@ -137,7 +138,7 @@ class _AddShopDialogState extends State<AddShopDialog> {
           // This widget allows the user to enter the metro station
           // where the shop is located.
           BasicTextField(
-            title: "shop metro",
+            title: S.of(context).shopMetro,
             controller: shopMetroController,
             isEnabled: true,
           ),
@@ -147,7 +148,7 @@ class _AddShopDialogState extends State<AddShopDialog> {
           // This widget allows the user to enter the contact number
           // of the shop.
           BasicTextField(
-            title: "contact number",
+            title: S.of(context).contactNumber,
             controller: contactNumberController,
             isEnabled: true,
           ),
@@ -177,7 +178,7 @@ class _AddShopDialogState extends State<AddShopDialog> {
           ),
         ),
         // The text to be displayed on the button.
-        child: const BaseButtonText(title: "add new shop"),
+        child: BaseButtonText(title: S.of(context).addNewShop),
       ),
     );
   }

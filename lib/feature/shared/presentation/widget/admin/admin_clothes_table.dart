@@ -10,6 +10,7 @@ import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/clothes_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class ClothesTable extends StatefulWidget {
   final String? title;
@@ -52,7 +53,7 @@ class _ClothesTableState extends State<ClothesTable> {
 
         Row(
           children: [
-            const CardText(title: "generate pdf"),
+            CardText(title: S.of(context).generatePdf),
             SizedBox(
                 height: 70,
                 width: 70,
@@ -84,7 +85,7 @@ class _ClothesTableState extends State<ClothesTable> {
 
                 // Filter clothes based on the title provided and the search query
                 switch (widget.title) {
-                  case "male clothes":
+                  case "male clothes" || "мужская одежда":
                     clothes = state.clothes!
                         .where((element) =>
                             element.typeClothes!.categoryClothes!
@@ -95,7 +96,7 @@ class _ClothesTableState extends State<ClothesTable> {
                                 .contains(_searchQuery))
                         .toList();
                     break;
-                  case "female clothes":
+                  case "female clothes" || "женская одежда":
                     clothes = state.clothes!
                         .where((element) =>
                             element.typeClothes!.categoryClothes!
@@ -106,7 +107,7 @@ class _ClothesTableState extends State<ClothesTable> {
                                 .contains(_searchQuery))
                         .toList();
                     break;
-                  case "clothes":
+                  case "clothes" || "все товары":
                     clothes = state.clothes!
                         .where((element) => element.nameClothesEn!
                             .toLowerCase()
@@ -126,7 +127,7 @@ class _ClothesTableState extends State<ClothesTable> {
                 );
               // If the state is RemoteClothesError, render an error text
               case RemoteClothesError:
-                return const Text("error");
+                return Text(S.of(context).error);
             }
             // If none of the states match, return an empty sized box
             return const SizedBox();

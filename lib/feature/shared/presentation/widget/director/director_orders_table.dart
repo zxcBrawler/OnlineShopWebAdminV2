@@ -10,6 +10,7 @@ import 'package:xc_web_admin/feature/shared/domain/entities/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorOrdersTable extends StatefulWidget {
   const DirectorOrdersTable({super.key});
@@ -59,7 +60,7 @@ class _DirectorOrdersTableState extends State<DirectorOrdersTable> {
                     ),
                   );
                 case RemoteDeliveryInfoError:
-                  return const Text("error");
+                  return Text(S.current.error);
               }
               return const SizedBox();
             },

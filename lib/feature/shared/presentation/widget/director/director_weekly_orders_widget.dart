@@ -5,6 +5,7 @@ import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_weekly_orders_linechart.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorWeeklyOrdersWidget extends StatefulWidget {
   const DirectorWeeklyOrdersWidget({super.key});
@@ -26,7 +27,7 @@ class _DirectorWeeklyOrdersWidgetState
             child: BasicContainer(
               child: Column(
                 children: [
-                  const BasicText(title: "weekly orders made overview"),
+                  BasicText(title: S.current.weeklyOrdersMadeOverview),
                   const Padding(
                       padding: EdgeInsets.only(right: 30),
                       child: DirectorWeeklyOrdersLinechart()),

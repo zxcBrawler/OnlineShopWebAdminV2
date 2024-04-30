@@ -9,6 +9,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorTotalItems extends StatefulWidget {
   const DirectorTotalItems({super.key});
@@ -53,11 +54,12 @@ class _DirectorTotalItemsState extends State<DirectorTotalItems> {
                               }
                               // Display the total number of clothes when the state is RemoteClothesDone
                               return BasicText(
-                                title: 'total clothes: $totalClothes',
+                                title:
+                                    '${S.of(context).totalClothes}: $totalClothes',
                               );
                             case RemoteShopGarnishError:
                               // Display the text "error" when the state is RemoteClothesError
-                              return const Text("error");
+                              return Text(S.current.error);
                           }
                           return const SizedBox();
                         },
@@ -68,7 +70,7 @@ class _DirectorTotalItemsState extends State<DirectorTotalItems> {
                           padding: EdgeInsets.zero,
                           onPressed: () {
                             router.go(Pages.directorAllClothes.screenPath,
-                                extra: {"clothes"});
+                                extra: {S.of(context).allClothes});
                           },
                           icon: const Icon(
                             Icons.chevron_right,

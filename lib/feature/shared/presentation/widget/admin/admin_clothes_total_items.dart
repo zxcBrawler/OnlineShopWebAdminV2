@@ -8,6 +8,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminTotalItems extends StatelessWidget {
   const AdminTotalItems({super.key});
@@ -54,11 +55,11 @@ class AdminTotalItems extends StatelessWidget {
                               // Display the total number of clothes when the state is RemoteClothesDone
                               return BasicText(
                                 title:
-                                    'total clothes: ${state.clothes!.length}',
+                                    '${S.of(context).totalClothes}: ${state.clothes!.length}',
                               );
                             case RemoteClothesError:
                               // Display the text "error" when the state is RemoteClothesError
-                              return const Text("error");
+                              return Text(S.of(context).error);
                           }
                           return const SizedBox();
                         },
@@ -70,7 +71,7 @@ class AdminTotalItems extends StatelessWidget {
                           // Navigate to the adminAllClothes screen when the icon button is pressed
                           onPressed: () {
                             router.go(Pages.adminAllClothes.screenPath,
-                                extra: {"clothes"});
+                                extra: {S.of(context).allClothes});
                           },
                           icon: const Icon(
                             Icons.chevron_right,

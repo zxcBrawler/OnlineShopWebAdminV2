@@ -4,6 +4,7 @@ import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/core/widget/text/basic_text.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_weekly_orders_linechart.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminWeeklyOrders extends StatefulWidget {
   const AdminWeeklyOrders({super.key});
@@ -44,9 +45,9 @@ class _AdminWeeklyOrdersState extends State<AdminWeeklyOrders> {
               child: Column(
                 // The Column widget contains several child widgets.
                 children: [
-                  const BasicText(
+                  BasicText(
                     // The BasicText widget displays "weekly orders made overview".
-                    title: "weekly orders made overview",
+                    title: S.of(context).weeklyOrdersMadeOverview,
                   ),
                   const Padding(
                       // The Padding widget adds right padding to the

@@ -7,6 +7,7 @@ import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_fema
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_male_clothes_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_colors.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_sizes.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminClothes extends StatefulWidget {
   const AdminClothes({super.key});
@@ -46,22 +47,22 @@ class _AdminClothesState extends State<AdminClothes> {
 
   /// Builds the UI for a desktop device.
   Widget _buildDesktopUI(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Header(title: 'clothes info'),
-        AdminTotalItems(),
-        Row(
+        Header(title: S.of(context).clothesInfo),
+        const AdminTotalItems(),
+        const Row(
           children: [
             FemaleClothesWidget(),
             MaleClothesWidget(),
           ],
         ),
-        Row(
+        const Row(
           children: [
             AdminWeeklyItemsSold(),
           ],
         ),
-        Row(
+        const Row(
           children: [
             Expanded(child: AdminColors()),
             Expanded(child: AdminSizes())
@@ -73,27 +74,27 @@ class _AdminClothesState extends State<AdminClothes> {
 
   /// Builds the UI for a mobile device.
   Widget _buildMobileUI(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Header(title: 'clothes info'),
-        AdminTotalItems(),
-        Row(
+        Header(title: S.of(context).clothesInfo),
+        const AdminTotalItems(),
+        const Row(
           children: [
             FemaleClothesWidget(),
           ],
         ),
-        Row(
+        const Row(
           children: [
             MaleClothesWidget(),
           ],
         ),
-        Row(
+        const Row(
           children: [
             AdminWeeklyItemsSold(),
           ],
         ),
-        AdminColors(),
-        AdminSizes()
+        const AdminColors(),
+        const AdminSizes()
       ],
     );
   }

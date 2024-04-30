@@ -11,6 +11,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/data/dto/add_color_dto.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_event.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AddColorDialog extends StatefulWidget {
   const AddColorDialog({super.key});
@@ -24,13 +25,11 @@ class _AddColorDialogState extends State<AddColorDialog> {
   Color currentColor = Colors.blue;
 
   final ColorDTO newColor = ColorDTO();
+  bool isInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    controllers = {
-      'color name': TextEditingController(text: ''),
-    };
   }
 
   @override
@@ -41,6 +40,13 @@ class _AddColorDialogState extends State<AddColorDialog> {
   /// Returns a widget representing the add color dialog.
   Widget build(BuildContext context) {
     // Builds the add color dialog widget.
+    if (isInitialized == false) {
+      controllers = {
+        S.of(context).colorName: TextEditingController(text: ''),
+      };
+      isInitialized = true;
+    }
+
     return Dialog(
       // The dialog widget.
       child: SingleChildScrollView(
@@ -49,8 +55,8 @@ class _AddColorDialogState extends State<AddColorDialog> {
           // The column widget containing the dialog content.
           children: [
             // The basic text widget displaying the title "add new color".
-            const BasicText(
-              title: "add new color",
+            BasicText(
+              title: S.of(context).addNewColor,
             ),
             // Iterate over the controllers map and build the basic text field
             // widget for each field.
@@ -61,8 +67,8 @@ class _AddColorDialogState extends State<AddColorDialog> {
                 isEnabled: true,
               ),
             // The basic text widget displaying the title "choose color".
-            const BasicText(
-              title: "choose color",
+            BasicText(
+              title: S.of(context).chooseColor,
             ),
             // The sized box widget containing the color picker widget.
             SizedBox(
@@ -96,7 +102,7 @@ class _AddColorDialogState extends State<AddColorDialog> {
                   ),
                 ),
                 // The base button text widget displaying the title "add new color".
-                child: const BaseButtonText(title: "add new color"),
+                child: BaseButtonText(title: S.of(context).addNewColor),
               ),
             )
           ],
@@ -140,7 +146,7 @@ class _AddColorDialogState extends State<AddColorDialog> {
   /// 5. Pops the current route and navigates to the "All Colors" screen.
   void addColor() async {
     // Retrieves the text entered by the user for the color name.
-    newColor.nameColor = controllers['color name']!.text;
+    newColor.nameColor = controllers[S.of(context).colorName]!.text;
 
     // Converts the selected color to a hexadecimal string representation.
     newColor.hex = convertColorToHex(currentColor.value);

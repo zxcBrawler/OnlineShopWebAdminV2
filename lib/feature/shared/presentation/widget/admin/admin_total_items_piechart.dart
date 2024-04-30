@@ -9,6 +9,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminTotalItemsPiechart extends StatefulWidget {
   const AdminTotalItemsPiechart({super.key});
@@ -64,7 +65,8 @@ class _AdminTotalItemsPiechartState extends State<AdminTotalItemsPiechart> {
                           children: [
                             // Display the total number of clothes.
                             BasicText(
-                              title: 'total clothes: ${clothesTypes.length}',
+                              title:
+                                  '${S.of(context).totalClothes}: ${clothesTypes.length}',
                             ),
                             // Display a pie chart of the clothes types.
                             BasicPieChart(inputData: clothesCount)
@@ -72,7 +74,7 @@ class _AdminTotalItemsPiechartState extends State<AdminTotalItemsPiechart> {
                         );
 
                       case RemoteClothesError:
-                        return const Text("error");
+                        return Text(S.of(context).error);
                     }
                     return const SizedBox();
                   },
@@ -87,7 +89,7 @@ class _AdminTotalItemsPiechartState extends State<AdminTotalItemsPiechart> {
                           padding: EdgeInsets.zero,
                           onPressed: () {
                             router.go(Pages.adminAllClothes.screenPath,
-                                extra: {"clothes"});
+                                extra: {S.of(context).allClothes});
                           },
                           icon: const Icon(
                             Icons.chevron_right,

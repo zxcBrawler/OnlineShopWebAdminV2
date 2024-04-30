@@ -9,6 +9,7 @@ import 'package:xc_web_admin/feature/shared/domain/entities/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/order_comp_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_comp_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 /// A utility class containing static methods for common functionalities.
 class Methods {
@@ -131,7 +132,7 @@ class Methods {
         currentDate.subtract(Duration(days: currentDate.weekday - 1));
     DateTime endDate = startDate.add(const Duration(days: 6));
     String currentWeek =
-        'Week of ${startDate.year}/${startDate.month}/${startDate.day} - ${endDate.year}/${endDate.month}/${endDate.day}';
+        '${S.current.currentWeek}: ${startDate.year}/${startDate.month}/${startDate.day} - ${endDate.year}/${endDate.month}/${endDate.day}';
     return currentWeek;
   }
 
@@ -393,24 +394,24 @@ class Methods {
         ),
         // Display the barcode of the clothes.
         CardText(
-          title: 'barcode: ${composition.clothesComp!.barcode!}',
+          title: composition.clothesComp!.barcode!,
         ),
         // Display the size of the clothes.
         CardText(
-          title: 'size: ${composition.sizeClothes!.nameSize}',
+          title: composition.sizeClothes!.nameSize!,
         ),
         // Display the color of the clothes.
         CardText(
-          title: 'color: ${composition.colorClothes!.nameColor}',
+          title: composition.colorClothes!.nameColor!,
         ),
 
         // Display the gender of the clothes.
         CardText(
           title:
-              'gender: ${composition.clothesComp!.typeClothes!.categoryClothes!.nameCategory}',
+              '${S.current.gender}: ${composition.clothesComp!.typeClothes!.categoryClothes!.nameCategory}',
         ),
         CardText(
-          title: 'order number: ${composition.orderId!.numberOrder}',
+          title: '${composition.orderId!.numberOrder}',
         ),
       ],
     );
@@ -423,27 +424,27 @@ class Methods {
       children: [
         // Display the name of the clothes.
         BasicText(
-          title: "№: ${deliveryInfoEntity.order!.numberOrder!}",
+          title: deliveryInfoEntity.order!.numberOrder!,
         ),
         // Display the barcode of the clothes.
         CardText(
           title:
-              'date time order: ${deliveryInfoEntity.order!.dateOrder!} ${deliveryInfoEntity.order!.timeOrder!}',
+              '${deliveryInfoEntity.order!.dateOrder!} ${deliveryInfoEntity.order!.timeOrder!}',
         ),
         // Display the size of the clothes.
         CardText(
-          title: 'sum order: ${deliveryInfoEntity.order!.sumOrder}',
+          title: '${deliveryInfoEntity.order!.sumOrder}',
         ),
         // Display the color of the clothes.
         CardText(
-          title: 'type delivery: ${deliveryInfoEntity.typeDelivery!.nameType}',
+          title: '${deliveryInfoEntity.typeDelivery!.nameType}',
         ),
 
         // Display the gender of the clothes.
         CardText(
           title: deliveryInfoEntity.shopAddresses!.shopAddressDirection == null
-              ? 'delivery address: ${deliveryInfoEntity.addresses!.directionAddress}'
-              : 'shop address: ${deliveryInfoEntity.shopAddresses!.shopAddressDirection}',
+              ? '${deliveryInfoEntity.addresses!.directionAddress}'
+              : '${deliveryInfoEntity.shopAddresses!.shopAddressDirection}',
         ),
       ],
     );
@@ -470,7 +471,7 @@ class Methods {
       children: [
         // The title of the CardText widget is the composition's quantity.
         CardText(
-          title: 'quantity: ${composition.quantity}',
+          title: '${composition.quantity}',
         ),
       ],
     );

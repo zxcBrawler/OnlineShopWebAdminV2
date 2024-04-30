@@ -12,6 +12,7 @@ import 'package:xc_web_admin/feature/shared/domain/entities/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class OrdersTable extends StatefulWidget {
   const OrdersTable({super.key});
@@ -51,7 +52,7 @@ class _OrdersTableState extends State<OrdersTable> {
         // Add button to generate pdf of all orders
         Row(
           children: [
-            const CardText(title: "generate pdf"),
+            CardText(title: S.of(context).generatePdf),
             SizedBox(
               height: 70,
               width: 70,
@@ -95,7 +96,7 @@ class _OrdersTableState extends State<OrdersTable> {
                     ),
                   );
                 case RemoteDeliveryInfoError:
-                  return const Text("error");
+                  return Text(S.of(context).error);
               }
               return const SizedBox();
             },

@@ -4,6 +4,7 @@ import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_items_piechart.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_orders_pie_chart.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -43,14 +44,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
           // Wrap the content with SingleChildScrollView to enable vertical scrolling
           padding: const EdgeInsets.all(16.0),
           child: Responsive.isDesktop(context)
-              ? const Column(
+              ? Column(
                   // Build the UI for a desktop device
                   children: [
                     Header(
                       // Display the header
-                      title: 'dashboard',
+                      title: S.of(context).dashboard,
                     ),
-                    Row(
+                    const Row(
                       // Display a row containing the total users, total orders, and total items piechart
                       children: [
                         AdminTotalUsers(),
@@ -60,19 +61,19 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     ),
                   ],
                 )
-              : const Column(
+              : Column(
                   // Build the UI for a non-desktop device
                   children: [
                     Header(
                       // Display the header
-                      title: 'dashboard',
+                      title: S.of(context).dashboard,
                     ),
                     // Display a row containing the total users widget
-                    Row(children: [AdminTotalUsers()]),
+                    const Row(children: [AdminTotalUsers()]),
                     // Display a row containing the total orders widget
-                    Row(children: [AdminTotalOrders()]),
+                    const Row(children: [AdminTotalOrders()]),
                     // Display a row containing the total items piechart widget
-                    Row(children: [AdminTotalItemsPiechart()]),
+                    const Row(children: [AdminTotalItemsPiechart()]),
                   ],
                 )),
     );

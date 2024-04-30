@@ -8,6 +8,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dar
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_add_user_dialog.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/users_table.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminAllUsers extends StatefulWidget {
   const AdminAllUsers({super.key});
@@ -39,11 +40,11 @@ class _AdminAllUsersState extends State<AdminAllUsers> {
         child: Column(
           children: [
             // Header widget with title 'all users'
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: Header(
-                    title: 'all users',
+                    title: S.of(context).users,
                   ),
                 ),
               ],

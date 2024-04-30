@@ -17,6 +17,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_st
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorAddClothesDialog extends StatefulWidget {
   const DirectorAddClothesDialog({super.key});
@@ -79,7 +80,7 @@ class _DirectorAddClothesDialogState extends State<DirectorAddClothesDialog> {
           // The dialog content is a Column widget
           children: [
             // A BasicText widget displaying the title "add clothes"
-            const BasicText(title: "add clothes"),
+            BasicText(title: S.current.addNewClothes),
 
             // A widget returned by the _buildClothesDropdown() method
             _buildClothesDropdown(),
@@ -87,7 +88,7 @@ class _DirectorAddClothesDialogState extends State<DirectorAddClothesDialog> {
             // A BasicTextField widget displaying an input field for entering
             // the quantity of clothes
             BasicTextField(
-              title: "enter quantity",
+              title: S.current.enterQuantity,
               controller: quantity,
               isEnabled: true,
             ),
@@ -127,7 +128,7 @@ class _DirectorAddClothesDialogState extends State<DirectorAddClothesDialog> {
                 children: [
                   // Build a BasicDropdown widget for selecting clothes
                   BasicDropdown(
-                    listTitle: "choose clothes",
+                    listTitle: S.current.chooseClothes,
                     // Map each RemoteClothes object to a String and build a list of options
                     dropdownData: state.clothes!
                         .map((e) => "${e.barcode} - ${e.nameClothesEn}")
@@ -187,9 +188,9 @@ class _DirectorAddClothesDialogState extends State<DirectorAddClothesDialog> {
     // Show a success snackbar
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Item added to shop'),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          content: Text(S.current.itemAdded),
+          duration: const Duration(seconds: 2),
         ),
       );
     }
@@ -251,9 +252,9 @@ class _DirectorAddClothesDialogState extends State<DirectorAddClothesDialog> {
             // If the item already exists, show a snackbar
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Item already exists in the shop.'),
-                  duration: Duration(seconds: 2),
+                SnackBar(
+                  content: Text(S.current.itemAlreadyExists),
+                  duration: const Duration(seconds: 2),
                 ),
               );
             }
@@ -268,7 +269,7 @@ class _DirectorAddClothesDialogState extends State<DirectorAddClothesDialog> {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        child: const BaseButtonText(title: "add new clothes to shop"),
+        child: BaseButtonText(title: S.current.addNewClothesToShop),
       ),
     );
   }
@@ -296,7 +297,7 @@ class _DirectorAddClothesDialogState extends State<DirectorAddClothesDialog> {
             case RemoteClothesColorsDone:
               return BasicDropdown(
                 // Title of the dropdown list.
-                listTitle: "choose color",
+                listTitle: S.current.chooseColor,
                 // Data for the dropdown list.
                 dropdownData: state.clothesColors!
                     .map((e) => e.colors!.nameColor ?? "")
@@ -351,7 +352,7 @@ class _DirectorAddClothesDialogState extends State<DirectorAddClothesDialog> {
             case RemoteClothesSizeClothesDone:
               return BasicDropdown(
                 // Title of the dropdown list.
-                listTitle: "choose size",
+                listTitle: S.current.chooseSize,
                 // Data for the dropdown list.
                 dropdownData: state.clothesSizeClothes!
                     .map((e) => e.sizeClothes!.nameSize ?? "")

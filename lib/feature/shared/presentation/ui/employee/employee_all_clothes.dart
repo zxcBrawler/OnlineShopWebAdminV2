@@ -35,7 +35,7 @@ class _EmployeeAllClothesState extends State<EmployeeAllClothes> {
                   // Expands to fill available horizontal space
                   child: Header(
                     // A widget for displaying a title
-                    title: 'all ${widget.title}',
+                    title: '${widget.title}',
                   ),
                 ),
               ],

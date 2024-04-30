@@ -9,6 +9,7 @@ import 'package:xc_web_admin/feature/shared/domain/entities/delivery_info.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorOrderStatuses extends StatefulWidget {
   const DirectorOrderStatuses({super.key});
@@ -52,15 +53,15 @@ class _DirectorOrderStatusesState extends State<DirectorOrderStatuses> {
                         }
                         return Column(
                           children: [
-                            const BasicText(
-                              title: 'orders by status',
+                            BasicText(
+                              title: S.current.ordersByStatus,
                             ),
                             BasicPieChart(inputData: statusCount)
                           ],
                         );
 
                       case RemoteDeliveryInfoError:
-                        return const Text("error");
+                        return Text(S.current.error);
                     }
                     return const SizedBox();
                   },

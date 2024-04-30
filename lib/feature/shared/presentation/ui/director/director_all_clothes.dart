@@ -37,7 +37,7 @@ class _DirectorAllClothesState extends State<DirectorAllClothes> {
                   // Expands to fill available horizontal space
                   child: Header(
                     // A widget for displaying a title
-                    title: 'all ${widget.title}',
+                    title: '${widget.title}',
                   ),
                 ),
               ],

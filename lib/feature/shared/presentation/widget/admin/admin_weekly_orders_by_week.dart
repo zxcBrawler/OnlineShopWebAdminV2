@@ -9,6 +9,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminWeeklyOrdersByWeek extends StatefulWidget {
   const AdminWeeklyOrdersByWeek({super.key});
@@ -57,14 +58,17 @@ class _AdminWeeklyOrdersByWeekState extends State<AdminWeeklyOrdersByWeek> {
                             BasicText(title: Methods.displayCurrentWeek()),
                             BasicLineChart(
                               spotsList: [flSpotListPickUp, flSpotListDelivery],
-                              titles: const ["Pick up", "Delivery"],
+                              titles: [
+                                S.of(context).pickUp,
+                                S.of(context).delivery
+                              ],
                             ),
                           ],
                         );
 
                       case RemoteDeliveryInfoError:
                         // Display an error message if there is an error in fetching the data
-                        return const Text("error");
+                        return Text(S.of(context).error);
                     }
 
                     // Return an empty SizedBox by default

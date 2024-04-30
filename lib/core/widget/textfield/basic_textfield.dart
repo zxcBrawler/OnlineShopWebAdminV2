@@ -48,7 +48,8 @@ class BasicTextFieldState extends State<BasicTextField> {
         // Apply text style to the text field
         style: GoogleFonts.hammersmithOne(textStyle: basicTextFieldStyle()),
         // Obscure the text if the title is "password" and _obscureText is true
-        obscureText: widget.title == "password" && _obscureText,
+        obscureText: widget.title == "password" ||
+            widget.title == "пароль" && _obscureText,
         // Add decoration to the text field
         decoration: InputDecoration(
           labelText: widget.title,
@@ -74,7 +75,7 @@ class BasicTextFieldState extends State<BasicTextField> {
   /// Returns:
   /// - A widget representing the built suffix icon.
   Widget? _buildSuffixIcon(String title) {
-    if (title == "password") {
+    if (title == "password" || title == "пароль") {
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: IconButton(
@@ -90,7 +91,7 @@ class BasicTextFieldState extends State<BasicTextField> {
         ),
       );
     }
-    if (title == "shop address") {
+    if (title == "shop address" || title == "адрес магазина") {
       return IconButton(
         icon: Icon(
           Icons.find_in_page,

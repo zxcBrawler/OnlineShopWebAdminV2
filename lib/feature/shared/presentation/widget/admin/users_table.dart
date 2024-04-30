@@ -9,6 +9,7 @@ import 'package:xc_web_admin/feature/shared/domain/entities/user_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class UsersTable extends StatefulWidget {
   const UsersTable({super.key});
@@ -72,7 +73,7 @@ class _UsersTableState extends State<UsersTable> {
                 // Case when the state is of type RemoteUserError
                 case RemoteUserError:
                   // Display error message
-                  return const Text("error");
+                  return Text(S.of(context).error);
               }
               // Return an empty sized box as the default case
               return const SizedBox();

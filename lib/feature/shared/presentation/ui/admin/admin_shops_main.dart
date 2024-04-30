@@ -3,6 +3,7 @@ import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_add_shop_dialog.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_shops_table.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminShops extends StatefulWidget {
   const AdminShops({super.key});
@@ -44,9 +45,9 @@ class _AdminShopsState extends State<AdminShops> {
         child: Column(
           // Display the UI for the AdminShops widget in a column
           children: [
-            const Header(
+            Header(
               // Display the title 'shops' in a header
-              title: 'shops',
+              title: S.of(context).shops,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

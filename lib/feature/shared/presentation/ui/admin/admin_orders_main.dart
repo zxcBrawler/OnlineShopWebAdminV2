@@ -5,6 +5,7 @@ import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_orde
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_orders_pie_chart.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_weekly_orders_widget.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminOrders extends StatefulWidget {
   const AdminOrders({super.key});
@@ -40,41 +41,41 @@ class _AdminOrdersState extends State<AdminOrders> {
   }
 
   Widget _buildDesktopUI(BuildContext context) {
-    return const Column(
+    return Column(
       // Create a column to stack the widgets vertically
       children: [
         Header(
           // Display the header
-          title: 'orders',
+          title: S.of(context).allOrders,
         ),
         // Display a row containing the total orders widget
-        Row(
+        const Row(
           children: [AdminTotalOrders(), AdminOrderStatuses()],
         ),
         // Display a row containing the weekly orders widget
 
-        AdminWeeklyOrders(),
+        const AdminWeeklyOrders(),
       ],
     );
   }
 
   Widget _buildMobileUI(BuildContext context) {
-    return const Column(
+    return Column(
       // Create a column to stack the widgets vertically
       children: [
         Header(
           // Display the header
-          title: 'orders',
+          title: S.of(context).allOrders,
         ),
         // Display a row containing the total orders widget
-        Row(
+        const Row(
           children: [AdminTotalOrders()],
         ),
         // Display a row containing the weekly orders widget
 
-        AdminWeeklyOrders(),
+        const AdminWeeklyOrders(),
 
-        Row(
+        const Row(
           children: [AdminOrderStatuses()],
         )
       ],

@@ -9,6 +9,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/empl
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_weelky_items_sold_overview.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_weekly_orders_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/employee/employee_total_items.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class EmployeeDashboard extends StatefulWidget {
   const EmployeeDashboard({super.key});
@@ -61,18 +62,18 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                   SessionStorage.saveLocalData("shopAddressId",
                       state.shop!.shopAddresses!.shopAddressId!);
                   // Render the main widgets
-                  return const Column(
+                  return Column(
                     children: [
                       Header(
-                        title: 'dashboard',
+                        title: S.current.dashboard,
                       ),
-                      EmployeeTotalItems(),
-                      Row(
+                      const EmployeeTotalItems(),
+                      const Row(
                         children: [
                           DirectorWeeklyItemsSold(),
                         ],
                       ),
-                      DirectorWeeklyOrdersWidget(),
+                      const DirectorWeeklyOrdersWidget(),
                     ],
                   );
 

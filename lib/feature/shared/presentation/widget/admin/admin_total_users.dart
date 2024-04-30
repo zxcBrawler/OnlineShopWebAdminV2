@@ -9,6 +9,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminTotalUsers extends StatefulWidget {
   const AdminTotalUsers({super.key});
@@ -76,7 +77,8 @@ class _AdminTotalUsersState extends State<AdminTotalUsers> {
                             // Renders a BasicText widget displaying the total
                             // number of users.
                             BasicText(
-                              title: 'total users: ${state.users?.length}',
+                              title:
+                                  '${S.of(context).totalUsers}: ${state.users?.length}',
                             ),
                             // Renders a BasicPieChart widget displaying the
                             // distribution of roles among the users.
@@ -87,7 +89,7 @@ class _AdminTotalUsersState extends State<AdminTotalUsers> {
                       case RemoteUserError:
                         // Renders a Text widget displaying the error message
                         // when the state is RemoteUserError.
-                        return const Text("error");
+                        return Text(S.of(context).error);
                     }
                     return const SizedBox();
                   },

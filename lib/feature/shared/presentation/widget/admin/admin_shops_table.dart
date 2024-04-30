@@ -9,6 +9,7 @@ import 'package:xc_web_admin/feature/shared/domain/entities/shop_address_entity.
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminShopsTable extends StatefulWidget {
   const AdminShopsTable({Key? key}) : super(key: key);
@@ -77,7 +78,7 @@ class AdminShopsTableState extends State<AdminShopsTable> {
                 // Case when the state is of type RemoteShopAddressError
                 case RemoteShopAddressError:
                   // Display error message
-                  return const Text("error");
+                  return Text(S.of(context).error);
               }
               // Return an empty sized box as the default case
               return const SizedBox();

@@ -5,6 +5,7 @@ import 'package:xc_web_admin/feature/shared/presentation/widget/director/directo
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_weelky_items_sold_overview.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_female_clothes_widget.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_male_clothes_widget.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorClothes extends StatefulWidget {
   const DirectorClothes({super.key});
@@ -27,17 +28,17 @@ class _DirectorClothesState extends State<DirectorClothes> {
   }
 
   Widget _buildDesktopUI(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Header(title: 'clothes info'),
-        DirectorTotalItems(),
-        Row(
+        Header(title: S.current.clothesInfo),
+        const DirectorTotalItems(),
+        const Row(
           children: [
             DirectorFemaleClothesWidget(),
             DirectorMaleClothesWidget(),
           ],
         ),
-        Row(
+        const Row(
           children: [DirectorWeeklyItemsSold()],
         ),
         // AdminWeeklyItemsSold(),
@@ -46,16 +47,16 @@ class _DirectorClothesState extends State<DirectorClothes> {
   }
 
   Widget _buildMobileUI(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Header(title: 'clothes info'),
-        DirectorTotalItems(),
-        Row(
+        Header(title: S.current.clothesInfo),
+        const DirectorTotalItems(),
+        const Row(
           children: [
             DirectorFemaleClothesWidget(),
           ],
         ),
-        Row(
+        const Row(
           children: [
             DirectorMaleClothesWidget(),
           ],

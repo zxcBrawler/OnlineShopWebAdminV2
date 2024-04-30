@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/config/color.dart';
 import 'package:xc_web_admin/config/methods.dart';
 import 'package:xc_web_admin/config/responsive.dart';
-import 'package:xc_web_admin/core/constants/strings.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/button/build_button.dart';
@@ -21,6 +20,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_ev
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_state.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_event.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorClothesDetails extends StatefulWidget {
   final ShopGarnishModel clothes;
@@ -32,12 +32,12 @@ class DirectorClothesDetails extends StatefulWidget {
 
 class _DirectorClothesDetailsState extends State<DirectorClothesDetails> {
   Map<String, TextEditingController> controllers = {
-    "barcode": TextEditingController(),
-    "name clothes ru": TextEditingController(),
-    "name clothes en": TextEditingController(),
-    "price clothes": TextEditingController(),
-    "size clothes": TextEditingController(),
-    "quantity": TextEditingController(),
+    S.current.barcode: TextEditingController(),
+    S.current.nameClothesRu: TextEditingController(),
+    S.current.nameClothesEn: TextEditingController(),
+    S.current.priceClothes: TextEditingController(),
+    S.current.size: TextEditingController(),
+    S.current.quantity: TextEditingController(),
   };
 
   final ShopGarnishDTO newQuantity = ShopGarnishDTO();
@@ -51,27 +51,27 @@ class _DirectorClothesDetailsState extends State<DirectorClothesDetails> {
     // Initialize the text editing controllers with the data from the widget
 
     /// Initialize the barcode controller
-    controllers["barcode"]!.text =
+    controllers[S.current.barcode]!.text =
         widget.clothes.sizeClothesGarnish!.clothes!.barcode!;
 
     /// Initialize the name clothes ru controller
-    controllers["name clothes ru"]!.text =
+    controllers[S.current.nameClothesRu]!.text =
         widget.clothes.sizeClothesGarnish!.clothes!.nameClothesRu!;
 
     /// Initialize the name clothes en controller
-    controllers["name clothes en"]!.text =
+    controllers[S.current.nameClothesEn]!.text =
         widget.clothes.sizeClothesGarnish!.clothes!.nameClothesEn!;
 
     /// Initialize the price clothes controller
-    controllers["price clothes"]!.text =
+    controllers[S.current.priceClothes]!.text =
         widget.clothes.sizeClothesGarnish!.clothes!.priceClothes!;
 
     /// Initialize the size clothes controller
-    controllers["size clothes"]!.text =
+    controllers[S.current.size]!.text =
         widget.clothes.sizeClothesGarnish!.sizeClothes!.nameSize!;
 
     /// Initialize the quantity controller
-    controllers["quantity"]!.text = widget.clothes.quantity!.toString();
+    controllers[S.current.quantity]!.text = widget.clothes.quantity!.toString();
   }
 
   @override
@@ -124,7 +124,7 @@ class _DirectorClothesDetailsState extends State<DirectorClothesDetails> {
                             Expanded(
                               child: HeaderText(
                                 textSize: isMobile ? 35 : 45,
-                                title: 'clothes details',
+                                title: S.current.clothesDetails,
                               ),
                             ),
                           ],
@@ -144,9 +144,11 @@ class _DirectorClothesDetailsState extends State<DirectorClothesDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       // Build the edit button
-                      buildButton("Edit", AppColors.darkBrown, _editQuantity),
+                      buildButton(
+                          S.current.edit, AppColors.darkBrown, _editQuantity),
                       // Build the delete button
-                      buildButton("Delete", AppColors.red, _deleteFromShop),
+                      buildButton(
+                          S.current.delete, AppColors.red, _deleteFromShop),
                     ],
                   ),
                 ],
@@ -176,11 +178,12 @@ class _DirectorClothesDetailsState extends State<DirectorClothesDetails> {
               controller: Methods.getControllerForField(controllers, field),
               // Set the enabled state of the BasicTextField based on whether the
               // current field is "quantity".
-              isEnabled:
-                  controllers[field]! == controllers["quantity"] ? true : false,
+              isEnabled: controllers[field]! == controllers[S.current.quantity]
+                  ? true
+                  : false,
             ),
           // Add a BasicText widget with the title "color".
-          const BasicText(title: "color"),
+          BasicText(title: S.current.color),
           // Add a ColorContainer widget with the color of the clothes.
           ColorContainer(
             color: Methods.getColorFromHex(
@@ -258,7 +261,7 @@ class _DirectorClothesDetailsState extends State<DirectorClothesDetails> {
             // If the state is of type RemoteClothesError, display a Text
             // widget with the error message.
             case RemoteClothesError:
-              return const Text(errorLoadingImage);
+              return Text(S.current.error);
           }
           // If none of the cases match, return an empty SizedBox.
           return const SizedBox();
@@ -277,7 +280,7 @@ class _DirectorClothesDetailsState extends State<DirectorClothesDetails> {
   void _editQuantity() async {
     // Prepare the new quantity DTO with the updated quantity and shopGarnishId
     newQuantity.shopGarnishId = widget.clothes.shopGarnishId!;
-    newQuantity.quantity = int.parse(controllers["quantity"]!.text);
+    newQuantity.quantity = int.parse(controllers[S.current.quantity]!.text);
 
     // Add an UpdateQuantity event to the RemoteShopGarnishBloc service
     service<RemoteShopGarnishBloc>()

@@ -8,6 +8,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminColors extends StatefulWidget {
   const AdminColors({super.key});
@@ -61,13 +62,14 @@ class _AdminColorsState extends State<AdminColors> {
                               /// Display the total number of colors when the
                               /// state is [RemoteColorsDone].
                               return BasicText(
-                                title: 'total colors: ${state.colors!.length}',
+                                title:
+                                    '${S.of(context).totalColors}: ${state.colors!.length}',
                               );
                             case RemoteColorsError:
 
                               /// Display the text "error" when the state is
                               /// [RemoteColorsError].
-                              return const Text("error");
+                              return Text(S.of(context).error);
                           }
                           return const SizedBox();
                         },

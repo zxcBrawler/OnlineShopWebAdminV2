@@ -10,6 +10,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/empl
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_total_items.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_weelky_items_sold_overview.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_weekly_orders_widget.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorDashboard extends StatefulWidget {
   const DirectorDashboard({super.key});
@@ -53,18 +54,18 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
                     case RemoteShopAddressByEmployeeIdDone:
                       SessionStorage.saveLocalData("shopAddressId",
                           state.shop!.shopAddresses!.shopAddressId!);
-                      return const Column(
+                      return Column(
                         children: [
                           Header(
-                            title: 'dashboard',
+                            title: S.current.dashboard,
                           ),
-                          DirectorTotalItems(),
-                          Row(
+                          const DirectorTotalItems(),
+                          const Row(
                             children: [
                               DirectorWeeklyItemsSold(),
                             ],
                           ),
-                          DirectorWeeklyOrdersWidget(),
+                          const DirectorWeeklyOrdersWidget(),
                         ],
                       );
 
@@ -86,18 +87,18 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
                     case RemoteShopAddressByEmployeeIdDone:
                       SessionStorage.saveLocalData("shopAddressId",
                           state.shop!.shopAddresses!.shopAddressId!);
-                      return const Column(
+                      return Column(
                         children: [
                           Header(
-                            title: 'dashboard',
+                            title: S.current.dashboard,
                           ),
-                          DirectorTotalItems(),
-                          Row(
+                          const DirectorTotalItems(),
+                          const Row(
                             children: [
                               DirectorWeeklyItemsSold(),
                             ],
                           ),
-                          DirectorWeeklyOrdersWidget(),
+                          const DirectorWeeklyOrdersWidget(),
                         ],
                       );
 

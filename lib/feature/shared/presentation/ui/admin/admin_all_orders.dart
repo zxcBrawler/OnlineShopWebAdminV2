@@ -3,6 +3,7 @@ import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 import 'package:xc_web_admin/core/widget/searchbar/basic_search_bar.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_orders_table.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminAllOrders extends StatefulWidget {
   const AdminAllOrders({super.key});
@@ -33,10 +34,10 @@ class _AdminAllOrdersState extends State<AdminAllOrders> {
   /// a [Padding] widget as a child. Inside the [Padding] widget, there is
   /// a [OrdersTable] widget.
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       // Wrap the content with a SingleChildScrollView to allow vertical scrolling
       child: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             // Header widget with the title 'all orders'
@@ -44,13 +45,13 @@ class _AdminAllOrdersState extends State<AdminAllOrders> {
               children: [
                 Expanded(
                   child: Header(
-                    title: 'all orders',
+                    title: S.of(context).allOrders,
                   ),
                 ),
               ],
             ),
             // Row with  search bar and three filter icons
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Expanded(
@@ -62,7 +63,7 @@ class _AdminAllOrdersState extends State<AdminAllOrders> {
               ],
             ),
             // Orders table widget
-            Row(
+            const Row(
               children: [
                 Expanded(
                   child: Padding(

@@ -10,6 +10,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/deli
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_weekly_orders_by_week.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class EmployeeWeeklyOrdersDetails extends StatefulWidget {
   const EmployeeWeeklyOrdersDetails({super.key});
@@ -30,11 +31,11 @@ class _EmployeeWeeklyOrdersDetailsState
         child: Column(
           children: [
             // Header widget
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: Header(
-                    title: 'orders overview',
+                    title: S.current.ordersOverview,
                   ),
                 ),
               ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_total_users.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminUsers extends StatefulWidget {
   const AdminUsers({super.key});
@@ -23,21 +24,21 @@ class _AdminUsersState extends State<AdminUsers> {
   /// widget, and another [Row] widget with a single child, [UserAddresses],
   /// which has the title 'user addresses'.
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       // Wrap the content with SafeArea to avoid any overlap with system UI
       child: SingleChildScrollView(
           // Wrap the content with SingleChildScrollView to enable vertical
           // scrolling
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           // The column for the UI elements
           child: Column(
             children: [
               // Display the header
               Header(
-                title: 'users',
+                title: S.of(context).users,
               ),
               // Display the total number of  users
-              Row(
+              const Row(
                 children: [
                   AdminTotalUsers(),
                 ],

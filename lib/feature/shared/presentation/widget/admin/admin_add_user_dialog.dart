@@ -21,6 +21,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_a
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shopAddress/shop_address_state.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AddUserDialog extends StatefulWidget {
   const AddUserDialog({super.key});
@@ -37,6 +38,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
   int? selectedRoleIndex = 0;
   int? selectedGenderIndex = 0;
   int? selectedShopAddressIndex = 0;
+  bool isInitialized = false;
 
   @override
 
@@ -54,20 +56,6 @@ class _AddUserDialogState extends State<AddUserDialog> {
   void initState() {
     // Call the superclass's initState function.
     super.initState();
-
-    // Initialize the controllers map.
-    controllers = {
-      // Email text field controller.
-      'email': TextEditingController(text: ''),
-      // Password text field controller.
-      'pass': TextEditingController(text: ''),
-      // Phone number text field controller.
-      'phoneNum': TextEditingController(text: ''),
-      // Username text field controller.
-      'username': TextEditingController(text: ''),
-      // Employee number text field controller.
-      'employeeNumber': TextEditingController(text: ''),
-    };
   }
 
   @override
@@ -93,6 +81,21 @@ class _AddUserDialogState extends State<AddUserDialog> {
   /// of [BasicInput] widgets for the user details. At the bottom, there is an
   /// [ElevatedButton] widget that adds a new user when pressed.
   Widget build(BuildContext context) {
+    if (isInitialized == false) {
+      controllers = {
+        // Email text field controller.
+        S.of(context).email: TextEditingController(text: ''),
+        // Password text field controller.
+        S.of(context).password: TextEditingController(text: ''),
+        // Phone number text field controller.
+        S.of(context).phoneNumber: TextEditingController(text: ''),
+        // Username text field controller.
+        S.of(context).username: TextEditingController(text: ''),
+        // Employee number text field controller.
+        S.of(context).employeeNumber: TextEditingController(text: ''),
+      };
+      isInitialized = true;
+    }
     return Dialog(
       child: SingleChildScrollView(
           child: BlocProvider<RemoteRoleBloc>(
@@ -105,18 +108,20 @@ class _AddUserDialogState extends State<AddUserDialog> {
               case RemoteRoleDone():
                 return Column(
                   children: [
-                    const BasicText(
-                      title: "add new user",
+                    BasicText(
+                      title: S.of(context).addNewUser,
                     ),
                     BasicDropdown(
-                      listTitle: "choose role",
+                      listTitle: S.of(context).chooseRole,
                       dropdownData: state.roles!
                           .map((e) => e.roleName!)
                           .where((element) => element != "user")
                           .toList(),
                       selectedIndex: selectedRoleIndex!,
                       onIndexChanged: (value) {
-                        selectedRoleIndex = value;
+                        setState(() {
+                          selectedRoleIndex = value;
+                        });
                       },
                       isColorDropdown: false,
                     ),
@@ -129,7 +134,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
                               return const SizedBox();
                             case RemoteGenderDone():
                               return BasicDropdown(
-                                listTitle: "choose gender",
+                                listTitle: S.of(context).chooseGender,
                                 dropdownData: state.genders!
                                     .map((e) => e.nameCategory!)
                                     .toList()
@@ -137,18 +142,20 @@ class _AddUserDialogState extends State<AddUserDialog> {
                                     .toList(),
                                 selectedIndex: selectedGenderIndex!,
                                 onIndexChanged: (value) {
-                                  selectedGenderIndex = value;
+                                  setState(() {
+                                    selectedGenderIndex = value;
+                                  });
                                 },
                                 isColorDropdown: false,
                               );
                             case RemoteGenderError():
-                              return const Text("error");
+                              return Text(S.of(context).error);
                           }
                           return const SizedBox();
                         },
                       ),
                     ),
-                    const BasicText(title: "enter user details"),
+                    BasicText(title: S.of(context).enterUserDetails),
                     for (var field in controllers.keys)
                       BasicTextField(
                         title: field,
@@ -166,18 +173,20 @@ class _AddUserDialogState extends State<AddUserDialog> {
                             return const SizedBox();
                           case RemoteShopAddressDone():
                             return BasicDropdown(
-                              listTitle: "choose shop address",
+                              listTitle: S.of(context).chooseShopAddress,
                               dropdownData: state.shopAddresses!
                                   .map((e) => e.shopAddressDirection!)
                                   .toList(),
                               selectedIndex: selectedShopAddressIndex!,
                               onIndexChanged: (value) {
-                                selectedShopAddressIndex = value;
+                                setState(() {
+                                  selectedShopAddressIndex = value;
+                                });
                               },
                               isColorDropdown: false,
                             );
                           case RemoteShopAddressError():
-                            return const Text("error");
+                            return Text(S.of(context).error);
                         }
                         return const SizedBox();
                       }),
@@ -186,12 +195,16 @@ class _AddUserDialogState extends State<AddUserDialog> {
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
                         onPressed: () async {
-                          newUser.email = controllers['email']!.text;
-                          newUser.passwordHash = controllers['pass']!.text;
-                          newUser.phoneNumber = controllers['phoneNum']!.text;
-                          newUser.username = controllers['username']!.text;
+                          newUser.email =
+                              controllers[S.of(context).email]!.text;
+                          newUser.passwordHash =
+                              controllers[S.of(context).password]!.text;
+                          newUser.phoneNumber =
+                              controllers[S.of(context).phoneNumber]!.text;
+                          newUser.username =
+                              controllers[S.of(context).username]!.text;
                           newUser.employeeNumber =
-                              controllers['employeeNumber']!.text;
+                              controllers[S.of(context).employeeNumber]!.text;
                           newUser.role = selectedRoleIndex! + 1;
                           newUser.gender = selectedGenderIndex! + 1;
                           newUser.shopAddressId = selectedShopAddressIndex! + 1;
@@ -209,13 +222,13 @@ class _AddUserDialogState extends State<AddUserDialog> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: const BaseButtonText(title: "add new user"),
+                        child: BaseButtonText(title: S.of(context).addNewUser),
                       ),
                     )
                   ],
                 );
               case RemoteRoleError():
-                return const Text("error");
+                return Text(S.of(context).error);
             }
             return const SizedBox();
           },

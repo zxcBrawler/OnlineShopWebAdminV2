@@ -14,6 +14,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_c
 import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_comp_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_comp_state.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_weekly_sold_items_by_week.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorWeeklyItemsSoldDetails extends StatefulWidget {
   const DirectorWeeklyItemsSoldDetails({super.key});
@@ -35,11 +36,11 @@ class _DirectorWeeklyItemsSoldDetailsState
         child: Column(
           children: [
             // Header widget
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: Header(
-                    title: 'items sold overview',
+                    title: S.current.itemsSoldOverview,
                   ),
                 ),
               ],
@@ -114,7 +115,7 @@ class _DirectorWeeklyItemsSoldDetailsState
                                                     isMobile,
                                                     compositions);
                                           case RemoteOrderCompError:
-                                            return const Text("error");
+                                            return Text(S.current.error);
                                         }
                                         return const SizedBox();
                                       },
@@ -126,7 +127,7 @@ class _DirectorWeeklyItemsSoldDetailsState
                           );
 
                         case RemoteDeliveryInfoError:
-                          return const Text("error");
+                          return Text(S.current.error);
                       }
                       return const SizedBox();
                     },

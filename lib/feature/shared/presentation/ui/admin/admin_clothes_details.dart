@@ -15,8 +15,7 @@ import 'package:xc_web_admin/feature/shared/data/model/clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_state.dart';
-
-import '../../../../../core/constants/strings.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminClothesDetails extends StatefulWidget {
   final ClothesModel clothes;
@@ -27,12 +26,8 @@ class AdminClothesDetails extends StatefulWidget {
 }
 
 class _AdminClothesDetailsState extends State<AdminClothesDetails> {
-  Map<String, TextEditingController> controllers = {
-    "barcode": TextEditingController(),
-    "name clothes ru": TextEditingController(),
-    "name clothes en": TextEditingController(),
-    "price clothes": TextEditingController(),
-  };
+  late final Map<String, TextEditingController> controllers;
+  bool isInitialized = false;
 
   /// Initialize the state of the widget.
   ///
@@ -42,18 +37,6 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
   void initState() {
     // Call the superclass's initState method.
     super.initState();
-
-    // Set the initial value of the 'barcode' text field.
-    controllers["barcode"]!.text = widget.clothes.barcode!;
-
-    // Set the initial value of the 'name clothes ru' text field.
-    controllers["name clothes ru"]!.text = widget.clothes.nameClothesRu!;
-
-    // Set the initial value of the 'name clothes en' text field.
-    controllers["name clothes en"]!.text = widget.clothes.nameClothesEn!;
-
-    // Set the initial value of the 'price clothes' text field.
-    controllers["price clothes"]!.text = widget.clothes.priceClothes!;
   }
 
   @override
@@ -74,6 +57,20 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
   /// It uses a [_buildSizesRow] function to build a row of size buttons.
   /// It uses a [_buildColorsRow] function to build a row of color buttons.
   Widget build(BuildContext context) {
+    if (isInitialized == false) {
+      controllers = {
+        S.of(context).barcode:
+            TextEditingController(text: widget.clothes.barcode!),
+        S.of(context).nameClothesRu:
+            TextEditingController(text: widget.clothes.nameClothesRu!),
+        S.of(context).nameClothesEn:
+            TextEditingController(text: widget.clothes.nameClothesEn!),
+        S.of(context).priceClothes:
+            TextEditingController(text: widget.clothes.priceClothes!),
+      };
+      isInitialized = true;
+    }
+
     // Check if the device is mobile
     final bool isMobile = Responsive.isMobile(context);
 
@@ -113,7 +110,7 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
                         Expanded(
                           child: HeaderText(
                             textSize: isMobile ? 35 : 45,
-                            title: 'clothes details',
+                            title: S.of(context).clothesDetails,
                           ),
                         ),
                       ],
@@ -179,6 +176,7 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
             case RemotePhotosOfClothesDone:
               // Map each photo to a [CachedNetworkImage] widget and wrap it in a [Center] widget.
               // Create a [CarouselSlider] widget with the photos.
+
               return SizedBox(
                 height: 500,
                 width: 500,
@@ -190,6 +188,8 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
                             fit: BoxFit.fill,
                             height: 500,
                             width: 500,
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
                           )))
                       .toList(),
                   options: CarouselOptions(
@@ -210,7 +210,7 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
               );
             // Display an error message if the state is [RemoteClothesError].
             case RemoteClothesError:
-              return const Text(errorLoadingImage);
+              return Text(S.of(context).error);
           }
           // Return an empty [SizedBox] if the state is not handled.
           return const SizedBox();
@@ -242,9 +242,9 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
               return Column(
                 children: [
                   // Display a header text indicating the available sizes.
-                  const HeaderText(
+                  HeaderText(
                     textSize: 20,
-                    title: availableInSizes,
+                    title: S.of(context).availableInSizes,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -267,7 +267,7 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
               );
             // When the state is [RemoteClothesError], display an error message.
             case RemoteClothesError:
-              return const Text(errorLoadingSizes);
+              return Text(S.of(context).error);
           }
           // When none of the above states match, return an empty sized box.
           return const SizedBox();
@@ -300,9 +300,9 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
               return Column(
                 children: [
                   // Add a [HeaderText] widget displaying "availableInColors".
-                  const HeaderText(
+                  HeaderText(
                     textSize: 20,
-                    title: availableInColors,
+                    title: S.of(context).availableInColors,
                   ),
                   // Add a [Padding] widget with a [Wrap] widget containing the available colors.
                   Padding(
@@ -325,7 +325,7 @@ class _AdminClothesDetailsState extends State<AdminClothesDetails> {
               );
             // If the state is [RemoteClothesError], return a [Text] widget displaying "errorLoadingColors".
             case RemoteClothesError:
-              return const Text(errorLoadingColors);
+              return Text(S.of(context).error);
           }
           // If none of the above cases match, return a [SizedBox].
           return const SizedBox();

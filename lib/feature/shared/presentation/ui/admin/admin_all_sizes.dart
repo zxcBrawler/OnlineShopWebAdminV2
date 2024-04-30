@@ -7,6 +7,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_bloc.dar
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_add_size_dialog.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_sizes_table.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminAllSizes extends StatefulWidget {
   const AdminAllSizes({super.key});
@@ -27,14 +28,14 @@ class _AdminAllSizesState extends State<AdminAllSizes> {
         child: Column(
           // A vertically expanding widget that contains the rest of the widgets
           children: [
-            const Row(
+            Row(
               // A horizontally expanding widget that contains a header widget
               children: [
                 Expanded(
                   // Expands to fill available horizontal space
                   child: Header(
                     // A widget for displaying a title
-                    title: 'all sizes',
+                    title: S.of(context).allSizes,
                   ),
                 ),
               ],

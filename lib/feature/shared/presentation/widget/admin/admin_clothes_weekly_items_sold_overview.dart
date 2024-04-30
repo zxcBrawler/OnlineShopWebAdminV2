@@ -12,6 +12,7 @@ import 'package:xc_web_admin/feature/shared/domain/entities/order_comp_entity.da
 import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_comp_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_comp_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_comp_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminWeeklyItemsSold extends StatelessWidget {
   const AdminWeeklyItemsSold({super.key});
@@ -65,15 +66,15 @@ class AdminWeeklyItemsSold extends StatelessWidget {
                         return Column(
                           // Displays the weekly items sold overview and the bar chart
                           children: [
-                            const BasicText(
-                                title: "weekly items sold overview"),
+                            BasicText(
+                                title: S.of(context).weeklyItemsSoldOverview),
                             BasicBarChart(
                                 barsList: [flSpotListMale, flSpotListFemale]),
                           ],
                         );
                       // When the state is RemoteOrderCompError, displays "error" text
                       case RemoteOrderCompError:
-                        return const Text("error");
+                        return Text(S.of(context).error);
                     }
                     // Returns an empty SizedBox when the state is not handled
                     return const SizedBox();

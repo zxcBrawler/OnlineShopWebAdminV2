@@ -26,6 +26,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/gender/gender_stat
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AddClothesDialog extends StatefulWidget {
   const AddClothesDialog({super.key});
@@ -47,24 +48,14 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
 
   int? selectedGenderIndex = 0;
   int? selectedTypeClothesIndex = 0;
+  int? selectedTypeClothesIndexForAdding = 0;
+  bool isInitialized = false;
 
   final ClothesDTO newClothes = ClothesDTO();
 
   @override
   void initState() {
     super.initState();
-    controllers = {
-      'barcode': TextEditingController(
-        text: '',
-      ),
-      'name clothes ru': TextEditingController(
-        text: '',
-      ),
-      'name clothes en': TextEditingController(
-        text: '',
-      ),
-      'price clothes': TextEditingController(text: ''),
-    };
 
     newBloc = service<RemoteClothesBloc>()
       ..add(GetTypeClothes(id: selectedGenderIndex! + 1));
@@ -136,12 +127,28 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
   /// `_buildAddClothesButton()` method. This widget displays a button for
   /// adding the clothes.
   Widget build(BuildContext context) {
+    if (isInitialized == false) {
+      controllers = {
+        S.of(context).barcode: TextEditingController(
+          text: '',
+        ),
+        S.of(context).nameClothesRu: TextEditingController(
+          text: '',
+        ),
+        S.of(context).nameClothesEn: TextEditingController(
+          text: '',
+        ),
+        S.of(context).priceClothes: TextEditingController(text: ''),
+      };
+      isInitialized = true;
+    }
+
     return Dialog(
       child: SingleChildScrollView(
         child: Column(children: [
           // Display the title "add new clothes"
-          const BasicText(
-            title: "add new clothes",
+          BasicText(
+            title: S.of(context).addNewClothes,
           ),
 
           // Display the dropdown menu for selecting the gender of the clothes
@@ -151,7 +158,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
           _buildTypeClothesDropdown(),
 
           // Display the title "enter clothes details"
-          const BasicText(title: "enter clothes details"),
+          BasicText(title: S.of(context).enterClothesDetails),
 
           // Display the input fields for the clothes details
           for (var field in controllers.keys)
@@ -165,7 +172,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
             ),
 
           // Display the title "choose sizes"
-          const BasicText(title: "choose sizes"),
+          BasicText(title: S.of(context).chooseSizes),
 
           // Display the dropdown menu for selecting the size of the clothes
           _buildSizesDropdown(),
@@ -173,7 +180,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
           // Display the selected sizes of the clothes
           _buildSelectedSizes(),
 
-          const BasicText(title: "choose colors"),
+          BasicText(title: S.of(context).chooseColors),
 
           // Display the dropdown menu for selecting the color of the clothes
           _buildColorDropdown(),
@@ -182,7 +189,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
           _buildSelectedColors(),
 
           // Display the title "add photo URL"
-          const BasicText(title: "add photo URL"),
+          BasicText(title: S.of(context).addPhotoURL),
 
           // Display the input field for entering the photo URL of the clothes
           _buildPhotoURLTextField(),
@@ -206,29 +213,33 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
   /// addition to complete. Afterwards, it pops the current route and
   /// navigates to the appropriate page based on the selected gender.
   void addClothes() async {
-    newClothes.barcode = controllers['barcode']!.text;
-    newClothes.nameClothesRu = controllers['name clothes ru']!.text;
-    newClothes.nameClothesEn = controllers['name clothes en']!.text;
-    newClothes.priceClothes = controllers['price clothes']!.text;
+    newClothes.barcode = controllers[S.of(context).barcode]!.text;
+    newClothes.nameClothesRu = controllers[S.of(context).nameClothesRu]!.text;
+    newClothes.nameClothesEn = controllers[S.of(context).nameClothesEn]!.text;
+    newClothes.priceClothes = controllers[S.of(context).priceClothes]!.text;
     newClothes.uploadedPhotos = uploadedPhotos!;
     newClothes.selectedColors = selectedColorsForAdding!;
     newClothes.selectedSizes = selectedSizesForAdding!;
-    newClothes.selectedTypeClothes = selectedTypeClothesIndex!;
+    newClothes.selectedTypeClothes = selectedTypeClothesIndexForAdding!;
 
     newBloc.add(AddClothes(clothesDTO: newClothes));
 
     await Future.delayed(const Duration(seconds: 1));
     router.pop();
     if (selectedGenderIndex! + 1 == 1) {
-      router.push(
-        Pages.adminAllClothes.screenPath,
-        extra: {"male clothes"},
-      );
+      if (mounted) {
+        router.push(
+          Pages.adminAllClothes.screenPath,
+          extra: {S.of(context).allMaleClothes},
+        );
+      }
     } else {
-      router.push(
-        Pages.adminAllClothes.screenPath,
-        extra: {"female clothes"},
-      );
+      if (mounted) {
+        router.push(
+          Pages.adminAllClothes.screenPath,
+          extra: {S.of(context).allFemaleClothes},
+        );
+      }
     }
   }
 
@@ -257,7 +268,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                 children: [
                   BasicDropdown(
                     // Display a dropdown list of genders
-                    listTitle: "choose gender",
+                    listTitle: S.of(context).chooseGender,
                     dropdownData: state.genders!
                         .map((e) => e.nameCategory!)
                         .toList()
@@ -282,7 +293,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
 
             // When the state is RemoteGenderError, return a Text widget with the error message
             case RemoteGenderError():
-              return const Text("error");
+              return Text(S.of(context).error);
           }
           // When the state is not handled, return an empty SizedBox
           return const SizedBox();
@@ -317,7 +328,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                 children: [
                   BasicDropdown(
                     // Display a dropdown list of type clothes
-                    listTitle: "choose type clothes",
+                    listTitle: S.of(context).chooseTypeClothes,
                     dropdownData: state.typeClothes!
                         .map((e) => e.nameType ?? "")
                         .toList(),
@@ -327,7 +338,8 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                     onIndexChanged: (value) {
                       // Update the selectedTypeClothesIndex
                       setState(() {
-                        selectedTypeClothesIndex =
+                        selectedTypeClothesIndex = value;
+                        selectedTypeClothesIndexForAdding =
                             state.typeClothes![value].idType;
                       });
                     },
@@ -337,7 +349,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
               );
             // If the state is RemoteClothesError, return a Text widget with the error message
             case RemoteClothesError:
-              return const Text("error");
+              return Text(S.of(context).error);
             // If the state is not handled, return an empty SizedBox
             default:
               return const SizedBox();
@@ -360,7 +372,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
               return Column(
                 children: [
                   BasicDropdown(
-                    listTitle: "choose sizes",
+                    listTitle: S.of(context).chooseSizes,
                     dropdownData: sizes.map((e) => e.nameSize ?? "").toList(),
                     selectedIndex: 0,
                     onIndexChanged: (value) {
@@ -374,7 +386,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                 ],
               );
             case RemoteSizesError():
-              return const Text("error");
+              return Text(S.of(context).error);
           }
           return const SizedBox();
         }));
@@ -467,7 +479,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
               return Column(
                 children: [
                   BasicDropdown(
-                    listTitle: "choose colors",
+                    listTitle: S.of(context).chooseColors,
                     dropdownData: colors.map((e) => e.nameColor ?? "").toList(),
                     colorDropdownData: colors.map((e) => e.hex ?? "").toList(),
                     selectedIndex: 0,
@@ -482,7 +494,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
                 ],
               );
             case RemoteColorsError():
-              return const Text("error");
+              return Text(S.of(context).error);
           }
           return const SizedBox();
         }));
@@ -494,7 +506,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
       children: [
         Expanded(
           child: BasicTextField(
-              title: "photo URL",
+              title: S.of(context).photoURL,
               controller: photoURLController,
               isEnabled: true),
         ),
@@ -574,7 +586,7 @@ class _AddClothesDialogState extends State<AddClothesDialog> {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        child: const BaseButtonText(title: "add new clothes"),
+        child: BaseButtonText(title: S.of(context).addNewClothes),
       ),
     );
   }

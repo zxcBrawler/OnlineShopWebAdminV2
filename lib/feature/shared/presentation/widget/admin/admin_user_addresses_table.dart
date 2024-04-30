@@ -11,6 +11,7 @@ import 'package:xc_web_admin/feature/shared/domain/entities/user_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/address/address_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/address/address_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/address/address_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class UserAddressesTable extends StatefulWidget {
   final UserEntity user;
@@ -59,9 +60,9 @@ class _UserAddressesTableState extends State<UserAddressesTable> {
                   // Check if no orders are found for the user
                   if (userOrders.isEmpty) {
                     // Display a message
-                    return const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: BasicText(title: "no addresses"),
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: BasicText(title: S.of(context).noAddresses),
                     );
                   }
                   // Display a table with the user's orders
@@ -79,7 +80,7 @@ class _UserAddressesTableState extends State<UserAddressesTable> {
                   );
                 case RemoteAddressError:
                   // Display error message
-                  return const Text("error");
+                  return Text(S.of(context).error);
                 default:
                   // Return an empty SizedBox if no case is matched
                   return const SizedBox();

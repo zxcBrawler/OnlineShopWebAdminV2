@@ -7,6 +7,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_bloc.d
 import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_add_color_dialog.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_colors_table.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminAllColors extends StatefulWidget {
   const AdminAllColors({super.key});
@@ -27,14 +28,14 @@ class _AdminAllColorsState extends State<AdminAllColors> {
         child: Column(
           // A vertically expanding widget that contains the rest of the widgets
           children: [
-            const Row(
+            Row(
               // A horizontally expanding widget that contains a header widget
               children: [
                 Expanded(
                   // Expands to fill available horizontal space
                   child: Header(
                     // A widget for displaying a title
-                    title: 'all colors',
+                    title: S.of(context).allColors,
                   ),
                 ),
               ],

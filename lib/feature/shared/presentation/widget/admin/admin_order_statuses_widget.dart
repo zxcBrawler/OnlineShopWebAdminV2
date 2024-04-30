@@ -7,6 +7,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminOrderStatuses extends StatefulWidget {
   const AdminOrderStatuses({super.key});
@@ -54,8 +55,8 @@ class _AdminOrderStatusesState extends State<AdminOrderStatuses> {
                         }
                         return Column(
                           children: [
-                            const BasicText(
-                              title: 'orders by status',
+                            BasicText(
+                              title: S.of(context).ordersByStatus,
                             ),
                             BasicPieChart(inputData: statusCount),
                           ],
@@ -63,7 +64,7 @@ class _AdminOrderStatusesState extends State<AdminOrderStatuses> {
 
                       // If the state is of type RemoteDeliveryInfoError, show a text widget
                       case RemoteDeliveryInfoError:
-                        return const Text("error");
+                        return Text(S.of(context).error);
                     }
                     return const SizedBox();
                   },

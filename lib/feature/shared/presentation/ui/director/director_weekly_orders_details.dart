@@ -10,6 +10,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/deli
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/delivery_info/delivery_info_state.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_weekly_orders_by_week.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorWeeklyOrdersDetails extends StatefulWidget {
   const DirectorWeeklyOrdersDetails({super.key});
@@ -30,11 +31,11 @@ class _DirectorWeeklyOrdersDetailsState
         child: Column(
           children: [
             // Header widget
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: Header(
-                    title: 'orders overview',
+                    title: S.current.ordersOverview,
                   ),
                 ),
               ],
@@ -73,7 +74,7 @@ class _DirectorWeeklyOrdersDetailsState
                                 state, isMobile, shopOrders);
 
                           case RemoteDeliveryInfoError:
-                            return const Text("error");
+                            return Text(S.current.error);
                         }
                         return const SizedBox();
                       },

@@ -8,6 +8,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/size/size_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminSizes extends StatefulWidget {
   const AdminSizes({super.key});
@@ -68,12 +69,13 @@ class _AdminSizesState extends State<AdminSizes> {
                             // when the state is RemoteSizesDone.
                             case RemoteSizesDone:
                               return BasicText(
-                                title: 'total sizes: ${state.sizes!.length}',
+                                title:
+                                    '${S.of(context).totalSizes}: ${state.sizes!.length}',
                               );
                             // Build a Text widget with the text "error" when the
                             // state is RemoteSizesError.
                             case RemoteSizesError:
-                              return const Text("error");
+                              return Text(S.of(context).error);
                           }
                           return const SizedBox();
                         },

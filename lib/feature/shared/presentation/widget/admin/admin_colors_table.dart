@@ -7,6 +7,7 @@ import 'package:xc_web_admin/core/widget/table/colums_generator.dart';
 import 'package:xc_web_admin/feature/shared/domain/entities/color_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/color/color_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class ColorsTable extends StatefulWidget {
   const ColorsTable({super.key});
@@ -76,7 +77,7 @@ class _ColorsTableState extends State<ColorsTable> {
               // Case for when there is an error in the color bloc
               case RemoteColorsError:
                 // Return a text widget displaying "error"
-                return const Text("error");
+                return Text(S.of(context).error);
             }
             // If none of the states match, return an empty sized box widget
             return const SizedBox();

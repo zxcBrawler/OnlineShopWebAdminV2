@@ -11,6 +11,7 @@ import 'package:xc_web_admin/feature/shared/domain/entities/user_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/employee_shop_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/employee_shop_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/employee_shop/employee_shop_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class EmployeesTable extends StatefulWidget {
   const EmployeesTable({super.key});
@@ -72,7 +73,7 @@ class _EmployeesTableState extends State<EmployeesTable> {
 
                 case RemoteEmployeeShopError:
                   // Display error message
-                  return const Text("error");
+                  return Text(S.current.error);
               }
 
               return const SizedBox();

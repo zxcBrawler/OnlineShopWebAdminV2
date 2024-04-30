@@ -25,6 +25,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/order_comp/order_c
 import 'package:xc_web_admin/feature/shared/presentation/bloc/status/status_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/status/status_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/status/status_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class OrderDetails extends StatefulWidget {
   final DeliveryInfoEntity deliveryInfo;
@@ -35,18 +36,12 @@ class OrderDetails extends StatefulWidget {
 }
 
 class _OrderDetailsState extends State<OrderDetails> {
-  Map<String, TextEditingController> controllers = {
-    "date order": TextEditingController(),
-    "time order": TextEditingController(),
-    "order number": TextEditingController(),
-    "sum order": TextEditingController(),
-    "shop address": TextEditingController(),
-    "user address": TextEditingController(),
-  };
+  late final Map<String, TextEditingController> controllers;
   final StatusDTO updatedStatus = StatusDTO();
   late List<StatusOrderEntity> statuses;
 
   late int? selectedStatusIndex;
+  bool isInitialized = false;
 
   /// Initializes the [_OrderDetailsState] with the necessary text editing controllers
   /// and sets the initial values for the controllers based on the [widget.deliveryInfo] parameter.
@@ -54,21 +49,6 @@ class _OrderDetailsState extends State<OrderDetails> {
   void initState() {
     // Call the parent's initState method
     super.initState();
-
-    // Set the initial value for the "date order" controller
-    controllers["date order"]!.text = widget.deliveryInfo.order!.dateOrder!;
-    // Set the initial value for the "time order" controller
-    controllers["time order"]!.text = widget.deliveryInfo.order!.timeOrder!;
-    // Set the initial value for the "order number" controller
-    controllers["order number"]!.text = widget.deliveryInfo.order!.numberOrder!;
-    // Set the initial value for the "sum order" controller
-    controllers["sum order"]!.text = widget.deliveryInfo.order!.sumOrder!;
-    // Set the initial value for the "shop address" controller
-    controllers["shop address"]!.text =
-        widget.deliveryInfo.shopAddresses!.shopAddressDirection ?? "";
-    // Set the initial value for the "user address" controller
-    controllers["user address"]!.text =
-        widget.deliveryInfo.addresses!.directionAddress ?? "";
 
     selectedStatusIndex =
         widget.deliveryInfo.order!.currentStatus!.idStatus! - 1;
@@ -87,6 +67,25 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget build(BuildContext context) {
     // Check if the device is a mobile device
     final isMobile = Responsive.isMobile(context);
+
+    if (isInitialized == false) {
+      controllers = {
+        S.of(context).dateOrder:
+            TextEditingController(text: widget.deliveryInfo.order!.dateOrder!),
+        S.of(context).timeOrder:
+            TextEditingController(text: widget.deliveryInfo.order!.timeOrder!),
+        S.of(context).orderNumber: TextEditingController(
+            text: widget.deliveryInfo.order!.numberOrder!),
+        S.of(context).sumOrder:
+            TextEditingController(text: widget.deliveryInfo.order!.sumOrder!),
+        S.of(context).shopAddress: TextEditingController(
+            text:
+                widget.deliveryInfo.shopAddresses!.shopAddressDirection ?? ""),
+        S.of(context).userAddress: TextEditingController(
+            text: widget.deliveryInfo.addresses!.directionAddress ?? ""),
+      };
+      isInitialized = true;
+    }
 
     // Build the widget tree
     return Scaffold(
@@ -117,7 +116,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                               Expanded(
                                 child: HeaderText(
                                   textSize: isMobile ? 35 : 45,
-                                  title: 'order details',
+                                  title: S.current.orderDetails,
                                 ),
                               ),
                             ],
@@ -152,15 +151,15 @@ class _OrderDetailsState extends State<OrderDetails> {
                             ])),
                       ],
                     ),
-                    const BasicText(title: "order composition"),
+                    BasicText(title: S.current.orderComposition),
                     _buildOrderCompList(),
 
                     // Build the edit status button
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        buildButton(
-                            "Edit status", AppColors.darkBrown, _editStatus),
+                        buildButton(S.current.editStatus, AppColors.darkBrown,
+                            _editStatus),
                       ],
                     ),
                   ],
@@ -188,7 +187,7 @@ class _OrderDetailsState extends State<OrderDetails> {
 
             // Build the dropdown widget
             return BasicDropdown(
-              listTitle: "status order",
+              listTitle: S.current.statusOrder,
               // Map the status names to a list of strings
               dropdownData: statuses.map((e) => e.nameStatus!).toList(),
               // Set the selected index to the stored selected status index
@@ -256,13 +255,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                                             .nameClothesEn!),
                                     CardText(
                                         title:
-                                            "barcode: ${compositions[index].clothesComp!.barcode!}"),
+                                            "${S.current.barcode}: ${compositions[index].clothesComp!.barcode!}"),
                                     CardText(
                                         title:
-                                            "size: ${compositions[index].sizeClothes!.nameSize!}"),
+                                            "${S.current.size}: ${compositions[index].sizeClothes!.nameSize!}"),
                                     CardText(
                                         title:
-                                            "color: ${compositions[index].colorClothes!.nameColor!}"),
+                                            "${S.current.color}: ${compositions[index].colorClothes!.nameColor!}"),
                                   ],
                                 ),
                                 const Spacer(),
@@ -282,7 +281,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     );
 
                   case RemoteOrderCompError:
-                    return const Text("error");
+                    return Text(S.of(context).error);
                 }
                 return const SizedBox();
               },

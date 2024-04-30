@@ -23,6 +23,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_bloc.dar
 import 'package:xc_web_admin/feature/shared/presentation/bloc/user/user_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_user_addresses_table.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_user_orders_table.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class AdminUserDetails extends StatefulWidget {
   final UserEntity? user;
@@ -34,12 +35,7 @@ class AdminUserDetails extends StatefulWidget {
 
 class _AdminUserDetailsState extends State<AdminUserDetails> {
   // Controllers for handling user input
-  Map<String, TextEditingController> controllers = {
-    "email": TextEditingController(),
-    "phone number": TextEditingController(),
-    "username": TextEditingController(),
-  };
-
+  late Map<String, TextEditingController> controllers;
   // DTO for storing updated user information
   final UserDTO updatedUser = UserDTO();
 
@@ -59,24 +55,6 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
   void initState() {
     // Call the parent's initState method
     super.initState();
-
-    // Initialize the controllers with user data
-    final user = widget.user!;
-    controllers["email"]!.text = user.email!;
-    controllers["phone number"]!.text = user.phoneNumber!;
-    controllers["username"]!.text = user.username!;
-
-    // If user role is not "user", add "employee number" controller and set its value
-    if (widget.user!.role!.roleName != "user") {
-      controllers.addEntries([
-        MapEntry("employee number", TextEditingController()),
-      ]);
-      controllers["employee number"]!.text = user.employeeNumber!;
-    }
-
-    // Set initial selected indices
-    selectedRoleIndex = user.role!.id! - 1;
-    selectedGenderIndex = user.gender!.id! - 1;
   }
 
   @override
@@ -95,6 +73,27 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
   Widget build(BuildContext context) {
     // Check if the screen size is mobile
     final isMobile = Responsive.isMobile(context);
+    controllers = {
+      S.of(context).email: TextEditingController(),
+      S.of(context).phoneNumber: TextEditingController(),
+      S.of(context).username: TextEditingController(),
+    };
+    final user = widget.user!;
+    controllers[S.of(context).email]!.text = user.email!;
+    controllers[S.of(context).phoneNumber]!.text = user.phoneNumber!;
+    controllers[S.of(context).username]!.text = user.username!;
+
+    // If user role is not "user", add "employee number" controller and set its value
+    if (widget.user!.role!.roleName != "user") {
+      controllers.addEntries([
+        MapEntry(S.of(context).employeeNumber, TextEditingController()),
+      ]);
+      controllers[S.of(context).employeeNumber]!.text = user.employeeNumber!;
+    }
+
+    // Set initial selected indices
+    selectedRoleIndex = user.role!.id! - 1;
+    selectedGenderIndex = user.gender!.id! - 1;
 
     return Scaffold(
       body: SafeArea(
@@ -126,7 +125,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                         Expanded(
                           child: HeaderText(
                             textSize: isMobile ? 35 : 45,
-                            title: 'user details',
+                            title: S.of(context).userDetails,
                           ),
                         ),
                       ],
@@ -164,7 +163,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                                     builder: (context, state) {
                                       if (state is RemoteRoleDone) {
                                         return BasicDropdown(
-                                          listTitle: "role",
+                                          listTitle: S.of(context).role,
                                           dropdownData: state.roles!
                                               .map((e) => e.roleName!)
                                               .toList(),
@@ -192,7 +191,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                                     builder: (_, state) {
                                       if (state is RemoteGenderDone) {
                                         return BasicDropdown(
-                                          listTitle: "gender",
+                                          listTitle: S.of(context).gender,
                                           dropdownData: state.genders!
                                               .map((e) => e.nameCategory!)
                                               .toList()
@@ -226,7 +225,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                                     builder: (context, state) {
                                       if (state is RemoteRoleDone) {
                                         return BasicDropdown(
-                                          listTitle: "role",
+                                          listTitle: S.of(context).role,
                                           dropdownData: state.roles!
                                               .map((e) => e.roleName!)
                                               .toList(),
@@ -258,7 +257,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                                     builder: (_, state) {
                                       if (state is RemoteGenderDone) {
                                         return BasicDropdown(
-                                          listTitle: "gender",
+                                          listTitle: S.of(context).gender,
                                           dropdownData: state.genders!
                                               .map((e) => e.nameCategory!)
                                               .toList()
@@ -291,7 +290,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                 // User orders section
                 HeaderText(
                   textSize: isMobile ? 35 : 45,
-                  title: 'user orders',
+                  title: S.of(context).userOrders,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -308,7 +307,7 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                 // User addresses section
                 HeaderText(
                   textSize: isMobile ? 35 : 45,
-                  title: 'user addresses',
+                  title: S.of(context).userAddresses,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -328,10 +327,12 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   // Edit button
-                  buildButton("Edit", AppColors.darkBrown, _editUserInfo),
+                  buildButton(
+                      S.of(context).edit, AppColors.darkBrown, _editUserInfo),
                   // Delete button
                   widget.user!.role!.roleName != "user"
-                      ? buildButton("Delete", AppColors.red, _deleteUser)
+                      ? buildButton(
+                          S.of(context).delete, AppColors.red, _deleteUser)
                       : const SizedBox(),
                 ],
               ),
@@ -353,11 +354,12 @@ class _AdminUserDetailsState extends State<AdminUserDetails> {
   void _editUserInfo() async {
     // Update the user info in the [updatedUser] object
     updatedUser.id = widget.user!.id!;
-    updatedUser.email = controllers["email"]!.text;
-    updatedUser.username = controllers["username"]!.text;
-    updatedUser.phoneNumber = controllers["phone number"]!.text;
+    updatedUser.email = controllers[S.of(context).email]!.text;
+    updatedUser.username = controllers[S.of(context).username]!.text;
+    updatedUser.phoneNumber = controllers[S.of(context).phoneNumber]!.text;
     if (widget.user!.role!.roleName != "user") {
-      updatedUser.employeeNumber = controllers["employee number"]!.text;
+      updatedUser.employeeNumber =
+          controllers[S.of(context).employeeNumber]!.text;
     }
     updatedUser.gender = selectedGenderIndex! + 1;
     updatedUser.role = selectedRoleIndex! + 1;

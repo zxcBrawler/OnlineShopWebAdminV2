@@ -10,6 +10,7 @@ import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_state.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 class DirectorFemaleClothesWidget extends StatefulWidget {
   const DirectorFemaleClothesWidget({super.key});
@@ -66,14 +67,15 @@ class _DirectorFemaleClothesWidgetState
                         return Column(
                           children: [
                             BasicText(
-                              title: 'total female clothes: $quantity',
+                              title:
+                                  '${S.of(context).totalFemaleClothes}: $quantity',
                             ),
                             BasicPieChart(inputData: clothesCount)
                           ],
                         );
 
                       case RemoteShopGarnishError:
-                        return const Text("error");
+                        return Text(S.current.error);
                     }
                     return const SizedBox();
                   },
@@ -87,7 +89,7 @@ class _DirectorFemaleClothesWidgetState
                           padding: EdgeInsets.zero,
                           onPressed: () {
                             router.go(Pages.directorAllClothes.screenPath,
-                                extra: {"female clothes"});
+                                extra: {S.of(context).allFemaleClothes});
                           },
                           icon: const Icon(
                             Icons.chevron_right,

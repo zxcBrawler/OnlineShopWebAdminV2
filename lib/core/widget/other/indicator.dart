@@ -15,8 +15,6 @@ class Indicator extends StatelessWidget {
   final double size;
   final Color? textColor;
 
-  @override
-
   /// Builds the indicator widget.
   ///
   /// This method returns a [Row] widget containing a [Container] for the
