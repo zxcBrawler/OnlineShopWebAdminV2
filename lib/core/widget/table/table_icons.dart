@@ -178,7 +178,8 @@ class _TableIconsState extends State<TableIcons> {
           builder: (BuildContext context) {
             ColorModel? currentColor = widget.data! as ColorModel;
             return Dialog(
-              backgroundColor: Methods.getColorFromHex(currentColor.hex!),
+              backgroundColor:
+                  Methods.getColorFromHex(currentColor.hex ?? "##FFF"),
               child: const SizedBox(
                 height: 300,
                 width: 300,

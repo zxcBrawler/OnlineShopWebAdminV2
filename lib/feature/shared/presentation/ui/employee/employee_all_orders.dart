@@ -25,7 +25,7 @@ class _EmployeeAllOrdersState extends State<EmployeeAllOrders> {
               children: [
                 Expanded(
                   child: Header(
-                    title: S.current.allOrders,
+                    title: S.of(context).allOrders,
                   ),
                 ),
               ],
