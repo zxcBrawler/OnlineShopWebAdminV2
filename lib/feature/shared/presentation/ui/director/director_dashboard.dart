@@ -57,7 +57,7 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
                       return Column(
                         children: [
                           Header(
-                            title: S.current.dashboard,
+                            title: S.of(context).dashboard,
                           ),
                           const DirectorTotalItems(),
                           const Row(
@@ -90,7 +90,7 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
                       return Column(
                         children: [
                           Header(
-                            title: S.current.dashboard,
+                            title: S.of(context).dashboard,
                           ),
                           const DirectorTotalItems(),
                           const Row(

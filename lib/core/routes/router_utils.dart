@@ -16,6 +16,8 @@ enum Pages {
   adminShopAddressInfo,
   adminAllOrders,
   adminAllClothes,
+  adminAllFemaleClothes,
+  adminAllMaleClothes,
   adminOrderDetails, // separate window
   adminClothesDetails, // separate window
   adminAllColors,
@@ -25,6 +27,8 @@ enum Pages {
   directorEmployees,
   directorClothes,
   directorAllClothes,
+  directorAllFemaleClothes,
+  directorAllMaleClothes,
   directorClothesDetails,
   directorWeeklyItemsSoldDetails, // separate window
   directorOrders,
@@ -34,6 +38,8 @@ enum Pages {
   employeeClothes,
   employeeOrders,
   employeeAllClothes,
+  employeeAllFemaleClothes,
+  employeeAllMaleClothes,
   employeeClothesDetails,
   employeeAllOrders,
   adminWeeklyOrdersDetails,
@@ -60,6 +66,8 @@ extension AppPageExtension on Pages {
       Pages.adminShopAddressInfo => '/adminShopAddressInfo',
       Pages.adminAllOrders => '/adminAllOrders',
       Pages.adminAllClothes => '/adminAllClothes',
+      Pages.adminAllFemaleClothes => '/adminAllFemaleClothes',
+      Pages.adminAllMaleClothes => '/adminAllMaleClothes',
       Pages.adminOrderDetails => '/adminOrderDetails',
       Pages.adminClothesDetails => '/adminClothesDetails',
       Pages.directorDashboard => '/directorDashboard',
@@ -84,6 +92,10 @@ extension AppPageExtension on Pages {
       Pages.adminWeeklyOrdersDetails => '/adminWeeklyOrdersDetails',
       Pages.directorWeeklyOrdersDetails => '/directorWeeklyOrdersDetails',
       Pages.employeeWeeklyOrdersDetails => '/employeeWeeklyOrdersDetails',
+      Pages.directorAllFemaleClothes => '/directorAllFemaleClothes',
+      Pages.directorAllMaleClothes => '/directorAllMaleClothes',
+      Pages.employeeAllFemaleClothes => '/employeeAllFemaleClothes',
+      Pages.employeeAllMaleClothes => '/employeeAllMaleClothes',
     };
   }
 
@@ -105,6 +117,8 @@ extension AppPageExtension on Pages {
       Pages.adminShopAddressInfo => 'adminShopAddressInfo',
       Pages.adminAllOrders => 'adminAllOrders',
       Pages.adminAllClothes => 'adminAllClothes',
+      Pages.adminAllFemaleClothes => 'adminAllFemaleClothes',
+      Pages.adminAllMaleClothes => 'adminAllMaleClothes',
       Pages.adminOrderDetails => 'adminOrderDetails',
       Pages.adminClothesDetails => 'adminClothesDetails',
       Pages.directorDashboard => 'directorDashboard',
@@ -129,6 +143,10 @@ extension AppPageExtension on Pages {
       Pages.adminWeeklyOrdersDetails => 'adminWeeklyOrdersDetails',
       Pages.directorWeeklyOrdersDetails => 'directorWeeklyOrdersDetails',
       Pages.employeeWeeklyOrdersDetails => 'employeeWeeklyOrdersDetails',
+      Pages.directorAllFemaleClothes => 'directorAllFemaleClothes',
+      Pages.directorAllMaleClothes => 'directorAllMaleClothes',
+      Pages.employeeAllFemaleClothes => 'employeeAllFemaleClothes',
+      Pages.employeeAllMaleClothes => 'employeeAllMaleClothes',
     };
   }
 }

@@ -11,6 +11,8 @@ import 'package:xc_web_admin/feature/shared/domain/entities/user_entity.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_active_users.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_colors.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_female_clothes.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_male_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_orders.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_sizes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_all_users.dart';
@@ -20,9 +22,13 @@ import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_dashboar
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_main_screen.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_items_sold_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/admin/admin_weekly_orders_details.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_all_female_clothes.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_all_male_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_weekly_items_sold_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/director/director_weekly_orders_details.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_all_clothes.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_all_female_clothes.dart';
+import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_all_male_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_all_orders.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_clothes.dart';
 import 'package:xc_web_admin/feature/shared/presentation/ui/employee/employee_clothes_details.dart';
@@ -179,11 +185,23 @@ final router =
           path: Pages.directorAllClothes.screenPath,
           name: Pages.directorAllClothes.screenName,
           pageBuilder: (context, state) {
-            HashSet<String> title = state.extra as HashSet<String>;
-            return NoTransitionPage(
-                child: DirectorAllClothes(
-              title: title.first,
-            ));
+            return const NoTransitionPage(child: DirectorAllClothes());
+          },
+        ),
+        GoRoute(
+          parentNavigatorKey: _shellNavigatorKey,
+          path: Pages.directorAllFemaleClothes.screenPath,
+          name: Pages.directorAllFemaleClothes.screenName,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: DirectorAllFemaleClothes());
+          },
+        ),
+        GoRoute(
+          parentNavigatorKey: _shellNavigatorKey,
+          path: Pages.directorAllMaleClothes.screenPath,
+          name: Pages.directorAllMaleClothes.screenName,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: DirectorAllMaleClothes());
           },
         ),
         GoRoute(
@@ -259,11 +277,23 @@ final router =
           name: Pages.employeeAllClothes.screenName,
           parentNavigatorKey: _shellNavigatorKey,
           pageBuilder: (context, state) {
-            HashSet<String> title = state.extra as HashSet<String>;
-            return NoTransitionPage(
-                child: EmployeeAllClothes(
-              title: title.first,
-            ));
+            return const NoTransitionPage(child: EmployeeAllClothes());
+          },
+        ),
+        GoRoute(
+          path: Pages.employeeAllFemaleClothes.screenPath,
+          name: Pages.employeeAllFemaleClothes.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: EmployeeAllFemaleClothes());
+          },
+        ),
+        GoRoute(
+          path: Pages.employeeAllMaleClothes.screenPath,
+          name: Pages.employeeAllMaleClothes.screenName,
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: EmployeeAllMaleClothes());
           },
         ),
         GoRoute(
@@ -370,11 +400,23 @@ final router =
         path: Pages.adminAllClothes.screenPath,
         name: Pages.adminAllClothes.screenName,
         pageBuilder: (context, state) {
-          HashSet<String> title = state.extra as HashSet<String>;
-          return NoTransitionPage(
-              child: AdminAllClothes(
-            title: title.first,
-          ));
+          return const NoTransitionPage(child: AdminAllClothes());
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _shellNavigatorKey,
+        path: Pages.adminAllFemaleClothes.screenPath,
+        name: Pages.adminAllFemaleClothes.screenName,
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: AdminAllFemaleClothes());
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _shellNavigatorKey,
+        path: Pages.adminAllMaleClothes.screenPath,
+        name: Pages.adminAllMaleClothes.screenName,
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: AdminAllMaleClothes());
         },
       ),
       GoRoute(

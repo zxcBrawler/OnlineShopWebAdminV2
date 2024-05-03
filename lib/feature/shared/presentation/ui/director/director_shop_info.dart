@@ -53,7 +53,7 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
           children: [
             // Display the header
             Header(
-              title: S.current.myShop,
+              title: S.of(context).myShop,
             ),
             // Display the shop information
             Row(
@@ -165,12 +165,12 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
           ),
         ),
         // The basic text widget displays the shop's contact number.
-        BasicText(title: "${S.current.contactNumber}: "),
+        BasicText(title: "${S.of(context).contactNumber}: "),
         CardText(
           title: state.shop!.shopAddresses!.contactNumber!,
         ),
         // The basic text widget displays the shop's address.
-        BasicText(title: "${S.current.shopAddress}: "),
+        BasicText(title: "${S.of(context).shopAddress}: "),
         // The sized box widget displays the shop's address.
         SizedBox(
           width: 400,
@@ -179,7 +179,7 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
           ),
         ),
         // The basic text widget displays the shop's metro.
-        BasicText(title: "${S.current.shopMetro}: "),
+        BasicText(title: "${S.of(context).shopMetro}: "),
         CardText(
           title: state.shop!.shopAddresses!.shopMetro!,
         ),
@@ -241,7 +241,7 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
             // The shop contact number.
             Row(
               children: [
-                BasicText(title: "${S.current.contactNumber}: "),
+                BasicText(title: "${S.of(context).contactNumber}: "),
               ],
             ),
             Row(
@@ -257,7 +257,7 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
             // The shop address.
             Row(
               children: [
-                BasicText(title: "${S.current.shopAddress}: "),
+                BasicText(title: "${S.of(context).shopAddress}: "),
               ],
             ),
             Row(
@@ -273,7 +273,7 @@ class _DirectorShopInfoState extends State<DirectorShopInfo> {
             // The shop metro.
             Row(
               children: [
-                BasicText(title: "${S.current.shopMetro}: "),
+                BasicText(title: "${S.of(context).shopMetro}: "),
               ],
             ),
             Row(

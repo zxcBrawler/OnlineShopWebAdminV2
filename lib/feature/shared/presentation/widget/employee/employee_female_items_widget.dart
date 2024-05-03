@@ -87,8 +87,9 @@ class _EmployeeFemaleItemsWidgetState extends State<EmployeeFemaleItemsWidget> {
                       child: IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            router.go(Pages.employeeAllClothes.screenPath,
-                                extra: {S.of(context).allFemaleClothes});
+                            router.go(
+                              Pages.employeeAllFemaleClothes.screenPath,
+                            );
                           },
                           icon: const Icon(
                             Icons.chevron_right,

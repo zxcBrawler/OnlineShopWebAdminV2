@@ -55,7 +55,7 @@ class _DirectorTotalOrdersState extends State<DirectorTotalOrders> {
                             BasicText(
                               // Display the total number of orders
                               title:
-                                  '${S.current.totalOrders}: ${shopOrders.length}',
+                                  '${S.of(context).totalOrders}: ${shopOrders.length}',
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),

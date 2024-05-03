@@ -61,8 +61,39 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
       body: Column(
         // The column expands to fill the available space.
         children: [
-          const Row(
-            children: [Icon(Icons.menu)],
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DropdownButton<Language>(
+                  underline: const SizedBox(),
+                  icon: Icon(
+                    Icons.language,
+                    color: AppColors.darkBrown,
+                  ),
+                  onChanged: (Language? language) async {
+                    if (language != null) {
+                      Locale locale =
+                          await SessionStorage.setLocale(language.languageCode);
+                      if (mounted) {
+                        MainApp.setLocale(context, locale);
+                      }
+                    }
+                  },
+                  items: Language.languageList()
+                      .map<DropdownMenuItem<Language>>(
+                        (e) => DropdownMenuItem<Language>(
+                          value: e,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [Text(e.name)],
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ],
           ),
           Expanded(
             // The expanded widget expands to fill the available space.
@@ -135,40 +166,42 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
             ),
           ),
           // The spacer widget expands to fill the available space.
-          const Spacer(),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DropdownButton<Language>(
-                  underline: const SizedBox(),
-                  icon: Icon(
-                    Icons.language,
-                    color: AppColors.darkBrown,
-                  ),
-                  onChanged: (Language? language) async {
-                    if (language != null) {
-                      Locale locale =
-                          await SessionStorage.setLocale(language.languageCode);
-                      if (mounted) {
-                        MainApp.setLocale(context, locale);
+
+          Expanded(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButton<Language>(
+                    underline: const SizedBox(),
+                    icon: Icon(
+                      Icons.language,
+                      color: AppColors.darkBrown,
+                    ),
+                    onChanged: (Language? language) async {
+                      if (language != null) {
+                        Locale locale = await SessionStorage.setLocale(
+                            language.languageCode);
+                        if (mounted) {
+                          MainApp.setLocale(context, locale);
+                        }
                       }
-                    }
-                  },
-                  items: Language.languageList()
-                      .map<DropdownMenuItem<Language>>(
-                        (e) => DropdownMenuItem<Language>(
-                          value: e,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [Text(e.name)],
+                    },
+                    items: Language.languageList()
+                        .map<DropdownMenuItem<Language>>(
+                          (e) => DropdownMenuItem<Language>(
+                            value: e,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [Text(e.name)],
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
+                        )
+                        .toList(),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

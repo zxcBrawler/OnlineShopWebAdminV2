@@ -62,7 +62,7 @@ class _EmployeeClothesState extends State<EmployeeClothes> {
     return Column(
       // Contains the title 'clothes info' and the total number of clothes
       children: [
-        Header(title: S.current.clothesInfo),
+        Header(title: S.of(context).clothesInfo),
         const EmployeeTotalItems(),
         // Contains the number of female clothes
         const Row(

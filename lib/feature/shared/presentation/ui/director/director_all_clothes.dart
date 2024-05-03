@@ -7,6 +7,7 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_
 import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_add_clothes_dialog.dart';
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_table.dart';
+import 'package:xc_web_admin/generated/l10n.dart';
 
 import '../../../../../di/service.dart';
 
@@ -37,7 +38,7 @@ class _DirectorAllClothesState extends State<DirectorAllClothes> {
                   // Expands to fill available horizontal space
                   child: Header(
                     // A widget for displaying a title
-                    title: '${widget.title}',
+                    title: S.of(context).allClothes,
                   ),
                 ),
               ],
@@ -95,7 +96,7 @@ class _DirectorAllClothesState extends State<DirectorAllClothes> {
                                     id: int.parse(SessionStorage.getValue(
                                         "shopAddressId")))),
                               child: DirectorClothesTable(
-                                title: widget.title,
+                                title: S.of(context).allClothes,
                               ),
                             ),
                           ),

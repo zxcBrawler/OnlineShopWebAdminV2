@@ -27,7 +27,7 @@ class _DirectorWeeklyOrdersWidgetState
             child: BasicContainer(
               child: Column(
                 children: [
-                  BasicText(title: S.current.weeklyOrdersMadeOverview),
+                  BasicText(title: S.of(context).weeklyOrdersMadeOverview),
                   const Padding(
                       padding: EdgeInsets.only(right: 30),
                       child: DirectorWeeklyOrdersLinechart()),

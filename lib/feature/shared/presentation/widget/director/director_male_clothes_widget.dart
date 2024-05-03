@@ -87,8 +87,9 @@ class _DirectorMaleClothesWidgetState extends State<DirectorMaleClothesWidget> {
                       child: IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            router.go(Pages.directorAllClothes.screenPath,
-                                extra: {S.of(context).allMaleClothes});
+                            router.go(
+                              Pages.directorAllMaleClothes.screenPath,
+                            );
                           },
                           icon: const Icon(
                             Icons.chevron_right,

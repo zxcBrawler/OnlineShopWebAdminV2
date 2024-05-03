@@ -46,7 +46,7 @@ class _DirectorWeeklyOrdersLinechartState
               // Display a BasicLineChart with the generated FlSpot lists
               return BasicLineChart(
                 spotsList: [flSpotListPickUp],
-                titles: [S.current.pickUp],
+                titles: [S.of(context).pickUp],
               );
 
             case RemoteDeliveryInfoError:

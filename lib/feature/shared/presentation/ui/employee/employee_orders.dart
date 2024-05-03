@@ -26,7 +26,7 @@ class _EmployeeShopOrdersState extends State<EmployeeShopOrders> {
             children: [
               Header(
                 // Display the header
-                title: S.current.shopOrders,
+                title: S.of(context).shopOrders,
               ),
               // Display a row containing the total orders widget
               const Row(

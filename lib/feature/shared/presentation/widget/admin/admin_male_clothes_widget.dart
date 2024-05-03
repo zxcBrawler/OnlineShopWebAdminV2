@@ -91,8 +91,9 @@ class _MaleClothesWidgetState extends State<MaleClothesWidget> {
                       child: IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            router.go(Pages.adminAllClothes.screenPath,
-                                extra: {S.of(context).allMaleClothes});
+                            router.go(
+                              Pages.adminAllMaleClothes.screenPath,
+                            );
                           },
                           icon: const Icon(
                             Icons.chevron_right,

@@ -38,7 +38,7 @@ class _BasicSearchBarState extends State<BasicSearchBar> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SearchBar(
-        hintText: S.current.search, // Hint text for the search bar
+        hintText: S.of(context).search, // Hint text for the search bar
         textStyle: MaterialStatePropertyAll(
           basicTextFieldStyle(), // Text style for the search bar
         ),

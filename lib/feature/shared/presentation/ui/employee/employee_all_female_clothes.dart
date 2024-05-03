@@ -9,15 +9,15 @@ import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_
 import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_table.dart';
 import 'package:xc_web_admin/generated/l10n.dart';
 
-class EmployeeAllClothes extends StatefulWidget {
-  final String? title;
-  const EmployeeAllClothes({super.key, this.title});
+class EmployeeAllFemaleClothes extends StatefulWidget {
+  const EmployeeAllFemaleClothes({super.key});
 
   @override
-  State<EmployeeAllClothes> createState() => _EmployeeAllClothesState();
+  State<EmployeeAllFemaleClothes> createState() =>
+      _EmployeeAllFemaleClothesState();
 }
 
-class _EmployeeAllClothesState extends State<EmployeeAllClothes> {
+class _EmployeeAllFemaleClothesState extends State<EmployeeAllFemaleClothes> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,7 +36,7 @@ class _EmployeeAllClothesState extends State<EmployeeAllClothes> {
                   // Expands to fill available horizontal space
                   child: Header(
                     // A widget for displaying a title
-                    title: S.of(context).allClothes,
+                    title: S.of(context).allFemaleClothes,
                   ),
                 ),
               ],
@@ -59,7 +59,7 @@ class _EmployeeAllClothesState extends State<EmployeeAllClothes> {
                                     id: int.parse(SessionStorage.getValue(
                                         "shopAddressId")))),
                               child: DirectorClothesTable(
-                                title: S.of(context).allClothes,
+                                title: S.of(context).allFemaleClothes,
                               ),
                             ),
                           ),

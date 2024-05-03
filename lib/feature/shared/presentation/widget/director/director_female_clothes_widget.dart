@@ -88,8 +88,9 @@ class _DirectorFemaleClothesWidgetState
                       child: IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            router.go(Pages.directorAllClothes.screenPath,
-                                extra: {S.of(context).allFemaleClothes});
+                            router.go(
+                              Pages.directorAllFemaleClothes.screenPath,
+                            );
                           },
                           icon: const Icon(
                             Icons.chevron_right,

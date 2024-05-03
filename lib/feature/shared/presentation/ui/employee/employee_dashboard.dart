@@ -65,7 +65,7 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                   return Column(
                     children: [
                       Header(
-                        title: S.current.dashboard,
+                        title: S.of(context).dashboard,
                       ),
                       const EmployeeTotalItems(),
                       const Row(

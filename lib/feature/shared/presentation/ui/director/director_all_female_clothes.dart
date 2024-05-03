@@ -1,43 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
-import 'package:xc_web_admin/core/widget/searchbar/basic_search_bar.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/di/service.dart';
-import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
-import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_event.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_add_clothes_dialog.dart';
-import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_table.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_bloc.dart';
+import 'package:xc_web_admin/feature/shared/presentation/bloc/shop_garnish/shop_garnish_event.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_add_clothes_dialog.dart';
+import 'package:xc_web_admin/feature/shared/presentation/widget/director/director_clothes_table.dart';
 import 'package:xc_web_admin/generated/l10n.dart';
 
-class AdminAllClothes extends StatefulWidget {
-  final String? title;
-  const AdminAllClothes({super.key, this.title});
+class DirectorAllFemaleClothes extends StatefulWidget {
+  const DirectorAllFemaleClothes({super.key});
 
   @override
-  State<AdminAllClothes> createState() => _AdminAllClothesState();
+  State<DirectorAllFemaleClothes> createState() =>
+      _DirectorAllFemaleClothesState();
 }
 
-class _AdminAllClothesState extends State<AdminAllClothes> {
+class _DirectorAllFemaleClothesState extends State<DirectorAllFemaleClothes> {
   @override
-
-  /// Builds the widget tree for the [AdminAllClothes] screen.
-  ///
-  /// This method is called when the widget is inserted into the widget tree.
-  /// It returns a [SafeArea] widget that contains a [SingleChildScrollView]
-  /// widget with padding. The [SingleChildScrollView] contains a [Column]
-  /// widget with multiple [Row] widgets, each containing various children.
-  ///
-  /// The [Column] widget starts with a [Header] widget containing the title
-  /// passed to the widget. Then, it contains a [Row] widget with two children.
-  /// The first child is a [BasicSearchBar] widget, and the second child is
-  /// another [Row] widget. This second [Row] widget contains two children,
-  /// each containing an [IconButton] widget. The first [IconButton] triggers
-  /// a dialog to be shown, and the second [IconButton] does nothing.
-  ///
-  /// After that, the [Column] widget contains another [Row] widget, which
-  /// contains a [BasicContainer] widget containing a [ClothesTable] widget.
-  /// The [ClothesTable] widget is wrapped in a [BlocProvider] widget.
   Widget build(BuildContext context) {
     return SafeArea(
       // Wraps the screen in a safe area
@@ -55,7 +37,7 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
                   // Expands to fill available horizontal space
                   child: Header(
                     // A widget for displaying a title
-                    title: S.of(context).allClothes,
+                    title: S.of(context).allFemaleClothes,
                   ),
                 ),
               ],
@@ -65,6 +47,7 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               // Spaces out the children horizontally
               children: [
+                // A widget for searching
                 Expanded(
                   // Expands to fill available horizontal space
                   child: Row(
@@ -80,11 +63,10 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
                               child: BasicContainer(
                                 child: IconButton(
                                   onPressed: () {
-                                    // Open add user dialog
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return const AddClothesDialog();
+                                          return const DirectorAddClothesDialog();
                                         });
                                   },
                                   icon: const Icon(Icons.add),
@@ -107,11 +89,13 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: BlocProvider<RemoteClothesBloc>(
-                              create: (context) =>
-                                  service()..add(const GetClothes()),
-                              child: ClothesTable(
-                                title: S.of(context).allClothes,
+                            child: BlocProvider<RemoteShopGarnishBloc>(
+                              create: (context) => service()
+                                ..add(GetShopGarnish(
+                                    id: int.parse(SessionStorage.getValue(
+                                        "shopAddressId")))),
+                              child: DirectorClothesTable(
+                                title: S.of(context).allFemaleClothes,
                               ),
                             ),
                           ),

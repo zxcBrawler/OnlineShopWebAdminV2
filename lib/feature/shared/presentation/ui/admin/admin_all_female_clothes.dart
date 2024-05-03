@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xc_web_admin/core/widget/header/basic_pages_header.dart';
-import 'package:xc_web_admin/core/widget/searchbar/basic_search_bar.dart';
 import 'package:xc_web_admin/core/widget/widget/basic_container.dart';
 import 'package:xc_web_admin/di/service.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/clothes/clothes_bloc.dart';
@@ -10,34 +9,15 @@ import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_add_
 import 'package:xc_web_admin/feature/shared/presentation/widget/admin/admin_clothes_table.dart';
 import 'package:xc_web_admin/generated/l10n.dart';
 
-class AdminAllClothes extends StatefulWidget {
-  final String? title;
-  const AdminAllClothes({super.key, this.title});
+class AdminAllFemaleClothes extends StatefulWidget {
+  const AdminAllFemaleClothes({super.key});
 
   @override
-  State<AdminAllClothes> createState() => _AdminAllClothesState();
+  State<AdminAllFemaleClothes> createState() => _AdminAllFemaleClothesState();
 }
 
-class _AdminAllClothesState extends State<AdminAllClothes> {
+class _AdminAllFemaleClothesState extends State<AdminAllFemaleClothes> {
   @override
-
-  /// Builds the widget tree for the [AdminAllClothes] screen.
-  ///
-  /// This method is called when the widget is inserted into the widget tree.
-  /// It returns a [SafeArea] widget that contains a [SingleChildScrollView]
-  /// widget with padding. The [SingleChildScrollView] contains a [Column]
-  /// widget with multiple [Row] widgets, each containing various children.
-  ///
-  /// The [Column] widget starts with a [Header] widget containing the title
-  /// passed to the widget. Then, it contains a [Row] widget with two children.
-  /// The first child is a [BasicSearchBar] widget, and the second child is
-  /// another [Row] widget. This second [Row] widget contains two children,
-  /// each containing an [IconButton] widget. The first [IconButton] triggers
-  /// a dialog to be shown, and the second [IconButton] does nothing.
-  ///
-  /// After that, the [Column] widget contains another [Row] widget, which
-  /// contains a [BasicContainer] widget containing a [ClothesTable] widget.
-  /// The [ClothesTable] widget is wrapped in a [BlocProvider] widget.
   Widget build(BuildContext context) {
     return SafeArea(
       // Wraps the screen in a safe area
@@ -55,7 +35,7 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
                   // Expands to fill available horizontal space
                   child: Header(
                     // A widget for displaying a title
-                    title: S.of(context).allClothes,
+                    title: S.of(context).allFemaleClothes,
                   ),
                 ),
               ],
@@ -111,7 +91,7 @@ class _AdminAllClothesState extends State<AdminAllClothes> {
                               create: (context) =>
                                   service()..add(const GetClothes()),
                               child: ClothesTable(
-                                title: S.of(context).allClothes,
+                                title: S.of(context).allFemaleClothes,
                               ),
                             ),
                           ),

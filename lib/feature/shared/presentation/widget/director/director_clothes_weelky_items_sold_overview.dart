@@ -90,7 +90,8 @@ class _DirectorWeeklyItemsSoldState extends State<DirectorWeeklyItemsSold> {
                                     children: [
                                       BasicText(
                                           title: S
-                                              .current.weeklyItemsSoldOverview),
+                                              .of(context)
+                                              .weeklyItemsSoldOverview),
                                       BasicBarChart(barsList: [
                                         flSpotListMale,
                                         flSpotListFemale

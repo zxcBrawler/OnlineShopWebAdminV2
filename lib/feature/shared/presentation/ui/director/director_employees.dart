@@ -26,7 +26,7 @@ class _DirectorEmployeesState extends State<DirectorEmployees> {
               children: [
                 Expanded(
                   child: Header(
-                    title: S.current.employees,
+                    title: S.of(context).employees,
                   ),
                 ),
               ],

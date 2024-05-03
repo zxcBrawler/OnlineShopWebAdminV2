@@ -54,7 +54,7 @@ class _DirectorOrderStatusesState extends State<DirectorOrderStatuses> {
                         return Column(
                           children: [
                             BasicText(
-                              title: S.current.ordersByStatus,
+                              title: S.of(context).ordersByStatus,
                             ),
                             BasicPieChart(inputData: statusCount)
                           ],

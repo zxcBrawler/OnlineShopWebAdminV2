@@ -69,8 +69,9 @@ class _EmployeeTotalItemsState extends State<EmployeeTotalItems> {
                         child: IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            router.go(Pages.employeeAllClothes.screenPath,
-                                extra: {S.of(context).allClothes});
+                            router.go(
+                              Pages.employeeAllClothes.screenPath,
+                            );
                           },
                           icon: const Icon(
                             Icons.chevron_right,
