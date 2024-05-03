@@ -28,9 +28,6 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
   @override
   void initState() {
     super.initState();
-    // Set the initial values of the text fields to dummy values for testing purposes.
-    usernameController.text = "admin";
-    passController.text = "admin";
   }
 
   @override
