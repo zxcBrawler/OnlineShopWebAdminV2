@@ -4,6 +4,8 @@ import 'package:xc_web_admin/core/constants/session_storage.dart';
 import 'package:xc_web_admin/core/routes/app_router.dart';
 import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/sidemenu/side_menu_tab.dart';
+import 'package:xc_web_admin/feature/shared/app.dart';
+import 'package:xc_web_admin/feature/shared/data/model/language.dart';
 
 /// Widget representing the drawer
 class BasicDrawer extends StatefulWidget {
@@ -51,28 +53,62 @@ class _BasicDrawerState extends State<BasicDrawer> {
                 // Set the route of the tab.
                 route: item['route'],
               ),
-
-            // Display an IconButton which allows the user to logout.
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                      tooltip: "logout",
-                      // Call the logout function when the button is pressed.
-                      onPressed: () {
-                        SessionStorage.clearAll();
-                        router.pushReplacement(Pages.auth.screenPath);
-                      },
-                      // Set the icon of the button to an exit to app icon.
-                      icon: Icon(
-                        Icons.exit_to_app_rounded,
-                        color: AppColors.white,
-                      )),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButton<Language>(
+                    underline: const SizedBox(),
+                    icon: Icon(
+                      Icons.language,
+                      color: AppColors.white,
+                    ),
+                    onChanged: (Language? language) async {
+                      if (language != null) {
+                        Locale locale = await SessionStorage.setLocale(
+                            language.languageCode);
+                        if (mounted) {
+                          MainApp.setLocale(context, locale);
+                        }
+                      }
+                    },
+                    items: Language.languageList()
+                        .map<DropdownMenuItem<Language>>(
+                          (e) => DropdownMenuItem<Language>(
+                            value: e,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [Text(e.name)],
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                          tooltip: "logout",
+                          // Call the logout function when the button is pressed.
+                          onPressed: () {
+                            SessionStorage.clearAll();
+                            router.pushReplacement(Pages.auth.screenPath);
+                          },
+                          // Set the icon of the button to an exit to app icon.
+                          icon: Icon(
+                            Icons.exit_to_app_rounded,
+                            color: AppColors.white,
+                          )),
+                    ],
+                  ),
+                ),
+              ],
             ),
+            // Display an IconButton which allows the user to logout.
           ],
         ),
       ),

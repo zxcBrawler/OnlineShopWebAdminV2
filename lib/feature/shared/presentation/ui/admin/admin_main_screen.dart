@@ -29,7 +29,7 @@ class AdminMainScreenState extends State<AdminMainScreen> {
     return Scaffold(
       // The drawer for the admin panel.
       drawer: BasicDrawer(
-        menuItems: adminMenuItems,
+        menuItems: adminMenuItems(context),
       ),
       // The key for the Scaffold. The key is obtained from the SideMenuController.
       key: context.read<SideMenuController>().scaffoldKey,

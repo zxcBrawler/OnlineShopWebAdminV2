@@ -8,7 +8,9 @@ import 'package:xc_web_admin/core/routes/router_utils.dart';
 import 'package:xc_web_admin/core/widget/text/auth_button_text.dart';
 import 'package:xc_web_admin/core/widget/textfield/basic_textfield.dart';
 import 'package:xc_web_admin/di/service.dart';
+import 'package:xc_web_admin/feature/shared/app.dart';
 import 'package:xc_web_admin/feature/shared/data/dto/login_dto.dart';
+import 'package:xc_web_admin/feature/shared/data/model/language.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/auth/auth_bloc.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/auth/auth_event.dart';
 import 'package:xc_web_admin/feature/shared/presentation/bloc/auth/auth_state.dart';
@@ -59,6 +61,9 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
       body: Column(
         // The column expands to fill the available space.
         children: [
+          const Row(
+            children: [Icon(Icons.menu)],
+          ),
           Expanded(
             // The expanded widget expands to fill the available space.
             child: Column(
@@ -131,6 +136,40 @@ class _MobileAuthPageState extends State<MobileAuthPage> {
           ),
           // The spacer widget expands to fill the available space.
           const Spacer(),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DropdownButton<Language>(
+                  underline: const SizedBox(),
+                  icon: Icon(
+                    Icons.language,
+                    color: AppColors.darkBrown,
+                  ),
+                  onChanged: (Language? language) async {
+                    if (language != null) {
+                      Locale locale =
+                          await SessionStorage.setLocale(language.languageCode);
+                      if (mounted) {
+                        MainApp.setLocale(context, locale);
+                      }
+                    }
+                  },
+                  items: Language.languageList()
+                      .map<DropdownMenuItem<Language>>(
+                        (e) => DropdownMenuItem<Language>(
+                          value: e,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [Text(e.name)],
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

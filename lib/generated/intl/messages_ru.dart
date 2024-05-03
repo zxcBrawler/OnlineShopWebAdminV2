@@ -70,7 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "clothesInfo": MessageLookupByLibrary.simpleMessage("товары"),
         "color": MessageLookupByLibrary.simpleMessage("цвет"),
         "colorName": MessageLookupByLibrary.simpleMessage("имя цвета"),
-        "contactNumber": MessageLookupByLibrary.simpleMessage("номер контакта"),
+        "contactNumber":
+            MessageLookupByLibrary.simpleMessage("контактный номер"),
         "currentWeek": MessageLookupByLibrary.simpleMessage("текущая неделя"),
         "dashboard": MessageLookupByLibrary.simpleMessage("панель управления"),
         "dateOrder": MessageLookupByLibrary.simpleMessage("дата заказа"),

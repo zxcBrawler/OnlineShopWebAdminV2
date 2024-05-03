@@ -39,6 +39,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.18.1
+  country_flags: ^2.2.0
+  country_icons: ^2.0.2
 
 dev_dependencies:
   flutter_test:

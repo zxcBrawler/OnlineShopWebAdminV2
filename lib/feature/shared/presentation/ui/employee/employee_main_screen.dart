@@ -19,7 +19,7 @@ class _EmployeeMainScreenState extends State<EmployeeMainScreen> {
     return Scaffold(
       // The drawer for the employee panel.
       drawer: BasicDrawer(
-        menuItems: employeeMenuItems,
+        menuItems: employeeMenuItems(context),
       ),
       // The key for the Scaffold. The key is obtained from the SideMenuController.
       key: context.read<SideMenuController>().scaffoldKey,
